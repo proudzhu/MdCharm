@@ -1,0 +1,46 @@
+# Maintainer: proudzhu <proudzhu at gmail.com>
+
+pkgname=mdcharm-git
+_pkgname=mdcharm
+pkgver=r35.c4e8d4e
+pkgrel=1
+pkgdesc='A wiki editor, currently it supports markdown(markdown extra) and Multi-Markdown.'
+arch=('i686' 'x86_64')
+url='https://github.com/zhangshine/MdCharm'
+license=('custom')
+depends=('qt5-webkit' 'hunspell' 'zlib')
+makedepends=('python')
+provides=("$_pkgname")
+conflicts=("$_pkgname")
+source=("$_pkgname::git+https://github.com/proudzhu/MdCharm.git")
+sha256sums=('SKIP')
+
+pkgver() {
+    cd "$srcdir/$_pkgname"
+    printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+}
+
+build() {
+    cd "$srcdir/$_pkgname/src"
+
+    qmake MdCharm.pro
+    # maybe some error when build with -j2
+    MAKEFLAGS="-j1" make
+}
+
+package() {
+    cd "$srcdir/$_pkgname/src"
+    # make DESTDIR=$pkgdir install
+    install -Dm755 release/mdcharm $pkgdir/usr/bin/mdcharm
+    install -Dm644 $srcdir/mdcharm/LICENSE $pkgdir/usr/share/licenses/$_pkgname/LICENSE
+
+    install -Dm644 $srcdir/mdcharm/dist/ubuntu/usr/share/mdcharm/mdcharm.png $pkgdir/usr/share/mdcharm/mdcharm.png
+    install -Dm644 $srcdir/mdcharm/dist/ubuntu/usr/share/applications/mdcharm.desktop $pkgdir/usr/share/applications/mdcharm/mdcharm.desktop
+    install -Dm644 $srcdir/mdcharm/dist/ubuntu/usr/share/mdcharm/spellcheckdict/en_GB.aff $pkgdir/usr/share/mdcharm/spellcheckdict/en_GB.aff
+    install -Dm644 $srcdir/mdcharm/dist/ubuntu/usr/share/mdcharm/spellcheckdict/en_GB.dic $pkgdir/usr/share/mdcharm/spellcheckdict/en_GB.dic
+    install -Dm644 $srcdir/mdcharm/dist/ubuntu/usr/share/mdcharm/spellcheckdict/en_US.aff $pkgdir/usr/share/mdcharm/spellcheckdict/en_US.aff
+    install -Dm644 $srcdir/mdcharm/dist/ubuntu/usr/share/mdcharm/spellcheckdict/en_GB.dic $pkgdir/usr/share/mdcharm/spellcheckdict/en_US.dic
+    install -Dm644 $srcdir/mdcharm/dist/ubuntu/usr/share/mdcharm/spellcheckdict/README_en_GB.txt $pkgdir/usr/share/mdcharm/spellcheckdict/README_en_GB.txt
+    install -Dm644 $srcdir/mdcharm/dist/ubuntu/usr/share/mdcharm/spellcheckdict/README_en_US.txt $pkgdir/usr/share/mdcharm/spellcheckdict/README_en_US.txt
+}
+
