@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 import os
 import sys
 from datetime import datetime
@@ -7,10 +9,12 @@ if __name__ == '__main__':
         sys.exit(1)
     if sys.argv[1] == "debug":
         if os.path.isfile("version.h"):
-            print 'Already Exist'
+            print('Already Exist')
             sys.exit(0)
-    version_h = open('../../src/MdCharm/version.h.in').read()
-    mdcharm_rc = open('../../src/MdCharm/mdcharm.rc.in').read()
+    with open('../../src/MdCharm/version.h.in') as version_h_file:
+        version_h = version_h_file.read()
+    with open('../../src/MdCharm/mdcharm.rc.in') as mdcharm_rc_file:
+        mdcharm_rc = mdcharm_rc_file.read()
     revision_output = os.popen('git log -1 --format="%H"')
     if revision_output:
         revision = str(revision_output.read()).strip()
@@ -31,10 +35,8 @@ if __name__ == '__main__':
                                               version_list[2],
                                               revision,
                                               ntime_str)
-    version_header_file = file("../../src/MdCharm/version.h", 'w+')
-    version_header_file.write(real_version_h)
-    version_header_file.close()
+    with open("../../src/MdCharm/version.h", 'w+') as version_header_file:
+        version_header_file.write(real_version_h)
     real_rc_file = mdcharm_rc.format(version_list[0], version_list[1], version_list[2], 0, tag)
-    rc_file = file("../../src/res/mdcharm.rc", 'w+')
-    rc_file.write(real_rc_file)
-    rc_file.close()
+    with open("../../src/res/mdcharm.rc", 'w+') as rc_file:
+        rc_file.write(real_rc_file)
