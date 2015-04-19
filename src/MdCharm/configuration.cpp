@@ -812,20 +812,27 @@ void Configuration::setMarkdownEngineType(MarkdownToHtml::MarkdownType type)
 
 MarkdownToHtml::MarkdownType Configuration::getMarkdownEngineType() const
 {
+    // TODO:
     QVariant var = settings->value(MARKDOWN_ENGINE);
     if(var.isValid() && var.canConvert(QVariant::Int)){
         int type = var.toInt();
         switch(type)
         {
+            case MarkdownToHtml::PHPMarkdownExtra:
+                return MarkdownToHtml::PHPMarkdownExtra;
+                break;
             case MarkdownToHtml::MultiMarkdown:
                 return MarkdownToHtml::MultiMarkdown;
                 break;
+            case MarkdownToHtml::CommonMark:
+                return  MarkdownToHtml::CommonMark;
+                break;
             default:
-                return MarkdownToHtml::PHPMarkdownExtra;
+                return MarkdownToHtml::Markdown;
                 break;
         }
     } else {
-        return MarkdownToHtml::PHPMarkdownExtra;
+        return MarkdownToHtml::Markdown;
     }
 }
 

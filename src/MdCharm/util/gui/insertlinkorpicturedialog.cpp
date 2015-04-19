@@ -19,6 +19,7 @@ InsertLinkOrPictureDialog::InsertLinkOrPictureDialog(int type, const QString pro
     if(type==MdCharmGlobal::ShortcutInsertPicture){
         ui->textLabel->setText(tr("Alt Text:"));
         ui->urlLabel->setText(tr("Picture Url:"));
+        // TODO:
         if(conf->getMarkdownEngineType()!=MarkdownToHtml::MultiMarkdown){
             ui->widthLineEdit->hide();
             ui->widthLabel->hide();

@@ -3,6 +3,7 @@
 #include "markdown.h"
 #include "html.h"
 #include "buffer.h"
+#include "cmark.h"
 
 using namespace std;
 
@@ -32,8 +33,12 @@ MarkdownToHtml::translateMarkdownToHtml(MarkdownToHtml::MarkdownType type,
 {
     if(type == MarkdownToHtml::Markdown || type == MarkdownToHtml::PHPMarkdownExtra){
         return translateMarkdownExtraToHtml(type, data, length, outHtml);
-    } else {
+    } else if(type == MarkdownToHtml::MultiMarkdown) {
         return translateMultiMarkdownToHtml(type, data, length, outHtml);
+    } else if(type == MarkdownToHtml::CommonMark) {
+        return translateCommonMarkToHtml(type, data, length, outHtml);
+    } else {
+        return ERROR;
     }
 }
 
@@ -75,9 +80,9 @@ MarkdownToHtml::renderToHtml(MarkdownToHtml::MarkdownType type, const char *data
     }
 
     renderFunc(&callbacks, &options, HTML_TOC);
-    if(type==Markdown)
+    if(type == MarkdownToHtml::Markdown)
         extension = 0;
-    else if(type==PHPMarkdownExtra)
+    else if(type == MarkdownToHtml::PHPMarkdownExtra)
         extension = MKDEXT_NO_INTRA_EMPHASIS
             |MKDEXT_TABLES
             |MKDEXT_FENCED_CODE
@@ -111,6 +116,16 @@ MarkdownToHtml::translateMultiMarkdownToHtml(MarkdownType type, const char *data
                                              const int length, string &outHtml)
 {
     char *result = markdown_to_string(data, 0, HTML_FORMAT);
+    outHtml.append(result);
+    free(result);
+    return SUCCESS;
+}
+
+MarkdownToHtml::MarkdownToHtmlResult
+MarkdownToHtml::translateCommonMarkToHtml(MarkdownType type, const char *data,
+                                             const int length, string &outHtml)
+{
+    char *result = cmark_markdown_to_html(data, length, CMARK_OPT_DEFAULT);
     outHtml.append(result);
     free(result);
     return SUCCESS;

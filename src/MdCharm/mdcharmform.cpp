@@ -382,6 +382,7 @@ void MdCharmForm::initToolBarContent()
                                         tr("Strike through(%1)").arg(mdcharmGlobalInstance->MdCharm_ShortCut_Strike_Through.toString()),
                                         this, SLOT(markdownToolBarSlot()));
     strikeThoughAction->setData(MdCharmGlobal::ShortcutStrikeThrough);
+    // TODO:
     strikeThoughAction->setEnabled(conf->getMarkdownEngineType()!=MarkdownToHtml::MultiMarkdown);
     strikeThoughAction->setShortcut(mdcharmGlobalInstance->MdCharm_ShortCut_Strike_Through);
     shortcutActions.append(action);
@@ -817,6 +818,7 @@ void MdCharmForm::updateConfiguration()
     if(spellCheckAction->isChecked()!=conf->isCheckSpell())
         spellCheckAction->setChecked(conf->isCheckSpell());
     editAreaTabWidgetManager->updateConfiguration();
+    // TODO:
     if(conf->getMarkdownEngineType()==MarkdownToHtml::MultiMarkdown)
         strikeThoughAction->setEnabled(false);
     else

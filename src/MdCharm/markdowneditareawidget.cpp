@@ -722,6 +722,7 @@ void MarkdownEditAreaWidget::insertLinkOrPicture(int type)
 
 void MarkdownEditAreaWidget::insertCode()
 {
+    // TODO: CommonMark, Markdown and PHPMarkdownExtra all the same
     if(conf->getMarkdownEngineType()==MarkdownToHtml::MultiMarkdown){
         editor->insertCode(QString());
     } else {

@@ -321,6 +321,7 @@ void MarkdownEditor::insertLinkOrPicuture(int type, const QString &text,
     cursor.beginEditBlock();
     cursor.clearSelection();
 
+    // TODO: CommonMark, Markdown and PHPMarkdownExtra all the same
     if(conf->getMarkdownEngineType()==MarkdownToHtml::MultiMarkdown){
         QString insertText = QString::fromUtf8("[%1][]").arg(text);
         if(type==MdCharmGlobal::ShortcutInsertPicture)

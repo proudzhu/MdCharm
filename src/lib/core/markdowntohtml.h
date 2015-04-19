@@ -26,7 +26,8 @@ public:
     enum MarkdownType {
         Markdown,
         PHPMarkdownExtra,
-        MultiMarkdown
+        MultiMarkdown,
+        CommonMark
     };
 
 public:
@@ -41,6 +42,9 @@ public:
                                         const char* data,
                                         const int length, std::string &outHtml);
     static MarkdownToHtmlResult translateMultiMarkdownToHtml(MarkdownType type,
+                                        const char* data,
+                                        const int length, std::string &outHtml);
+    static MarkdownToHtmlResult translateCommonMarkToHtml(MarkdownType type,
                                         const char* data,
                                         const int length, std::string &outHtml);
     static MarkdownToHtmlResult renderMarkdownExtarToc(MarkdownType type,

@@ -14,14 +14,14 @@ CONFIG(debug, debug|release){ #debug
     DEFINES += MDCHARM_DEBUG
     TARGET = MdCharm_d
     DESTDIR = ../debug/
-    LIBS += -L../debug -lgbreakpad_d -lcore
+    LIBS += -L../debug -lgbreakpad_d -lcore -lcmark
 } else { #release
     DEFINES += NDEBUG
     DEFINES += QT_NO_DEBUG_OUTPUT
     TARGET = MdCharm
     unix:TARGET = mdcharm
     DESTDIR = ../release/
-    LIBS += -L../release -lgbreakpad -lcore
+    LIBS += -L../release -lgbreakpad -lcore -lcmark
 }
 #Fix for hunspell
 win32-msvc*: {
