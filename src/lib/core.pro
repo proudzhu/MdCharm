@@ -38,7 +38,7 @@ CONFIG(release, debug|release){
 
 
 include(multimarkdown/src/multimarkdown_lib.pri)
-include(../lib/markdown/markdown.pro)
+#include(../lib/markdown/markdown.pro)
 
 INCLUDEPATH += multimarkdown/src
 

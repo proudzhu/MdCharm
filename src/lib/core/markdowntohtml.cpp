@@ -90,8 +90,6 @@ MarkdownToHtml::renderToHtml(MarkdownToHtml::MarkdownType type, const char *data
             |MKDEXT_STRIKETHROUGH
             |MKDEXT_SUPERSCRIPT
             |MKDEXT_LAX_SPACING
-            |MKDEXT_HEADER_ID_ATTRIBUTE
-            |MKDEXT_FOOTNOTE
             ;
     markdown = sd_markdown_new( extension, 16, &callbacks, &options);
     if (markdown == NULL)
@@ -139,9 +137,14 @@ MarkdownToHtml::translateCommonMarkToHtml(MarkdownType type, const char *data,
  * @param toc
  * @return
  */
+void sdhtml_toc_renderer_with_flag(struct sd_callbacks *callbacks, struct html_renderopt *options_ptr, unsigned int render_flags)
+{
+    sdhtml_toc_renderer(callbacks, options_ptr);
+}
+
 MarkdownToHtml::MarkdownToHtmlResult
 MarkdownToHtml::renderMarkdownExtarToc(MarkdownType type, const char *data,
                                        const int length, string &toc)
 {
-    return renderToHtml(type, data, length, toc, sdhtml_toc_renderer);
+    return renderToHtml(type, data, length, toc, sdhtml_toc_renderer_with_flag);
 }
