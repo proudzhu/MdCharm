@@ -5,7 +5,7 @@ CONFIG += ordered
 SUBDIRS += crashdump
 #SUBDIRS += markdown
 #SUBDIRS += hunspell
-SUBDIRS += multimarkdown/peg/leg.pro
+#SUBDIRS += multimarkdown/peg/leg.pro
 #SUBDIRS += pcre
 SUBDIRS += core.pro
 
