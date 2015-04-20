@@ -19,12 +19,12 @@ QMAKE_EXTRA_TARGETS += markdown_parser_c markdown_parser_c_nonexist
 PRE_TARGETDEPS += $$PWD/multimarkdown/src/markdown_parser.c
 
 #For pcre
-#INCLUDEPATH += $$PWD/pcre
-#CONFIG(debug, debug|release){
-#    LIBS += -L../debug -lmdcharm_pcre
-#} else {
-#    LIBS += -L../release -lmdcharm_pcre
-#}
+INCLUDEPATH += $$PWD/pcre
+CONFIG(debug, debug|release){
+    LIBS += -L../debug -lmdcharm_pcre
+} else {
+    LIBS += -L../release -lmdcharm_pcre
+}
 
 #end pcre
 

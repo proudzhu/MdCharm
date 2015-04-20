@@ -6,7 +6,7 @@ CONFIG += ordered
 #SUBDIRS += markdown
 #SUBDIRS += hunspell
 SUBDIRS += multimarkdown/peg/leg.pro
-#SUBDIRS += pcre
+SUBDIRS += pcre
 SUBDIRS += core.pro
 
 #SUBDIRS += zlib
