@@ -34,12 +34,11 @@ win32-msvc*: {
 }
 
 unix: {
-    INCLUDEPATH +=../lib/pcre
     LIBS += -lhunspell
     CONFIG(debug, debug|release){
-        LIBS += -L../debug -lmdcharm_pcre
+        LIBS += -L../debug -lpcre16
     } else {
-        LIBS += -L../release -lmdcharm_pcre
+        LIBS += -L../release -lpcre16
     }
     CONFIG += link_pkgconfig
     PKGCONFIG += zlib glib-2.0
@@ -53,10 +52,7 @@ win32-msvc*:QMAKE_CXXFLAGS_RELEASE += -Zi
 win32-msvc*:QMAKE_CFLAGS_RELEASE += -Zi
 win32-msvc*:QMAKE_LFLAGS_RELEASE += /DEBUG /OPT:REF /OPT:ICF
 
-INCLUDEPATH += ../lib/core ../lib/markdown/html \
-                ../lib/markdown/src ../lib/crashdump \
-                ../lib/zlib/zlib ../lib/pcre \
-                ../lib/rapidxml
+INCLUDEPATH += ../lib/core ../lib/crashdump
 
 version_h.target = version.h
 
