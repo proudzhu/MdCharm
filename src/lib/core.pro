@@ -39,7 +39,7 @@ CONFIG(release, debug|release){
 CONFIG += link_pkgconfig
 PKGCONFIG += zlib glib-2.0
 
-include(multimarkdown/src/multimarkdown_lib.pri)
+#include(multimarkdown/src/multimarkdown_lib.pri)
 #include(../lib/markdown/markdown.pro)
 
 #INCLUDEPATH += multimarkdown/src
