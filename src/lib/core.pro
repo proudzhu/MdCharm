@@ -30,10 +30,10 @@ PRE_TARGETDEPS += $$PWD/multimarkdown/src/markdown_parser.c
 
 CONFIG(release, debug|release){
     DESTDIR = ../release
-    LIBS += -lhunspell
+    LIBS += -lhunspell -lsundown
 } else {
     DESTDIR = ../debug
-    LIBS += -lhunspell
+    LIBS += -lhunspell -lsundown
 }
 
 
