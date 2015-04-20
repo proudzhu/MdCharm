@@ -19,7 +19,7 @@ win32: DEFINES += MARKDOWN_LIB
 #    LIBS += -L ../../release -lrapidxml
 #}
 
-#include(../rapidxml/rapidxml.pro)
+include(../rapidxml/rapidxml.pro)
 
 #TEMPLATE = lib
 
