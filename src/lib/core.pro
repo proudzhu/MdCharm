@@ -30,10 +30,10 @@ CONFIG(debug, debug|release){
 
 CONFIG(release, debug|release){
     DESTDIR = ../release
-    LIBS += -lhunspell -lsundown
+    LIBS += -lhunspell
 } else {
     DESTDIR = ../debug
-    LIBS += -lhunspell -lsundown
+    LIBS += -lhunspell
 }
 
 
