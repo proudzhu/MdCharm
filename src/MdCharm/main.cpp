@@ -14,7 +14,7 @@
 #include "configuration.h"
 #include "util/spellcheck/spellchecker.h"
 #include "codesyntaxhighlighter.h"
-#include <BreakpadHandler.h>
+//#include <BreakpadHandler.h>
 
 void delayForShowSplash(unsigned int msec);
 void initHilighter();
@@ -48,6 +48,8 @@ int main(int argc, char** argv)
         startTime = QTime::currentTime();
     }
 
+    // disable crashdump
+    /*
     BreakpadQt::GlobalHandler *handler = BreakpadQt::GlobalHandler::instance();
     handler->setDumpPath(QDir::tempPath());
 #ifdef Q_OS_LINUX
@@ -56,6 +58,7 @@ int main(int argc, char** argv)
     handler->setReporter(qApp->applicationDirPath().append("/crashrpt"));
 #endif
     handler->appendArgument(conf->configFileDirPath().append("/sysinfo.txt"));
+    */
     if(conf->isCheckSpell())
         MdCharmGlobal::getInstance();
     QStringList argsList = app.arguments();
