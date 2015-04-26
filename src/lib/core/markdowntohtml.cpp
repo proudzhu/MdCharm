@@ -1,8 +1,8 @@
 #include "markdowntohtml.h"
 #include "markdown_lib.h"
-#include "markdown.h"
-#include "html.h"
-#include "buffer.h"
+#include "hoedown/document.h"
+#include "hoedown/html.h"
+#include "hoedown/buffer.h"
 #include "cmark.h"
 
 using namespace std;
@@ -47,65 +47,64 @@ MarkdownToHtml::translateMarkdownExtraToHtml(MarkdownToHtml::MarkdownType type,
                                         const char *data,
                                         const int length, string &outHtml)
 {
-    return renderToHtml(type, data, length, outHtml, sdhtml_renderer);
+    return renderToHtml(type, data, length, outHtml, hoedown_html_renderer_new);
 }
 
 MarkdownToHtml::MarkdownToHtmlResult
 MarkdownToHtml::renderToHtml(MarkdownToHtml::MarkdownType type, const char *data, const int length, string &outHtml,
-                             void (*renderFunc)(struct sd_callbacks *callbacks, struct html_renderopt *options, unsigned int render_flags))
+                             hoedown_renderer* (*renderFunc)(hoedown_html_flags render_flags, int nesting_level))
 {
     if (length == 0) //length is 0, just return
         return NOTHING;
 
-    buf *ib, *ob;
-    sd_callbacks callbacks;
-    html_renderopt options;
-    sd_markdown *markdown;
-    unsigned int extension=0;
+    hoedown_buffer *ib, *ob;
+    hoedown_renderer *callbacks;
+    hoedown_html_renderer_state options;
+    hoedown_document *markdown;
+    unsigned int extensions = 0;
+    hoedown_html_flags render_flags;
 
-    ib = bufnew(length);
+    ib = hoedown_buffer_new(length);
     if (ib == NULL)
     {
         return ERROR;
     }
-    bufgrow(ib, length);
+    hoedown_buffer_grow(ib, length);
     ib->size = length;
     memcpy(ib->data, data, length);
 
-    ob = bufnew(OUTPUT_UNIT);
+    ob = hoedown_buffer_new(OUTPUT_UNIT);
     if (ob == NULL)
     {
-        bufrelease(ib);
+        hoedown_buffer_free(ib);
         return ERROR;
     }
 
-    renderFunc(&callbacks, &options, HTML_TOC);
+    // Set the nesting level really high in the HTML renderer
+    callbacks = renderFunc(render_flags, 99);
     if(type == MarkdownToHtml::Markdown)
-        extension = 0;
-    else if(type == MarkdownToHtml::PHPMarkdownExtra)
-        extension = MKDEXT_NO_INTRA_EMPHASIS
-            |MKDEXT_TABLES
-            |MKDEXT_FENCED_CODE
-            |MKDEXT_AUTOLINK
-            |MKDEXT_STRIKETHROUGH
-            |MKDEXT_SUPERSCRIPT
-            |MKDEXT_LAX_SPACING
-            ;
-    markdown = sd_markdown_new( extension, 16, &callbacks, &options);
+        extensions = 0;
+    if(type == MarkdownToHtml::PHPMarkdownExtra)
+        extensions = HOEDOWN_EXT_BLOCK
+                | HOEDOWN_EXT_SPAN
+                | HOEDOWN_EXT_FLAGS
+                ;
+
+    markdown = hoedown_document_new(callbacks, (hoedown_extensions)extensions, 0);
     if (markdown == NULL)
     {
-        bufrelease(ib);
-        bufrelease(ob);
+        hoedown_buffer_free(ib);
+        hoedown_buffer_free(ob);
         return ERROR;
     }
 
-    sd_markdown_render(ob, ib->data, ib->size, markdown);
-    sd_markdown_free(markdown);
+    hoedown_document_render(markdown, ob, ib->data, ib->size);
+    hoedown_document_free(markdown);
 
     outHtml.assign((const char*)ob->data, ob->size);
 
-    bufrelease(ib);
-    bufrelease(ob);
+    hoedown_buffer_free(ib);
+    hoedown_buffer_free(ob);
     return SUCCESS; // success
 }
 
@@ -137,14 +136,14 @@ MarkdownToHtml::translateCommonMarkToHtml(MarkdownType type, const char *data,
  * @param toc
  * @return
  */
-void sdhtml_toc_renderer_with_flag(struct sd_callbacks *callbacks, struct html_renderopt *options_ptr, unsigned int render_flags)
+hoedown_renderer *hoedown_html_toc_renderer_new_with_flags(hoedown_html_flags render_flags, int nesting_level)
 {
-    sdhtml_toc_renderer(callbacks, options_ptr);
+    return hoedown_html_toc_renderer_new(nesting_level);
 }
 
 MarkdownToHtml::MarkdownToHtmlResult
 MarkdownToHtml::renderMarkdownExtarToc(MarkdownType type, const char *data,
                                        const int length, string &toc)
 {
-    return renderToHtml(type, data, length, toc, sdhtml_toc_renderer_with_flag);
+    return renderToHtml(type, data, length, toc, hoedown_html_toc_renderer_new_with_flags);
 }

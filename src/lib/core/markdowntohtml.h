@@ -6,6 +6,8 @@
 #include <cstdlib>
 #include <cstring>
 #include <string>
+#include "hoedown/document.h"
+#include "hoedown/html.h"
 
 #ifdef MARKDOWN_LIB
     #define DECLSPEC __declspec(dllexport)
@@ -55,7 +57,7 @@ public:
                                              const char *data,
                                              const int length,
                                              std::string &outHtml,
-                                             void (*renderFunc)(struct sd_callbacks *callbacks, struct html_renderopt *options, unsigned int render_flags));
+                                             hoedown_renderer* (*renderFunc)(hoedown_html_flags render_flags, int nesting_level));
 };
 
 #endif // MARKDOWNTOHTML_H
