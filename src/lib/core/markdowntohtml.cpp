@@ -80,8 +80,7 @@ MarkdownToHtml::renderToHtml(MarkdownToHtml::MarkdownType type, const char *data
         return ERROR;
     }
 
-    // Set the nesting level really high in the HTML renderer
-    callbacks = renderFunc(render_flags, 99);
+    callbacks = renderFunc(render_flags, 0);
     if(type == MarkdownToHtml::Markdown)
         extensions = 0;
     if(type == MarkdownToHtml::PHPMarkdownExtra)
@@ -90,7 +89,7 @@ MarkdownToHtml::renderToHtml(MarkdownToHtml::MarkdownType type, const char *data
                 | HOEDOWN_EXT_FLAGS
                 ;
 
-    markdown = hoedown_document_new(callbacks, (hoedown_extensions)extensions, 0);
+    markdown = hoedown_document_new(callbacks, (hoedown_extensions)extensions, DEF_MAX_NESTING);
     if (markdown == NULL)
     {
         hoedown_buffer_free(ib);

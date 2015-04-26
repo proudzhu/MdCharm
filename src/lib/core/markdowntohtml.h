@@ -15,6 +15,8 @@
     #define DECLSPEC
 #endif
 
+#define DEF_MAX_NESTING 16
+
 class DECLSPEC MarkdownToHtml
 {
 public:
