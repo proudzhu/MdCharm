@@ -1,5 +1,5 @@
 #include "markdowntohtml.h"
-#include "markdown_lib.h"
+#include "libMultiMarkdown.h"
 #include "hoedown/document.h"
 #include "hoedown/html.h"
 #include "hoedown/buffer.h"
