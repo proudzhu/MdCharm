@@ -83,7 +83,6 @@ SOURCES += \
     conf/configuredialog.cpp \
     configuration.cpp \
     conf/pages.cpp \
-    util/test/qregularexpression.cpp \
     baseeditor/baseeditor.cpp \
     about/aboutmdcharmdialog.cpp \
     util/gui/findandreplace.cpp \
@@ -133,7 +132,6 @@ HEADERS += \
     conf/configuredialog.h \
     configuration.h \
     conf/pages.h \
-    util/test/qregularexpression.h \
     baseeditor/baseeditor.h \
     about/aboutmdcharmdialog.h \
     util/gui/findandreplace.h \
