@@ -21,11 +21,6 @@ void initHilighter();
 
 int main(int argc, char** argv)
 {
-#ifdef QT_V5
-    qApp->addLibraryPath("/usr/local/lib/Qt-5.0.2/plugins");
-    qApp->addLibraryPath("/usr/local/lib/Qt-5.0.2/");
-#endif
-
     MdCharmApplication app(argc, argv);
     if(app.isRunning())
         return 0;

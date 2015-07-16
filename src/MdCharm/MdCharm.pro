@@ -5,9 +5,6 @@ lessThan(QT_MAJOR_VERSION, 5){
 } else {
     DEFINES += QT_V5
     QT += core gui webkit network widgets webkitwidgets printsupport
-    unix: {
-        QMAKE_RPATHDIR += /usr/local/lib/Qt-5.0.2/lib/
-    }
 }
 
 CONFIG(debug, debug|release){ #debug
