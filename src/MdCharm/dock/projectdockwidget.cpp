@@ -35,11 +35,7 @@ void ProjectDockWidget::initGui()
     projectTreeView->setHeaderHidden(true);
     projectTreeView->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
-#ifdef QT_V5
     projectTreeView->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
-#else
-    projectTreeView->header()->setResizeMode(QHeaderView::ResizeToContents);
-#endif
     projectTreeView->header()->setStretchLastSection(false);
 
 }

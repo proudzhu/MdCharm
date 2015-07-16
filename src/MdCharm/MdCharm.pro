@@ -1,11 +1,6 @@
 TEMPLATE = app
 
-lessThan(QT_MAJOR_VERSION, 5){
-    QT += core gui webkit network
-} else {
-    DEFINES += QT_V5
-    QT += core gui webkit network widgets webkitwidgets printsupport
-}
+QT += core gui webkit network widgets webkitwidgets printsupport
 
 CONFIG(debug, debug|release){ #debug
     DEFINES += MDCHARM_DEBUG

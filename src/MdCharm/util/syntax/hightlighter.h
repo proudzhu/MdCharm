@@ -2,10 +2,7 @@
 #define HIGHTLIGHTER_H
 
 #include <QSyntaxHighlighter>
-
-#ifdef QT_V5
 #include <QtWidgets>
-#endif
 
 class QTextDocument;
 

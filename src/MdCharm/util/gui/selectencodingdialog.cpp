@@ -4,10 +4,7 @@
 #include "../../configuration.h"
 
 #include <QtGui>
-
-#ifdef QT_V5
 #include <QtWidgets>
-#endif
 
 SelectEncodingDialog::SelectEncodingDialog(bool modified, QString currentEncoding, QWidget *parent) :
     QDialog(parent, Qt::WindowTitleHint|Qt::WindowSystemMenuHint),

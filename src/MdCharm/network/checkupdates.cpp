@@ -26,12 +26,8 @@ void CheckUpdates::check()
 {
     QNetworkRequest request;
     QUrl url = QUrl::fromUserInput("http://www.mdcharm.com/checkupdate"); 
-#ifdef QT_V5
     QUrlQuery query;
     query.addQueryItem(QString::fromLatin1("current_version"), QString::fromLatin1(VERSION_STR));
-#else
-    url.addQueryItem(QString::fromLatin1("current_version"), QString::fromAscii(VERSION_STR));
-#endif
 #ifdef Q_OS_LINUX
     QString type("Linux");
 #elif defined Q_OS_WIN
@@ -40,12 +36,9 @@ void CheckUpdates::check()
     QString type("Unknow");
 #endif
 
-#ifdef QT_V5
     query.addQueryItem(QString::fromLatin1("type"), type);
     url.setQuery(query);
-#else
-    url.addQueryItem(QString::fromLatin1("type"), type);
-#endif
+
     request.setUrl(url);
     reply = manager.get(request);
     connect(reply, SIGNAL(error(QNetworkReply::NetworkError)),

@@ -1,9 +1,6 @@
 #include <QtGui>
 #include <QtCore>
-
-#ifdef QT_V5
 #include <QtPrintSupport>
-#endif
 
 #include "baseeditor.h"
 #include "util/spellcheck/spellchecker.h"

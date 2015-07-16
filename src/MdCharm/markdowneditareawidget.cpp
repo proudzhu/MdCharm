@@ -1,12 +1,5 @@
 #include <QPlainTextEdit>
-
-#ifdef QT_V5
 #include <QtWebKitWidgets>
-#else
-#include <QtWebKit/QWebFrame>
-#include <QtWebKit/QWebPage>
-#endif
-
 #include <QSplitter>
 #include <QResizeEvent>
 #include <QTextStream>

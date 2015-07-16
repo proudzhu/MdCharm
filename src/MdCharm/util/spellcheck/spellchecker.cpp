@@ -19,11 +19,8 @@ SpellCheckTokenizer::SpellCheckTokenizer(const QString *text)
     boundaryFinder = QTextBoundaryFinder(QTextBoundaryFinder::Word, *text);
     position = 0;
     startWord = -1;
-#ifdef QT_V5
+
     if(boundaryFinder.boundaryReasons() & QTextBoundaryFinder::StartOfItem)
-#else
-    if(boundaryFinder.boundaryReasons() & QTextBoundaryFinder::StartWord)
-#endif
         startWord = 0;
 }
 
@@ -36,11 +33,7 @@ bool SpellCheckTokenizer::hasNextWord()
             return false;
 
         const QTextBoundaryFinder::BoundaryReasons reasons = boundaryFinder.boundaryReasons();
-#ifdef QT_V5
         if(reasons & QTextBoundaryFinder::EndOfItem){
-#else
-        if(reasons & QTextBoundaryFinder::EndWord){
-#endif
             if(startWord==-1)
                 continue;
             //skip empty words
@@ -49,21 +42,15 @@ bool SpellCheckTokenizer::hasNextWord()
             nextWord = text->mid(startWord, position-startWord);
             start=startWord;
             end=position;
-#ifdef QT_V5
+
             if(reasons & QTextBoundaryFinder::StartOfItem)
-#else
-            if(reasons & QTextBoundaryFinder::StartWord)
-#endif
                 startWord = position;
             else
                 startWord = -1;
             return true;
         }
-#ifdef QT_V5
+
         if(reasons & QTextBoundaryFinder::StartOfItem)
-#else
-        if(reasons & QTextBoundaryFinder::StartWord)
-#endif
             startWord = position;
     }
     return false;

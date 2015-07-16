@@ -2,10 +2,7 @@
 
 #include <QtGui>
 #include <QtCore>
-
-#ifdef QT_V5
 #include <QtWidgets>
-#endif
 
 /***************************** FileSystemTreeViewState ******************/
 QList<QStringList>& FileSystemTreeViewState::getExpands()

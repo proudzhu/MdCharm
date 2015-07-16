@@ -4,10 +4,7 @@
 #include <QAbstractItemModel>
 #include <QtCore>
 #include <QtGui>
-
-#ifdef QT_V5
 #include <QtWidgets>
-#endif
 
 class FileSystemModel;
 class FileNode

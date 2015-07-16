@@ -4,10 +4,7 @@
 #include <QDockWidget>
 #include <QtGui>
 #include <QtCore>
-
-#ifdef QT_V5
 #include <QtWidgets>
-#endif
 
 class FileSystemModel;
 class FileSystemTreeView;

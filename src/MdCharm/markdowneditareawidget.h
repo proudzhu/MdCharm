@@ -5,10 +5,7 @@
 
 #include <QUrl>
 #include <QTextDocument>
-
-#ifdef QT_V5
 #include <QtPrintSupport>
-#endif
 
 class QSplitter;
 class QPlainTextEdit;

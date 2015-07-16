@@ -1,10 +1,7 @@
 #include <QtGui>
 #include <QtCore>
 #include <QtWebKit>
-
-#ifdef QT_V5
 #include <QtWebKitWidgets>
-#endif
 
 #include <cassert>
 
