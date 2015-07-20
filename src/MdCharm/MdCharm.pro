@@ -15,15 +15,6 @@ CONFIG(debug, debug|release){ #debug
     DESTDIR = ../release/
     LIBS += -L../release -lcore -lcmark -lhoedown -lmultimarkdown
 }
-#Fix for hunspell
-win32-msvc*: {
-    INCLUDEPATH+=../lib/hunspell/src ../lib/pcre
-    CONFIG(debug, debug|release){
-        LIBS += -L../debug -lhunspell_d -lmdcharm_pcre
-    } else {
-        LIBS += -L../release -lhunspell -lmdcharm_pcre
-    }
-}
 
 unix: {
     LIBS += -lhunspell
@@ -36,19 +27,10 @@ unix: {
     PKGCONFIG += zlib glib-2.0
 }
 
-win32 {
-    RC_FILE = $$PWD/../res/mdcharm.rc
-}
-
-win32-msvc*:QMAKE_CXXFLAGS_RELEASE += -Zi
-win32-msvc*:QMAKE_CFLAGS_RELEASE += -Zi
-win32-msvc*:QMAKE_LFLAGS_RELEASE += /DEBUG /OPT:REF /OPT:ICF
-
-INCLUDEPATH += ../lib/core ../lib/crashdump
+INCLUDEPATH += ../lib/core
 
 version_h.target = version.h
 
-win32:version_h.commands = python.exe ../../src/MdCharm/version_h.py release
 unix:version_h.commands = python ../../src/MdCharm/version_h.py release
 
 version_h.depends = version_h_nonexist
