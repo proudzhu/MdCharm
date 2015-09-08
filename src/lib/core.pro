@@ -28,5 +28,8 @@ SOURCES += \
     core/markdowntohtml.cpp \
     core/languagedefinationxmlparser.cpp \
     core/highlighter.cpp \
-    core/codesyntaxhighlighter.cpp
+    core/codesyntaxhighlighter.cpp \
+    core/commonmark.cpp \
+    core/hoedown.cpp \
+    core/multimarkdown.cpp
 
