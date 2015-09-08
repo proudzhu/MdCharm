@@ -1,8 +1,6 @@
 #include "codesyntaxhighlighter.h"
 #include "languagedefinationxmlparser.h"
 
-using namespace std;
-
 LanguageManager* LanguageManager::instance = NULL;
 
 LanguageManager::LanguageManager()
@@ -11,12 +9,12 @@ LanguageManager::LanguageManager()
 
 LanguageManager::~LanguageManager()
 {
-    for(map<string, Language *>::iterator it = languages.begin(); it!=languages.end(); it++){
+    for(std::map<std::string, Language *>::iterator it = languages.begin(); it!=languages.end(); it++){
         delete (*it).second;
     }
 }
 
-void LanguageManager::addLanguage(const string &name, char *content)
+void LanguageManager::addLanguage(const std::string &name, char *content)
 {
     LanguageDefinationXmlParser ldxp;
     Language *lan = ldxp.startParse(name.c_str(), content);
@@ -25,16 +23,16 @@ void LanguageManager::addLanguage(const string &name, char *content)
 //    lan->printDebugInfo();
 }
 
-Language* LanguageManager::getLanguage(const string &name)
+Language* LanguageManager::getLanguage(const std::string &name)
 {
-    string realLan = name;
+    std::string realLan = name;
     if(name=="c")
         realLan = "cpp";
     else if(name=="html")
         realLan = "xml";
     else if(name=="js")
         realLan = "javascript";
-    map<string, Language *>::iterator it = languages.find(realLan);
+    std::map<std::string, Language *>::iterator it = languages.find(realLan);
     if(it==languages.end())
         return NULL;
     return (*it).second;
@@ -53,10 +51,10 @@ CodeSyntaxHighlighter::CodeSyntaxHighlighter()
     top = NULL;
 }
 
-const string& CodeSyntaxHighlighter::highlight(const char *name, int len, const char *code, int codeLen)
+const std::string& CodeSyntaxHighlighter::highlight(const char *name, int len, const char *code, int codeLen)
 {
     LanguageManager *lanManger = LanguageManager::getInstance();
-    Language *targetLanguage = lanManger->getLanguage(string(name, len));
+    Language *targetLanguage = lanManger->getLanguage(std::string(name, len));
     if(!targetLanguage){
         result = escape(code, codeLen);
         return result;
@@ -64,7 +62,7 @@ const string& CodeSyntaxHighlighter::highlight(const char *name, int len, const 
     return highlight(targetLanguage, code, codeLen);
 }
 
-const string& CodeSyntaxHighlighter::highlight(Language *lan, const char *code, int len)
+const std::string& CodeSyntaxHighlighter::highlight(Language *lan, const char *code, int len)
 {
     result.clear();
     modeBuffer.clear();
@@ -85,11 +83,11 @@ const string& CodeSyntaxHighlighter::highlight(Language *lan, const char *code, 
         }
         if(!fr.isValid())
             break;
-        string match(code+fr.start, fr.end-fr.start);
-        int count = processLexem(string(code+index, fr.start-index), &match);
+        std::string match(code+fr.start, fr.end-fr.start);
+        int count = processLexem(std::string(code+index, fr.start-index), &match);
         index = fr.start+count;
     }
-    string left(code+index, len-index);
+    std::string left(code+index, len-index);
     processLexem(left);
     while(!parentStack.empty()){
         result.append("</span>");
@@ -99,7 +97,7 @@ const string& CodeSyntaxHighlighter::highlight(Language *lan, const char *code, 
     return result;
 }
 
-int CodeSyntaxHighlighter::processLexem(const string &subCode, const string *matchCode)
+int CodeSyntaxHighlighter::processLexem(const std::string &subCode, const std::string *matchCode)
 {
 //    printf("subCode: %s\n", subCode.c_str());
 //    printf("matchCode: %s\n", matchCode->c_str());
@@ -153,7 +151,7 @@ int CodeSyntaxHighlighter::processLexem(const string &subCode, const string *mat
     return matchCode->length()>0 ? matchCode->length() : 1;
 }
 
-string CodeSyntaxHighlighter::processBuffer()
+std::string CodeSyntaxHighlighter::processBuffer()
 {
     //language no sub language
     if(top)
@@ -162,18 +160,18 @@ string CodeSyntaxHighlighter::processBuffer()
         return processKeywords();
 }
 
-string CodeSyntaxHighlighter::processKeywords()
+std::string CodeSyntaxHighlighter::processKeywords()
 {
-    string buffer = escape(modeBuffer.c_str(), modeBuffer.length());
+    std::string buffer = escape(modeBuffer.c_str(), modeBuffer.length());
     if(lan->getKeywords().empty())
         return buffer;
-    string keywordResult;
+    std::string keywordResult;
     int lastIndex = 0;
     lan->getLexemsRe().setLastIndex(0);
     FindResult fr = lan->getLexemsRe().exec(buffer.c_str(), buffer.length());
     while(fr.isValid()){
         keywordResult.append(buffer.substr(lastIndex, fr.start-lastIndex));
-        string keyword = buffer.substr(fr.start, fr.end-fr.start);
+        std::string keyword = buffer.substr(fr.start, fr.end-fr.start);
         int km = keywordMatch(keyword);
         if(km!=Keywords::NotFound){
             keywordResult.append("<span class=\"")
@@ -190,18 +188,18 @@ string CodeSyntaxHighlighter::processKeywords()
     return keywordResult + buffer.substr(lastIndex);
 }
 
-string CodeSyntaxHighlighter::processKeywords(Contain *contain)
+std::string CodeSyntaxHighlighter::processKeywords(Contain *contain)
 {
-    string buffer = escape(modeBuffer.c_str(), modeBuffer.length());
+    std::string buffer = escape(modeBuffer.c_str(), modeBuffer.length());
     if(contain->getKeywords().empty()&&!contain->isRefLanguageKeywords())
         return buffer;
-    string keywordResult;
+    std::string keywordResult;
     int lastIndex = 0;
     contain->getLexemsRe().setLastIndex(0);
     FindResult fr = contain->getLexemsRe().exec(buffer.c_str(), buffer.length());
     while(fr.isValid()){
         keywordResult.append(buffer.substr(lastIndex, fr.start-lastIndex));
-        string keyword = buffer.substr(fr.start, fr.end-fr.start);
+        std::string keyword = buffer.substr(fr.start, fr.end-fr.start);
         int km = keywordMatch(keyword, contain);
         if(km!=Keywords::NotFound){
             keywordResult.append("<span class=\"")
@@ -218,23 +216,23 @@ string CodeSyntaxHighlighter::processKeywords(Contain *contain)
     return keywordResult + buffer.substr(lastIndex);
 }
 
-string CodeSyntaxHighlighter::processSubLanguage(Contain *top)
+std::string CodeSyntaxHighlighter::processSubLanguage(Contain *top)
 {
     CodeSyntaxHighlighter *subHighlighter = new CodeSyntaxHighlighter;
     LanguageManager *languageManager = LanguageManager::getInstance();
     Language* sub = languageManager->getLanguage(top->getSubLanguage());
     if(!sub)
         return escape(modeBuffer.c_str(), modeBuffer.length());
-    string r = "<span class=\""+top->getSubLanguage()+"\">";
+    std::string r = "<span class=\""+top->getSubLanguage()+"\">";
     r += subHighlighter->highlight(sub, modeBuffer.c_str(), modeBuffer.length());
     r += "</span>";
     delete subHighlighter;
     return r;
 }
 
-void CodeSyntaxHighlighter::processMatch(Contain *contain, const string &match)
+void CodeSyntaxHighlighter::processMatch(Contain *contain, const std::string &match)
 {
-    string markup;
+    std::string markup;
     if(contain->isShowClassName())
         markup.append("<span class=\"").append(contain->getRealName()).append("\">");
     if(contain->isReturnBegin()){
@@ -257,9 +255,9 @@ void CodeSyntaxHighlighter::processMatch(Contain *contain, const string &match)
     relevance += contain->getRelevance();
 }
 
-int CodeSyntaxHighlighter::keywordMatch(const string &match, Contain *contain)
+int CodeSyntaxHighlighter::keywordMatch(const std::string &match, Contain *contain)
 {
-    string matchStr(match);
+    std::string matchStr(match);
     if(!lan->isCaseSensitive()){//to lower case if not case sensitive
         for(unsigned int i=0;i<match.length(); i++){
             matchStr[i]=tolower(match[i]);
@@ -268,7 +266,7 @@ int CodeSyntaxHighlighter::keywordMatch(const string &match, Contain *contain)
     return (contain&&!contain->isRefLanguageKeywords()) ? contain->matchKeyword(matchStr) : lan->matchKeyword(matchStr);
 }
 
-Contain* CodeSyntaxHighlighter::findEndContain(Contain *contain, const string &match)
+Contain* CodeSyntaxHighlighter::findEndContain(Contain *contain, const std::string &match)
 {
     if(!contain)
         return NULL;
@@ -281,9 +279,9 @@ Contain* CodeSyntaxHighlighter::findEndContain(Contain *contain, const string &m
     return NULL;
 }
 
-string CodeSyntaxHighlighter::escape(const char* src, int len)
+std::string CodeSyntaxHighlighter::escape(const char* src, int len)
 {
-    string result;
+    std::string result;
     if(len==0)
         return result;
     result.resize(len*2);

@@ -3,18 +3,16 @@
 #include "hoedown/html.h"
 #include "hoedown/buffer.h"
 
-using namespace std;
-
 MarkdownToHtml::MarkdownToHtmlResult
 MarkdownToHtml::translateMarkdownExtraToHtml(MarkdownToHtml::MarkdownType type,
                                         const char *data,
-                                        const int length, string &outHtml)
+                                        const int length, std::string &outHtml)
 {
     return renderToHtml(type, data, length, outHtml, hoedown_html_renderer_new);
 }
 
 MarkdownToHtml::MarkdownToHtmlResult
-MarkdownToHtml::renderToHtml(MarkdownToHtml::MarkdownType type, const char *data, const int length, string &outHtml,
+MarkdownToHtml::renderToHtml(MarkdownToHtml::MarkdownType type, const char *data, const int length, std::string &outHtml,
                              hoedown_renderer* (*renderFunc)(hoedown_html_flags render_flags, int nesting_level))
 {
     if (length == 0) //length is 0, just return
@@ -85,7 +83,7 @@ hoedown_renderer *hoedown_html_toc_renderer_new_with_flags(hoedown_html_flags re
 
 MarkdownToHtml::MarkdownToHtmlResult
 MarkdownToHtml::renderMarkdownExtarToc(MarkdownType type, const char *data,
-                                       const int length, string &toc)
+                                       const int length, std::string &toc)
 {
     return renderToHtml(type, data, length, toc, hoedown_html_toc_renderer_new_with_flags);
 }

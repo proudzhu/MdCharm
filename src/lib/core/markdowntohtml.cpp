@@ -1,7 +1,5 @@
 #include "markdowntohtml.h"
 
-using namespace std;
-
 MarkdownToHtml::MarkdownToHtml()
 {
 }
@@ -15,8 +13,8 @@ MarkdownToHtml::MarkdownToHtml()
 *******************************************************************************/
 MarkdownToHtml::MarkdownToHtmlResult
 MarkdownToHtml::translateMarkdownToHtml(MarkdownToHtml::MarkdownType type,
-                                        const string &inMarkdown,
-                                        string &outHtml)
+                                        const std::string &inMarkdown,
+                                        std::string &outHtml)
 {
     return translateMarkdownToHtml(type, inMarkdown.c_str(), inMarkdown.length(), outHtml);
 }
@@ -24,7 +22,7 @@ MarkdownToHtml::translateMarkdownToHtml(MarkdownToHtml::MarkdownType type,
 MarkdownToHtml::MarkdownToHtmlResult
 MarkdownToHtml::translateMarkdownToHtml(MarkdownToHtml::MarkdownType type,
                                         const char *data,
-                                        const int length, string &outHtml)
+                                        const int length, std::string &outHtml)
 {
     if(type == MarkdownToHtml::Markdown || type == MarkdownToHtml::PHPMarkdownExtra){
         return translateMarkdownExtraToHtml(type, data, length, outHtml);

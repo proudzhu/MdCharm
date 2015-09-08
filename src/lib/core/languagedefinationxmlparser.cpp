@@ -5,7 +5,6 @@
 
 #include "languagedefinationxmlparser.h"
 
-using namespace std;
 using namespace rapidxml;
 //------------------------------ RegExp ----------------------------------------
 RegExp::RegExp()
@@ -14,7 +13,7 @@ RegExp::RegExp()
     lastIndex = 0;
 }
 
-bool RegExp::compile(const string &pattern, bool isCaseSensitive, bool isGlobal)
+bool RegExp::compile(const std::string &pattern, bool isCaseSensitive, bool isGlobal)
 {
     const char *error;
     int errorOffset;
@@ -80,13 +79,13 @@ RegExp::~RegExp()
 }
 
 //------------------------------- Keywords -------------------------------------
-Keywords::Keywords(KeywordsType t, const string &kw)
+Keywords::Keywords(KeywordsType t, const std::string &kw)
 {
     type = t;
     k = kw;
 }
 
-const string& Keywords::getKeyword()
+const std::string& Keywords::getKeyword()
 {
     return k;
 }
@@ -110,10 +109,10 @@ const char* Keywords::getKeyTypeString(int kt)
 }
 
 //---------------------------- HighlightUtli -----------------------------------
-string HighlighterUtil::joinKeywords(list<Keywords> keywords, char sep)
+std::string HighlighterUtil::joinKeywords(std::list<Keywords> keywords, char sep)
 {
-    string result;
-    for(list<Keywords>::iterator it=keywords.begin(); it!=keywords.end(); it++){
+    std::string result;
+    for(std::list<Keywords>::iterator it=keywords.begin(); it!=keywords.end(); it++){
         result.append((*it).getKeyword());
         result.push_back(sep);
     }
@@ -122,10 +121,10 @@ string HighlighterUtil::joinKeywords(list<Keywords> keywords, char sep)
     return result;
 }
 
-string HighlighterUtil::joinStrings(list<string> sl, char sep)
+std::string HighlighterUtil::joinStrings(std::list<std::string> sl, char sep)
 {
-    string result;
-    for(list<string>::iterator it=sl.begin(); it!=sl.end(); it++){
+    std::string result;
+    for(std::list<std::string>::iterator it=sl.begin(); it!=sl.end(); it++){
 //        if(it->empty())
 //            continue;
         result.append((*it));
@@ -220,12 +219,12 @@ void Contain::setSubLanugage(const char * subLanguage)
     this->subLanguage = subLanguage;
 }
 
-const string Contain::getSubLanguage()
+const std::string Contain::getSubLanguage()
 {
     return subLanguage;
 }
 
-void Contain::setName(const string &name)
+void Contain::setName(const std::string &name)
 {
     this->name = name;
 }
@@ -241,7 +240,7 @@ std::string Contain::getRealName()
     return name.substr(0, name.find_first_of('|'));
 }
 
-void Contain::setBegin(const string &begin)
+void Contain::setBegin(const std::string &begin)
 {
     if(begin.empty()) //TODO: patch for xml whitespace, try find a more better method
         this->begin.push_back(' ');
@@ -249,14 +248,14 @@ void Contain::setBegin(const string &begin)
         this->begin = begin;
 }
 
-const string Contain::getBegin()
+const std::string Contain::getBegin()
 {
     if(!beginWithKeyword)
         return begin;
     return "\\b("+HighlighterUtil::joinKeywords(keywords, '|')+")\\s";
 }
 
-void Contain::setEnd(const string &end)
+void Contain::setEnd(const std::string &end)
 {
     if(end.empty())//TODO: same with setBegin()
         this->end.push_back(' ');
@@ -264,22 +263,22 @@ void Contain::setEnd(const string &end)
         this->end = end;
 }
 
-const string& Contain::getEnd()
+const std::string& Contain::getEnd()
 {
     return end;
 }
 
-void Contain::setLexems(const string &lexems)
+void Contain::setLexems(const std::string &lexems)
 {
     this->lexems = lexems;
 }
 
-void Contain::setIllegal(const string &illegal)
+void Contain::setIllegal(const std::string &illegal)
 {
     this->illegal = illegal;
 }
 
-void Contain::addKeyword(Keywords::KeywordsType kt, const string &keyword)
+void Contain::addKeyword(Keywords::KeywordsType kt, const std::string &keyword)
 {
     keywords.push_back(Keywords(kt, keyword));
 }
@@ -318,14 +317,14 @@ void Contain::compile(Language *lan)
         illegalRe.compile(illegal, lan->isCaseSensitive());
     //TODO: starts
 
-    list<string> terminators;
-    for(list<Contain *>::iterator it=refContains.begin(); it!=refContains.end(); it++){
+    std::list<std::string> terminators;
+    for(std::list<Contain *>::iterator it=refContains.begin(); it!=refContains.end(); it++){
         Contain *contain = *it;
         terminators.push_back(contain->getBegin());
     }
     if(refLanguageContains){
-        list<Contain *>& lanContains = lan->getContains();
-        for(list<Contain *>::iterator it=lanContains.begin(); it!=lanContains.end(); it++){
+        std::list<Contain *>& lanContains = lan->getContains();
+        for(std::list<Contain *>::iterator it=lanContains.begin(); it!=lanContains.end(); it++){
             Contain *contain = *it;
             if(!contain->isRef()){
                 terminators.push_front(contain->getBegin());
@@ -341,11 +340,11 @@ void Contain::compile(Language *lan)
         terminatorsRe.compile(HighlighterUtil::joinStrings(terminators, '|'), true, true);
 }
 
-Contain* Contain::findMatchedContain(const string &match)
+Contain* Contain::findMatchedContain(const std::string &match)
 {
     if(parent && parent->getStarts() && parent->getStarts()==this)
         return NULL;
-    for(list<Contain *>::iterator it=refContains.begin(); it!=refContains.end(); it++){
+    for(std::list<Contain *>::iterator it=refContains.begin(); it!=refContains.end(); it++){
         Contain *contain = *it;
         if(contain->getBeginRe().isValid()){
             FindResult fr = contain->getBeginRe().exec(match.c_str(), match.length());
@@ -398,7 +397,7 @@ Contain* Contain::getParent()
     return parent;
 }
 
-const string& Contain::getTerminatorEnd()
+const std::string& Contain::getTerminatorEnd()
 {
     return terminatorEnd;
 }
@@ -442,9 +441,9 @@ const std::list<Keywords>& Contain::getKeywords()
     return keywords;
 }
 
-int Contain::matchKeyword(const string &k)
+int Contain::matchKeyword(const std::string &k)
 {
-    for(list<Keywords>::iterator it=keywords.begin(); it!=keywords.end(); it++){
+    for(std::list<Keywords>::iterator it=keywords.begin(); it!=keywords.end(); it++){
         if(it->getKeyword()==k)
             return it->getType();
     }
@@ -483,37 +482,37 @@ Language::Language()
     caseSensitive = true;
 }
 
-void Language::addKeyword(Keywords::KeywordsType kt, const string &keyword)
+void Language::addKeyword(Keywords::KeywordsType kt, const std::string &keyword)
 {
     keywords.push_back(Keywords(kt, keyword));
 }
 
-void Language::addLiteral(const string &literal)
+void Language::addLiteral(const std::string &literal)
 {
     keywords.push_back(Keywords(Keywords::Literal, literal));
 }
 
-void Language::addConstant(const string &constant)
+void Language::addConstant(const std::string &constant)
 {
     keywords.push_back(Keywords(Keywords::Constant, constant));
 }
 
-void Language::addType(const string &type)
+void Language::addType(const std::string &type)
 {
     keywords.push_back(Keywords(Keywords::Type, type));
 }
 
-void Language::addCommand(const string &command)
+void Language::addCommand(const std::string &command)
 {
     keywords.push_back(Keywords(Keywords::Command, command));
 }
 
-void Language::addProperty(const string &property)
+void Language::addProperty(const std::string &property)
 {
     keywords.push_back(Keywords(Keywords::Property, property));
 }
 
-void Language::addBuiltIn(const string &builtIn)
+void Language::addBuiltIn(const std::string &builtIn)
 {
     keywords.push_back(Keywords(Keywords::BuiltIn, builtIn));
 }
@@ -533,34 +532,34 @@ bool Language::isCaseSensitive()
     return caseSensitive;
 }
 
-void Language::setName(const string &name)
+void Language::setName(const std::string &name)
 {
     this->name = name;
 }
 
-void Language::setIllegal(const string &illegal)
+void Language::setIllegal(const std::string &illegal)
 {
     this->illegal = illegal;
 }
 
-void Language::setLexems(const string &lexems)
+void Language::setLexems(const std::string &lexems)
 {
     this->lexems = lexems;
 }
 
-const string& Language::getLexems()
+const std::string& Language::getLexems()
 {
     return lexems;
 }
 
-const list<Keywords>& Language::getKeywords()
+const std::list<Keywords>& Language::getKeywords()
 {
     return keywords;
 }
 
-int Language::matchKeyword(const string &k)
+int Language::matchKeyword(const std::string &k)
 {
-    for(list<Keywords>::iterator it=keywords.begin(); it!=keywords.end(); it++){
+    for(std::list<Keywords>::iterator it=keywords.begin(); it!=keywords.end(); it++){
         if(it->getKeyword()==k)
             return it->getType();
     }
@@ -569,16 +568,16 @@ int Language::matchKeyword(const string &k)
 
 Contain *Language::findRefContain(const char *name)
 {
-    for(list<Contain *>::iterator it=contains.begin(); it!=contains.end(); it++){
+    for(std::list<Contain *>::iterator it=contains.begin(); it!=contains.end(); it++){
         if(0==strcmp((*it)->getName(), name))
             return *it;
     }
     return NULL;
 }
 
-Contain *Language::findMatchedContain(const string &match)
+Contain *Language::findMatchedContain(const std::string &match)
 {
-    for(list<Contain *>::reverse_iterator it=contains.rbegin(); it!=contains.rend(); it++){
+    for(std::list<Contain *>::reverse_iterator it=contains.rbegin(); it!=contains.rend(); it++){
         Contain *contain = *it;
         if(contain->getBeginRe().isValid() && !contain->isRef()){
             FindResult fr = contain->getBeginRe().exec(match.c_str(), match.length());
@@ -593,7 +592,7 @@ void Language::printDebugInfo()
 {
     printf("-----------------------Debug Info------------------------------\n");
     printf("keywords number: %d\n", keywords.size());
-    for(list<Contain *>::iterator it=contains.begin(); it!=contains.end(); it++){
+    for(std::list<Contain *>::iterator it=contains.begin(); it!=contains.end(); it++){
         printf("name: %s\n", (*it)->getName());
     }
 }
@@ -616,8 +615,8 @@ void Language::compileLanguage()
         }
     }
     //start compile
-    list<string> terminators;
-    for(list<Contain *>::iterator it=contains.begin(); it!=contains.end(); it++){
+    std::list<std::string> terminators;
+    for(std::list<Contain *>::iterator it=contains.begin(); it!=contains.end(); it++){
         Contain *contain = *it;
         contain->compile(this);
         if(!contain->isRef())
@@ -641,7 +640,7 @@ RegExp& Language::getLexemsRe()
     return lexemsRe;
 }
 
-list<Contain *>& Language::getContains()
+std::list<Contain *>& Language::getContains()
 {
     return contains;
 }
@@ -649,7 +648,7 @@ list<Contain *>& Language::getContains()
 Language::~Language()
 {
     //free contains
-    for(list<Contain *>::iterator it= contains.begin(); it != contains.end(); it++){
+    for(std::list<Contain *>::iterator it= contains.begin(); it != contains.end(); it++){
         delete *it;
     }
 }
