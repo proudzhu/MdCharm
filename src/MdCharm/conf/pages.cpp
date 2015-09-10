@@ -348,8 +348,7 @@ void TextEditorPage::saveConfig()
 
 int TextEditorPage::getFontSizeIndex(const int size)
 {
-    QList<int> fontSizeList;
-    fontSizeList << 6 << 7 << 8 << 9 << 10 << 11 << 12 << 14 << 16 << 18 << 20 << 22 << 24 << 26 << 28 << 36 << 48 << 72;
+    QList<int> fontSizeList{6, 7, 8, 9, 10, 11, 12, 14, 16, 18, 20, 22, 24, 26, 28, 36, 48, 72};
     for( int i=0; i < fontSizeList.size(); i++)
     {
         if (fontSizeList.at(i) == size)
