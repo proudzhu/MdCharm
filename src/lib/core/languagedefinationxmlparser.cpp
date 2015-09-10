@@ -112,8 +112,8 @@ const char* Keywords::getKeyTypeString(int kt)
 std::string HighlighterUtil::joinKeywords(std::list<Keywords> keywords, char sep)
 {
     std::string result;
-    for(std::list<Keywords>::iterator it=keywords.begin(); it!=keywords.end(); it++){
-        result.append((*it).getKeyword());
+    for (auto key : keywords) {
+        result.append(key.getKeyword());
         result.push_back(sep);
     }
     result.erase(result.length()-1, 1);
@@ -124,10 +124,10 @@ std::string HighlighterUtil::joinKeywords(std::list<Keywords> keywords, char sep
 std::string HighlighterUtil::joinStrings(std::list<std::string> sl, char sep)
 {
     std::string result;
-    for(std::list<std::string>::iterator it=sl.begin(); it!=sl.end(); it++){
-//        if(it->empty())
-//            continue;
-        result.append((*it));
+    for (auto s : sl) {
+//      if (s.empty())
+//          continue;
+        result.append(s);
         result.push_back(sep);
     }
     result.erase(result.length()-1, 1);
@@ -318,14 +318,12 @@ void Contain::compile(Language *lan)
     //TODO: starts
 
     std::list<std::string> terminators;
-    for(std::list<Contain *>::iterator it=refContains.begin(); it!=refContains.end(); it++){
-        Contain *contain = *it;
+    for (auto contain : refContains) {
         terminators.push_back(contain->getBegin());
     }
     if(refLanguageContains){
         std::list<Contain *>& lanContains = lan->getContains();
-        for(std::list<Contain *>::iterator it=lanContains.begin(); it!=lanContains.end(); it++){
-            Contain *contain = *it;
+        for (auto contain : lanContains) {
             if(!contain->isRef()){
                 terminators.push_front(contain->getBegin());
             }
@@ -344,8 +342,7 @@ Contain* Contain::findMatchedContain(const std::string &match)
 {
     if(parent && parent->getStarts() && parent->getStarts()==this)
         return NULL;
-    for(std::list<Contain *>::iterator it=refContains.begin(); it!=refContains.end(); it++){
-        Contain *contain = *it;
+    for (auto contain : refContains) {
         if(contain->getBeginRe().isValid()){
             FindResult fr = contain->getBeginRe().exec(match.c_str(), match.length());
             if(fr.isValid())
@@ -443,9 +440,9 @@ const std::list<Keywords>& Contain::getKeywords()
 
 int Contain::matchKeyword(const std::string &k)
 {
-    for(std::list<Keywords>::iterator it=keywords.begin(); it!=keywords.end(); it++){
-        if(it->getKeyword()==k)
-            return it->getType();
+    for (auto key : keywords) {
+        if(key.getKeyword()==k)
+            return key.getType();
     }
     return Keywords::NotFound;
 }
@@ -559,18 +556,18 @@ const std::list<Keywords>& Language::getKeywords()
 
 int Language::matchKeyword(const std::string &k)
 {
-    for(std::list<Keywords>::iterator it=keywords.begin(); it!=keywords.end(); it++){
-        if(it->getKeyword()==k)
-            return it->getType();
+    for (auto key : keywords) {
+        if(key.getKeyword()==k)
+            return key.getType();
     }
     return Keywords::NotFound;
 }
 
 Contain *Language::findRefContain(const char *name)
 {
-    for(std::list<Contain *>::iterator it=contains.begin(); it!=contains.end(); it++){
-        if(0==strcmp((*it)->getName(), name))
-            return *it;
+    for (auto contain : contains) {
+        if(0==strcmp(contain->getName(), name))
+            return contain;
     }
     return NULL;
 }
@@ -592,8 +589,8 @@ void Language::printDebugInfo()
 {
     printf("-----------------------Debug Info------------------------------\n");
     printf("keywords number: %d\n", keywords.size());
-    for(std::list<Contain *>::iterator it=contains.begin(); it!=contains.end(); it++){
-        printf("name: %s\n", (*it)->getName());
+    for (auto contain : contains) {
+        printf("name: %s\n", contain->getName());
     }
 }
 
@@ -616,8 +613,7 @@ void Language::compileLanguage()
     }
     //start compile
     std::list<std::string> terminators;
-    for(std::list<Contain *>::iterator it=contains.begin(); it!=contains.end(); it++){
-        Contain *contain = *it;
+    for (auto contain : contains) {
         contain->compile(this);
         if(!contain->isRef())
             terminators.push_front(contain->getBegin());
@@ -648,8 +644,8 @@ std::list<Contain *>& Language::getContains()
 Language::~Language()
 {
     //free contains
-    for(std::list<Contain *>::iterator it= contains.begin(); it != contains.end(); it++){
-        delete *it;
+    for (auto contain : contains) {
+        delete contain;
     }
 }
 //---------------------------- LanguageDefinationXmlParser ---------------------

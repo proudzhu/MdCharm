@@ -582,8 +582,7 @@ void BaseEditor::spellCheckAux(const QTextBlock &block)
     QTextCharFormat spellErrorCharFormat;
     spellErrorCharFormat.setUnderlineStyle(QTextCharFormat::WaveUnderline);
     spellErrorCharFormat.setUnderlineColor(Qt::darkRed);
-    for(int i=0; i<resultList.length(); i++){
-        SpellCheckResult result = resultList.at(i);
+    for (auto result : resultList) {
         QTextCursor errorCursor(block);
         errorCursor.setPosition(block.position()+result.start);
         errorCursor.movePosition(QTextCursor::Right, QTextCursor::KeepAnchor, result.end-result.start);//select wrong words

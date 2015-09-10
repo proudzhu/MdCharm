@@ -9,9 +9,8 @@ LanguageManager::LanguageManager()
 
 LanguageManager::~LanguageManager()
 {
-    for(std::map<std::string, Language *>::iterator it = languages.begin(); it!=languages.end(); it++){
-        delete (*it).second;
-    }
+    for (auto lang : languages)
+        delete lang.second;
 }
 
 void LanguageManager::addLanguage(const std::string &name, char *content)
@@ -32,7 +31,7 @@ Language* LanguageManager::getLanguage(const std::string &name)
         realLan = "xml";
     else if(name=="js")
         realLan = "javascript";
-    std::map<std::string, Language *>::iterator it = languages.find(realLan);
+    auto it = languages.find(realLan);
     if(it==languages.end())
         return NULL;
     return (*it).second;
