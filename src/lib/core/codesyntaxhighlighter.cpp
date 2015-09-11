@@ -258,9 +258,7 @@ int CodeSyntaxHighlighter::keywordMatch(const std::string &match, Contain *conta
 {
     std::string matchStr(match);
     if(!lan->isCaseSensitive()){//to lower case if not case sensitive
-        for(unsigned int i=0;i<match.length(); i++){
-            matchStr[i]=tolower(match[i]);
-        }
+        std::transform(matchStr.begin(), matchStr.end(), matchStr.begin(), ::tolower);
     }
     return (contain&&!contain->isRefLanguageKeywords()) ? contain->matchKeyword(matchStr) : lan->matchKeyword(matchStr);
 }
