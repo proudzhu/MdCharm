@@ -16,7 +16,7 @@ ExportDirectoryDialog::ExportDirectoryDialog(QWidget *parent, const QString &dir
     ui(std::make_shared<Ui::ExportDirectoryDialog>())
 {
     ui->setupUi(this);
-    webView = new QWebView;
+    webView = new QWebEngineView;
     timer = new QTimer(this);
     timer->setSingleShot(true);
     if(!dirPath.isEmpty()){
@@ -207,7 +207,8 @@ void ExportDirectoryDialog::loadFinish()
     printer.setOutputFormat(QPrinter::PdfFormat);
     printer.setOutputFileName(pdfOutputFilPath);
     printer.setCreator("MdCharm (http://www.mdcharm.com/)");
-    webView->print(&printer);
+    //TODO: Not available in qtwebengine
+    //webView->print(&printer);
     pdfOutputFilPath.clear();
     emit exportNext();
 }

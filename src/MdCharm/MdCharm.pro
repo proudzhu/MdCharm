@@ -1,6 +1,6 @@
 TEMPLATE = app
 
-QT += core gui webkit network widgets webkitwidgets printsupport
+QT += core gui network widgets webenginewidgets printsupport
 
 CONFIG(debug, debug|release){ #debug
     DEFINES += MDCHARM_DEBUG

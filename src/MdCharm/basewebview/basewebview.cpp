@@ -1,6 +1,6 @@
 #include <QContextMenuEvent>
 #include <QMenu>
-#include <QtWebKit>
+#include <QtWebEngineWidgets>
 #include <QApplication>
 #include <QClipboard>
 #include <QPrinter>
@@ -11,7 +11,7 @@
 #include "resource.h"
 
 BaseWebView::BaseWebView(QWidget *parent) :
-    QWebView(parent)
+    QWebEngineView(parent)
 {
 }
 
@@ -36,13 +36,15 @@ void BaseWebView::contextMenuEvent(QContextMenuEvent *e)
         QPrinter webViewPrinter(QPrinter::HighResolution);
         QPrintDialog printDialog(&webViewPrinter, this);
         printDialog.setWindowTitle(tr("Print..."));
-        if(printDialog.exec()==QDialog::Accepted)
-            print(&webViewPrinter);
+        //TODO: Not available in qtwebengine
+        //if(printDialog.exec()==QDialog::Accepted)
+        //    print(&webViewPrinter);
     } else if(action==printPreviewAction){
         QPrinter printer(QPrinter::HighResolution);
         QPrintPreviewDialog ppd(&printer, this, Qt::WindowMaximizeButtonHint);
         ppd.setWindowTitle(tr("Print Preview..."));
-        connect(&ppd, SIGNAL(paintRequested(QPrinter*)), this, SLOT(print(QPrinter*)));
+        //TODO: Not available in qtwebengine
+        //connect(&ppd, SIGNAL(paintRequested(QPrinter*)), this, SLOT(print(QPrinter*)));
         ppd.showMaximized();
         ppd.exec();
     }

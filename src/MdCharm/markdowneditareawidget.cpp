@@ -1,5 +1,5 @@
 #include <QPlainTextEdit>
-#include <QtWebKitWidgets>
+#include <QtWebEngineWidgets>
 #include <QSplitter>
 #include <QResizeEvent>
 #include <QTextStream>
@@ -8,7 +8,6 @@
 #include <QTextDocument>
 #include <QDir>
 #include <QtGui>
-#include <QWebElement>
 
 #include "markdowneditareawidget.h"
 #include "markdowntohtml.h"
@@ -70,13 +69,14 @@ MarkdownEditAreaWidget::MarkdownEditAreaWidget(MdCharmForm *mainForm, const QStr
 
 void MarkdownEditAreaWidget::initPreviewerMatter()
 {
-    connect(previewer, SIGNAL(linkClicked(QUrl)),
+    connect(previewer, SIGNAL(linkChanged(QUrl)),
             this, SLOT(openUrl(QUrl)));
     markdownWebkitHandler = new MarkdownWebkitHandler();
     addJavascriptObject();//warning:add before setHtml!!!!!!!!!!!!!!!!!!!!!!!!!!
-    QObject::connect(previewer->page()->mainFrame(),SIGNAL(javaScriptWindowObjectCleared()),
-                     this, SLOT(addJavascriptObject()));
-    QObject::connect(previewer->page(), SIGNAL(linkHovered(QString,QString,QString)),
+    //TODO:
+    //QObject::connect(previewer->page(), SIGNAL(javaScriptWindowObjectCleared()),
+    //                 this, SLOT(addJavascriptObject()));
+    QObject::connect(previewer->page(), SIGNAL(linkHovered(QString)),
                      this, SIGNAL(showStatusMessage(QString)));
     initHtmlEngine();
 }
@@ -96,7 +96,8 @@ void MarkdownEditAreaWidget::initHtmlEngine()
 
     previewer->setHtml(htmlContent.arg(conf->getMarkdownCSS())
                        .arg("<script type=\"text/javascript\" src=\"qrc:/jquery.js\"></script>")
-                       .arg("<script type=\"text/javascript\" src=\"qrc:/markdown/markdown.js\"></script>")
+                       //.arg("<script type=\"text/javascript\" src=\"qrc:/markdown/markdown.js\"></script>")
+                       .arg("")
                        .arg(QString::fromUtf8(textResult.c_str(), textResult.length())),
                        baseUrl);
 }
@@ -127,7 +128,8 @@ void MarkdownEditAreaWidget::initGui()
 
 void MarkdownEditAreaWidget::initConfiguration()
 {
-    previewer->page()->setLinkDelegationPolicy(QWebPage::DelegateAllLinks);//make qwebkit not load the link
+    //TODO: No easy way to delegate links
+    //previewer->page()->setLinkDelegationPolicy(QWebEnginePage::DelegateAllLinks);//make qwebkit not load the link
 
     if (conf->isDisplayLineNumber())
         editor->enableDisplayLineNumber();
@@ -255,7 +257,9 @@ void MarkdownEditAreaWidget::parseMarkdown()
 //        return;
 //    lastRevision = editor->document()->revision();
     std::string textResult = convertMarkdownToHtml();
-    previewer->page()->mainFrame()->findFirstElement("body").setInnerXml(QString::fromUtf8(textResult.c_str(), textResult.length()));
+
+    //TODO: No api to support extracting DOM elements.
+    //previewer->page()->findFirstElement("body").setInnerXml(QString::fromUtf8(textResult.c_str(), textResult.length()));
 }
 
 void MarkdownEditAreaWidget::reFind()
@@ -265,8 +269,7 @@ void MarkdownEditAreaWidget::reFind()
 
 void MarkdownEditAreaWidget::addJavascriptObject()
 {
-    previewer->page()->mainFrame()
-            ->addToJavaScriptWindowObject("markdownWebkitHandler", markdownWebkitHandler);
+    // previewer->page()->addToJavaScriptWindowObject("markdownWebkitHandler", markdownWebkitHandler);
 }
 
 void MarkdownEditAreaWidget::setText(const QString &text)
@@ -301,7 +304,8 @@ void MarkdownEditAreaWidget::exportToPdf(const QString &filePath)
     printer.setOutputFormat(QPrinter::PdfFormat);
     printer.setOutputFileName(filePath);
     printer.setCreator("MdCharm(http://www.mdcharm.com/)");
-    previewer->print(&printer);
+    //TODO: No api for printing the web page.
+    //previewer->print(&printer);
 }
 
 void MarkdownEditAreaWidget::exportToODT(const QString &filePath)
@@ -579,7 +583,8 @@ void MarkdownEditAreaWidget::undo()
 
 void MarkdownEditAreaWidget::updateConfiguration()
 {
-    previewer->page()->setLinkDelegationPolicy(QWebPage::DelegateExternalLinks);//make qwebkit not load the link
+    //TODO: No easy way to delegate links
+    //previewer->page()->setLinkDelegationPolicy(QWebEnginePage::DelegateExternalLinks);//make qwebkit not load the link
 
     if (conf->isDisplayLineNumber())
         editor->enableDisplayLineNumber();
@@ -747,25 +752,28 @@ void MarkdownEditAreaWidget::findPrevious()
 void MarkdownEditAreaWidget::scrollPreviewTo(int value)//Vertical scrollbar visible=true
 {
     float maxEdit = editorScrollBar->maximum();
-    int previewMax = previewer->page()->mainFrame()->scrollBarMaximum(Qt::Vertical);
-    previewer->page()->mainFrame()->setScrollBarValue(Qt::Vertical, value/maxEdit*previewMax);
+    //TODO:
+    //int previewMax = previewer->page()->scrollBarMaximum(Qt::Vertical);
+    //previewer->page()->setScrollBarValue(Qt::Vertical, value/maxEdit*previewMax);
 }
 
 void MarkdownEditAreaWidget::scrollPreviewTo()//Vertical scrollbar visible=false
 {
     int blockCount = editor->blockCount();
     int curBlock = editor->textCursor().blockNumber()+1;//FIXME: crashrpt 60e48fe9-6bfc-43cd-afac-002f89817ead
-    int previewMax = previewer->page()->mainFrame()->scrollBarMaximum(Qt::Vertical);
-    if(!editorScrollBar->isVisible() || blockCount==curBlock)
-        previewer->page()->mainFrame()->setScrollBarValue(Qt::Vertical, curBlock/blockCount*previewMax);
+    //TODO:
+    //int previewMax = previewer->page()->scrollBarMaximum(Qt::Vertical);
+    //if(!editorScrollBar->isVisible() || blockCount==curBlock)
+    //    previewer->page()->setScrollBarValue(Qt::Vertical, curBlock/blockCount*previewMax);
 
 }
 
 void MarkdownEditAreaWidget::openUrl(const QUrl &url)
 {
     if(url.toString(QUrl::RemoveQuery|QUrl::RemoveFragment)==previewer->url().toString(QUrl::RemoveQuery|QUrl::RemoveFragment)){
-        if(!url.fragment().isEmpty())
-            previewer->page()->mainFrame()->scrollToAnchor(url.fragment());
+        //TODO:
+        //if(!url.fragment().isEmpty())
+        //    previewer->page()->scrollToAnchor(url.fragment());
         return;
     }
     QDesktopServices::openUrl(url);
@@ -791,7 +799,8 @@ std::string MarkdownEditAreaWidget::convertMarkdownToHtml()
 
 void MarkdownEditAreaWidget::jumpToPreviewAnchor(const QString &anchor)
 {
-    previewer->page()->currentFrame()->scrollToAnchor(anchor);
+    //TODO:
+    //previewer->page()->scrollToAnchor(anchor);
 }
 
 //-------------------------------- Clone ---------------------------------------

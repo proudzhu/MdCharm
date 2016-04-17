@@ -1,7 +1,6 @@
 #include <QtGui>
 #include <QtCore>
-#include <QtWebKit>
-#include <QtWebKitWidgets>
+#include <QtWebEngineWidgets>
 
 #include <cassert>
 
@@ -42,7 +41,8 @@ BrowerEditAreaWidget::BrowerEditAreaWidget(const QString &filePath) :
     webkitHandler = new BrowerWebkitHandler;
     brower = new BaseWebView(this);
     brower->setAcceptDrops(false);
-    brower->page()->setLinkDelegationPolicy(QWebPage::DelegateAllLinks);
+    //TODO: No easy way to delegate links
+    //brower->page()->setLinkDelegationPolicy(QWebPage::DelegateAllLinks);
     addJavascriptObject();
 
     initSignalsAndSlots();
@@ -72,9 +72,9 @@ void BrowerEditAreaWidget::initContent(const QString &filePath)
 
 void BrowerEditAreaWidget::initSignalsAndSlots()
 {
-    connect(brower, SIGNAL(linkClicked(QUrl)),
+    connect(brower, SIGNAL(linkChanged(QUrl)),
             this, SLOT(openLinkOutside(QUrl)));
-    connect(brower->page()->mainFrame(), SIGNAL(javaScriptWindowObjectCleared()),
+    connect(brower->page(), SIGNAL(javaScriptWindowObjectCleared()),
             this, SLOT(addJavascriptObject()));
 }
 
@@ -123,8 +123,8 @@ bool BrowerEditAreaWidget::isRedoAvailable(){ return false; }
 
 void BrowerEditAreaWidget::addJavascriptObject()
 {
-    brower->page()->mainFrame()
-            ->addToJavaScriptWindowObject("browerWebkitHandler", webkitHandler);
+    //TODO:
+    //brower->page()->addToJavaScriptWindowObject("browerWebkitHandler", webkitHandler);
 }
 
 void BrowerEditAreaWidget::openLinkOutside(const QUrl &url)

@@ -1,9 +1,9 @@
 #ifndef BASEWEBVIEW_H
 #define BASEWEBVIEW_H
 
-#include <QWebView>
+#include <QWebEngineView>
 
-class BaseWebView : public QWebView
+class BaseWebView : public QWebEngineView
 {
     Q_OBJECT
 public:

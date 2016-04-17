@@ -7,8 +7,7 @@
 #include "configuration.h"
 #include "util/updatetocthread.h"
 
-#include <QtWebKit>
-#include <QWebFrame>
+#include <QtWebEngineWidgets>
 
 TOCDockWidget::TOCDockWidget(QWidget *parent) :
     QDockWidget(parent),
@@ -16,7 +15,8 @@ TOCDockWidget::TOCDockWidget(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    ui->webView->page()->setLinkDelegationPolicy(QWebPage::DelegateAllLinks);
+    //TODO: No easy way to delegate links
+    //ui->webView->page()->setLinkDelegationPolicy(QWebPage::DelegateAllLinks);
 
     thread = new UpdateTocThread(this);
 
@@ -31,7 +31,7 @@ TOCDockWidget::TOCDockWidget(QWidget *parent) :
     connect(this, SIGNAL(visibilityChanged(bool)), this, SLOT(visibleChange(bool)));
     connect(thread, SIGNAL(finished()), this, SLOT(workerFinished()));
     connect(thread, SIGNAL(workerResult(QString)), this, SLOT(updateTocContent(QString)));
-    connect(ui->webView, SIGNAL(linkClicked(QUrl)), this, SIGNAL(anchorClicked(QUrl)));
+    connect(ui->webView->page(), SIGNAL(linkChanged(QUrl)), this, SIGNAL(anchorClicked(QUrl)));
 }
 
 void TOCDockWidget::visibleChange(bool b)
@@ -77,5 +77,6 @@ void TOCDockWidget::updateToc(MarkdownToHtml::MarkdownType type, const QString &
 
 void TOCDockWidget::updateTocContent(const QString &result)
 {
-    ui->webView->page()->currentFrame()->findFirstElement("body").setInnerXml(result);
+    //TODO: Not available in qtwebengine
+    //ui->webView->page()->findFirstElement("body").setInnerXml(result);
 }
