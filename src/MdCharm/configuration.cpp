@@ -818,21 +818,15 @@ MarkdownToHtml::MarkdownType Configuration::getMarkdownEngineType() const
         int type = var.toInt();
         switch(type)
         {
-            case MarkdownToHtml::PHPMarkdownExtra:
-                return MarkdownToHtml::PHPMarkdownExtra;
-                break;
-            case MarkdownToHtml::MultiMarkdown:
-                return MarkdownToHtml::MultiMarkdown;
-                break;
             case MarkdownToHtml::CommonMark:
                 return  MarkdownToHtml::CommonMark;
                 break;
             default:
-                return MarkdownToHtml::Markdown;
+                return MarkdownToHtml::CommonMark;
                 break;
         }
     } else {
-        return MarkdownToHtml::Markdown;
+        return MarkdownToHtml::CommonMark;
     }
 }
 

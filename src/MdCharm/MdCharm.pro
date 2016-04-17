@@ -6,14 +6,14 @@ CONFIG(debug, debug|release){ #debug
     DEFINES += MDCHARM_DEBUG
     TARGET = MdCharm_d
     DESTDIR = ../debug/
-    LIBS += -L../debug -lcore -lcmark -lhoedown -lmultimarkdown
+    LIBS += -L../debug -lcore -lcmark
 } else { #release
     DEFINES += NDEBUG
     DEFINES += QT_NO_DEBUG_OUTPUT
     TARGET = MdCharm
     unix:TARGET = mdcharm
     DESTDIR = ../release/
-    LIBS += -L../release -lcore -lcmark -lhoedown -lmultimarkdown
+    LIBS += -L../release -lcore -lcmark
 }
 
 unix: {

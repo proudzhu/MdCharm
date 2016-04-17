@@ -29,11 +29,7 @@ EnvironmentPage::EnvironmentPage(QWidget *parent) :
         QStringList extsList = exts.split("|");
         ui->extensionListWidget->addItems(extsList);
     }
-    ui->markdownEngineComboBox->addItem(tr("Default"), MarkdownToHtml::Markdown);
-    ui->markdownEngineComboBox->addItem(tr("PHPMarkdownExtra"), MarkdownToHtml::PHPMarkdownExtra);
-    ui->markdownEngineComboBox->addItem(tr("MultiMarkdown"), MarkdownToHtml::MultiMarkdown);
     ui->markdownEngineComboBox->addItem(tr("CommonMark"), MarkdownToHtml::CommonMark);
-    //ui->markdownEngineComboBox->setCurrentIndex(conf->getMarkdownEngineType()==MarkdownToHtml::PHPMarkdownExtra ? 0 : 1);
     ui->markdownEngineComboBox->setCurrentIndex(conf->getMarkdownEngineType());
 
     initKeyboardData();
@@ -58,17 +54,11 @@ void EnvironmentPage::saveConfig()
     int index = ui->markdownEngineComboBox->currentIndex();
     int type = ui->markdownEngineComboBox->itemData(index).toInt();
     switch (type) {
-        case MarkdownToHtml::PHPMarkdownExtra:
-            conf->setMarkdownEngineType(MarkdownToHtml::PHPMarkdownExtra);
-            break;
-        case MarkdownToHtml::MultiMarkdown:
-            conf->setMarkdownEngineType(MarkdownToHtml::MultiMarkdown);
-            break;
         case MarkdownToHtml::CommonMark:
             conf->setMarkdownEngineType(MarkdownToHtml::CommonMark);
             break;
         default:
-            conf->setMarkdownEngineType(MarkdownToHtml::Markdown);
+            conf->setMarkdownEngineType(MarkdownToHtml::CommonMark);
             break;
     }
 

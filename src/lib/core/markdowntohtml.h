@@ -6,8 +6,6 @@
 #include <cstdlib>
 #include <cstring>
 #include <string>
-#include "hoedown/document.h"
-#include "hoedown/html.h"
 
 #ifdef MARKDOWN_LIB
     #define DECLSPEC __declspec(dllexport)
@@ -28,9 +26,6 @@ public:
     };
 
     enum MarkdownType {
-        Markdown,
-        PHPMarkdownExtra,
-        MultiMarkdown,
         CommonMark
     };
 
@@ -42,24 +37,9 @@ public:
     static MarkdownToHtmlResult translateMarkdownToHtml(MarkdownType type,
                                         const char* data,
                                         const int length, std::string &outHtml);
-    static MarkdownToHtmlResult translateMarkdownExtraToHtml(MarkdownType type,
-                                        const char* data,
-                                        const int length, std::string &outHtml);
-    static MarkdownToHtmlResult translateMultiMarkdownToHtml(MarkdownType type,
-                                        const char* data,
-                                        const int length, std::string &outHtml);
     static MarkdownToHtmlResult translateCommonMarkToHtml(MarkdownType type,
                                         const char* data,
                                         const int length, std::string &outHtml);
-    static MarkdownToHtmlResult renderMarkdownExtarToc(MarkdownType type,
-                                                       const char* data,
-                                                       const int length, std::string &toc);
-
-    static MarkdownToHtmlResult renderToHtml(MarkdownType type,
-                                             const char *data,
-                                             const int length,
-                                             std::string &outHtml,
-                                             hoedown_renderer* (*renderFunc)(hoedown_html_flags render_flags, int nesting_level));
 };
 
 #endif // MARKDOWNTOHTML_H

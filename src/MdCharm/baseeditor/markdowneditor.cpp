@@ -321,44 +321,10 @@ void MarkdownEditor::insertLinkOrPicuture(int type, const QString &text,
     cursor.beginEditBlock();
     cursor.clearSelection();
 
-    // TODO: CommonMark, Markdown and PHPMarkdownExtra all the same
-    if(conf->getMarkdownEngineType()==MarkdownToHtml::MultiMarkdown){
-        QString insertText = QString::fromUtf8("[%1][]").arg(text);
-        if(type==MdCharmGlobal::ShortcutInsertPicture)
-            insertText.prepend("!");
-        cursor.insertText(insertText);
-        int curBlockNum = cursor.blockNumber();
-        int cursorPosition = cursor.position();
-        cursor.movePosition(QTextCursor::End);
-        int endBlockNum = cursor.blockNumber();
-        QString ref;
-        if(endBlockNum==curBlockNum || (endBlockNum-1)==curBlockNum)
-        {
-            ref.append("\n\n");
-        } else {
-            QTextBlock endBlock = cursor.block();
-            if(!endBlock.text().isEmpty() && endBlock.text()[0]=='['){
-                ref.append("\n");
-            } else {
-                ref.append("\n\n");
-            }
-        }
-        ref.append(QString::fromUtf8("[%1]: %2").arg(text).arg(url));
-        if(!title.isEmpty())
-            ref.append(" \""+title+"\"");
-        if(!width.isEmpty())
-            ref.append(" width="+width);
-        if(!height.isEmpty())
-            ref.append(" height="+height);
-        cursor.insertText(ref);
-        cursor.setPosition(cursorPosition);
-    } else {
-        QString insertText = QString::fromUtf8("[%1](%2 \"%3\")").arg(text).arg(url).arg(title);
-        if(type==MdCharmGlobal::ShortcutInsertPicture)
-            insertText.prepend("!");
-        cursor.insertText(insertText);
-    }
-
+    QString insertText = QString::fromUtf8("[%1](%2 \"%3\")").arg(text).arg(url).arg(title);
+    if(type==MdCharmGlobal::ShortcutInsertPicture)
+        insertText.prepend("!");
+    cursor.insertText(insertText);
     cursor.endEditBlock();
     setTextCursor(cursor);
 }

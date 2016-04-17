@@ -29,7 +29,5 @@ SOURCES += \
     core/languagedefinationxmlparser.cpp \
     core/highlighter.cpp \
     core/codesyntaxhighlighter.cpp \
-    core/commonmark.cpp \
-    core/hoedown.cpp \
-    core/multimarkdown.cpp
+    core/commonmark.cpp
 

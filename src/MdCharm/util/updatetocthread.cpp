@@ -11,14 +11,13 @@ UpdateTocThread::UpdateTocThread(QObject *parent) :
 
 void UpdateTocThread::run()
 {
-    if(this->type == MarkdownToHtml::MultiMarkdown){
-        emit workerResult(QString());
-    } else {
-        std::string stdResult;
-        QByteArray content = this->content.toUtf8();
-        MarkdownToHtml::renderMarkdownExtarToc(this->type, content.data(), content.length(), stdResult);
-        emit workerResult(QString::fromUtf8(stdResult.c_str(), stdResult.length()));
-    }
+    // CommonMark not support TOC now
+    /*
+    std::string stdResult;
+    QByteArray content = this->content.toUtf8();
+    MarkdownToHtml::renderMarkdownExtarToc(this->type, content.data(), content.length(), stdResult);
+    emit workerResult(QString::fromUtf8(stdResult.c_str(), stdResult.length()));
+    */
 }
 
 void UpdateTocThread::setContent(MarkdownToHtml::MarkdownType type, const QString &content)

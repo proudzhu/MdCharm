@@ -27,7 +27,7 @@ MarkdownCheatSheetDialog::MarkdownCheatSheetDialog(QWidget *parent) :
     cheatSheetMdFile.open(QFile::ReadOnly);
     QByteArray content = cheatSheetMdFile.readAll();
     std::string textResult;
-    MarkdownToHtml::translateMarkdownToHtml(MarkdownToHtml::PHPMarkdownExtra, content.data(), content.length(), textResult);
+    MarkdownToHtml::translateMarkdownToHtml(MarkdownToHtml::CommonMark, content.data(), content.length(), textResult);
 
     htmlContent = htmlContent.arg(conf->getMarkdownCSS())
                        .arg("")

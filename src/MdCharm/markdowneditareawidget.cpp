@@ -715,14 +715,9 @@ void MarkdownEditAreaWidget::insertLinkOrPicture(int type)
 
 void MarkdownEditAreaWidget::insertCode()
 {
-    // TODO: CommonMark, Markdown and PHPMarkdownExtra all the same
-    if(conf->getMarkdownEngineType()==MarkdownToHtml::MultiMarkdown){
-        editor->insertCode(QString());
-    } else {
-        InsertCodeDialog insertCodeDialog(this);
-        if(insertCodeDialog.exec()==QDialog::Accepted && !insertCodeDialog.getCodeType().isEmpty()){
-            editor->insertCode(insertCodeDialog.getCodeType());
-        }
+    InsertCodeDialog insertCodeDialog(this);
+    if(insertCodeDialog.exec()==QDialog::Accepted && !insertCodeDialog.getCodeType().isEmpty()){
+        editor->insertCode(insertCodeDialog.getCodeType());
     }
 }
 

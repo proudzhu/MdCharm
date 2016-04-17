@@ -15,7 +15,7 @@ NewVersionInfoDialog::NewVersionInfoDialog(const QString &version, const QString
 
     std::string html;
     QByteArray content = infoMarkdown.toUtf8();
-    MarkdownToHtml::translateMarkdownToHtml(MarkdownToHtml::PHPMarkdownExtra, content.data(), content.length(), html);
+    MarkdownToHtml::translateMarkdownToHtml(MarkdownToHtml::CommonMark, content.data(), content.length(), html);
     infoBrower = new QTextBrowser(this);
     infoBrower->setFrameShape(QFrame::NoFrame);
     infoBrower->setHtml(QString::fromUtf8(html.c_str(), html.length()));
