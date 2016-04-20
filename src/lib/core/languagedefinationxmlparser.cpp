@@ -9,7 +9,7 @@ using namespace rapidxml;
 //------------------------------ RegExp ----------------------------------------
 RegExp::RegExp()
 {
-    re = NULL;
+    re = nullptr;
     lastIndex = 0;
 }
 
@@ -22,7 +22,7 @@ bool RegExp::compile(const std::string &pattern, bool isCaseSensitive, bool isGl
         option |= PCRE_CASELESS;
     }
     QString realPattern = QString::fromUtf8(pattern.c_str(), pattern.length());
-    re = pcre16_compile(realPattern.utf16(), option, &error, &errorOffset, NULL);
+    re = pcre16_compile(realPattern.utf16(), option, &error, &errorOffset, nullptr);
     assert(re);
     global = isGlobal;
     return re ? true : false;
@@ -37,7 +37,7 @@ FindResult RegExp::exec(const char *code, int len)
     int spce[21];
     memset(spce, 0, 21);
     QString realCode = QString::fromUtf8(code, len);
-    int rc = pcre16_exec(re, NULL, realCode.utf16(), len, global ? lastIndex : 0, 0, spce, 21);
+    int rc = pcre16_exec(re, nullptr, realCode.utf16(), len, global ? lastIndex : 0, 0, spce, 21);
     if(rc<0)
         return FindResult();
     else {
@@ -52,7 +52,7 @@ bool RegExp::test(const char *code, int len)
     int spec[21];
     memset(spec, 0, 21);
     QString realCode = QString::fromUtf8(code, len);
-    int rc = pcre16_exec(re, NULL, realCode.utf16(), len, 0, 0, spec, 21);
+    int rc = pcre16_exec(re, nullptr, realCode.utf16(), len, 0, 0, spec, 21);
     return rc>=0;
 }
 
@@ -149,8 +149,8 @@ Contain::Contain()
     excludeEnd = false;
     refLanguageContains = false;
     relevance = 1;
-    parent = NULL;
-    starts = NULL;
+    parent = nullptr;
+    starts = nullptr;
 }
 
 Contain::~Contain()
@@ -341,7 +341,7 @@ void Contain::compile(Language *lan)
 Contain* Contain::findMatchedContain(const std::string &match)
 {
     if(parent && parent->getStarts() && parent->getStarts()==this)
-        return NULL;
+        return nullptr;
     for (auto contain : refContains) {
         if(contain->getBeginRe().isValid()){
             FindResult fr = contain->getBeginRe().exec(match.c_str(), match.length());
@@ -349,7 +349,7 @@ Contain* Contain::findMatchedContain(const std::string &match)
                 return contain;
         }
     }
-    return NULL;
+    return nullptr;
 }
 
 RegExp& Contain::getBeginRe()
@@ -569,7 +569,7 @@ Contain *Language::findRefContain(const char *name)
         if(0==strcmp(contain->getName(), name))
             return contain;
     }
-    return NULL;
+    return nullptr;
 }
 
 Contain *Language::findMatchedContain(const std::string &match)
@@ -582,7 +582,7 @@ Contain *Language::findMatchedContain(const std::string &match)
                 return contain;
         }
     }
-    return NULL;
+    return nullptr;
 }
 
 void Language::printDebugInfo()

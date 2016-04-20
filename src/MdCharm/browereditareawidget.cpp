@@ -81,7 +81,7 @@ void BrowerEditAreaWidget::initSignalsAndSlots()
 EditAreaWidget* BrowerEditAreaWidget::clone()
 {
     Q_ASSERT(isEditActionOptionEnabled(AllowSplit));
-    return NULL;
+    return nullptr;
 }
 
 void BrowerEditAreaWidget::setHtml(const QString &html, const QUrl &baseUrl)

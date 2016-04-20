@@ -43,7 +43,7 @@ void BaseEditor::enableSpellCheck()
     updateExtraSelection();
     if(spellCheckLanguage.isEmpty())
         spellCheckLanguage=conf->getSpellCheckLanguage();
-    if(mdCharmGlobal->getSpellChecker(spellCheckLanguage)==NULL){
+    if(mdCharmGlobal->getSpellChecker(spellCheckLanguage)==nullptr){
         Q_ASSERT(0 && "This should not be happen");
         spellCheckLanguage.clear();
         return;
@@ -576,7 +576,7 @@ void BaseEditor::spellCheckAux(const QTextBlock &block)
 {
     removeExtraSelectionInRange(spellCheckErrorSelection, block.position(), block.position()+block.length());
     SpellChecker *spellChecker = mdCharmGlobal->getSpellChecker(spellCheckLanguage);
-    if(spellChecker==NULL)
+    if(spellChecker==nullptr)
         return;
     SpellCheckResultList resultList = spellChecker->checkString(block.text());
     QTextCharFormat spellErrorCharFormat;

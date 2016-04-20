@@ -5,7 +5,7 @@ CheckUpdates::CheckUpdates(QObject *parent) :
     QObject(parent)
 {
     hasError = false;
-    reply = NULL;
+    reply = nullptr;
 }
 
 void CheckUpdates::error(QNetworkReply::NetworkError err)
@@ -51,7 +51,7 @@ void CheckUpdates::httpFinished()
 {
     if(isHasError())
         return;
-    if(reply==NULL)
+    if(reply==nullptr)
         return;
     QString contents = reply->readAll();
     qDebug("%s",contents.toLatin1().constData());

@@ -18,7 +18,7 @@ class Contain;
 
 struct StackItem
 {
-    StackItem(Language *l=NULL, Contain* c=NULL)
+    StackItem(Language *l=nullptr, Contain* c=nullptr)
     {
         lan = l;
         con = c;

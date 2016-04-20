@@ -36,7 +36,7 @@ FileNode::~FileNode()
 
 QList<FileNode *>* FileNode::getChildren()
 {
-    if(children==NULL){
+    if(children==nullptr){
         children = new QList<FileNode *>();
         if(!path.isEmpty()){
             QFileInfo info(path);
@@ -75,7 +75,7 @@ QString FileNode::getPath() const
 
 QString FileNode::getText() const
 {
-    if(parent && parent->getParent() == NULL){
+    if(parent && parent->getParent() == nullptr){
         return fileInfo.absoluteFilePath();
     } else {
         return fileInfo.fileName();
@@ -84,7 +84,7 @@ QString FileNode::getText() const
 
 QString FileNode::getName() const
 {
-    if(parent && parent->getParent() == NULL){
+    if(parent && parent->getParent() == nullptr){
         return fileInfo.absoluteFilePath();
     } else {
         Configuration *conf = Configuration::getInstance();
@@ -125,7 +125,7 @@ void FileNode::clear()
 void FileNode::reload()
 {
     clear();
-    if(children==NULL)
+    if(children==nullptr)
         children = new QList<FileNode*>();
     if(!path.isEmpty()){
         fileInfo = QFileInfo(path);
@@ -141,7 +141,7 @@ void FileNode::reload()
 FileNode *FileNode::findPath(const QString &target)
 {
     if(!target.startsWith(path))
-        return NULL;
+        return nullptr;
     if(path==target)
         return this;
 
@@ -162,7 +162,7 @@ FileNode *FileNode::findPath(const QString &target)
             }
         }
         if(!find)
-            return NULL;
+            return nullptr;
     }
     return curParent;
 }

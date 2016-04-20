@@ -438,7 +438,7 @@ StylesPage::StylesPage(QWidget *parent) :
 StylesPage::~StylesPage()
 {
     delete cssHighLighter;
-    cssHighLighter = NULL;
+    cssHighLighter = nullptr;
     delete ui;
 }
 

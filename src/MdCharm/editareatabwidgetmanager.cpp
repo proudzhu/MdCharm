@@ -44,7 +44,7 @@ EditAreaTabWidgetManager::EditAreaTabWidgetManager(MdCharmForm *mainForm) :
     connect(fileWatcher, SIGNAL(fileChanged(QString)), this, SLOT(fileChangedSlot(QString)));
 
     newFileId = 0;
-    currentTabWidget = NULL;
+    currentTabWidget = nullptr;
 }
 
 MarkdownEditAreaWidget* EditAreaTabWidgetManager::addMarkdownEditAreaWidget(
@@ -203,13 +203,13 @@ EditAreaWidget* EditAreaTabWidgetManager::addNewTabWidget(EditAreaTabWidget *vie
                                                                    QMessageBox::Yes|QMessageBox::No,
                                                                    QMessageBox::Yes);
             if(sb == QMessageBox::No)
-                return NULL;
+                return nullptr;
             //else, try create the file
             QFile newFile(filePath);
             if( !newFile.open(QIODevice::WriteOnly|QIODevice::Text) ){
                 QMessageBox::information(this, tr("Create new file"),
                                          tr("Cannot create the file \"%1\"").arg(filePath));
-                return NULL;
+                return nullptr;
             }
             newFile.close();
         }
@@ -302,7 +302,7 @@ QList<EditAreaWidget *> EditAreaTabWidgetManager::findEditAreaWidgetByFilePath(c
 EditAreaTabWidget* EditAreaTabWidgetManager::findEditAreaTabWidget(EditAreaWidget *eaw)
 {
     if(!eaw)
-        return NULL;
+        return nullptr;
     foreach (EditAreaTabWidget *view, views) {
         int index = view->indexOf(eaw);
         if(index!=-1){
@@ -310,7 +310,7 @@ EditAreaTabWidget* EditAreaTabWidgetManager::findEditAreaTabWidget(EditAreaWidge
         }
     }
     Q_ASSERT(0 && "can't be null");
-    return NULL;
+    return nullptr;
 }
 
 void EditAreaTabWidgetManager::updateConfiguration()
@@ -427,7 +427,7 @@ void EditAreaTabWidgetManager::updateCurrentTabWidget()
 {
     currentTabWidget = qobject_cast<EditAreaTabWidget *>(sender());
     if(currentTabWidget && currentTabWidget->count()<=0)
-        currentTabWidget = NULL;
+        currentTabWidget = nullptr;
     emit updateActions();
     emit currentChanged();
 }
@@ -443,7 +443,7 @@ void EditAreaTabWidgetManager::moveToOtherViewSlot(int index)
     EditAreaWidget *eaw = qobject_cast<EditAreaWidget *>(view->widget(index));
     if(!eaw)
         return;
-    EditAreaTabWidget *otherView = NULL;
+    EditAreaTabWidget *otherView = nullptr;
     foreach (EditAreaTabWidget *v, views) {
         if(v!=view){
             otherView = v;
@@ -481,7 +481,7 @@ void EditAreaTabWidgetManager::cloneToOtherViewSlot(int index)
     EditAreaWidget *eaw = qobject_cast<EditAreaWidget *>(view->widget(index));
     if(!eaw)
         return;
-    EditAreaTabWidget *otherView = NULL;
+    EditAreaTabWidget *otherView = nullptr;
     foreach (EditAreaTabWidget *v, views) {
         if(v!=view){
             otherView = v;
@@ -527,7 +527,7 @@ EditAreaWidget* EditAreaTabWidgetManager::getCurrentWidget()
 {
     EditAreaTabWidget *currentTabWidget = getCurrentTabWidget();
     if(!currentTabWidget)
-        return NULL;
+        return nullptr;
     return qobject_cast<EditAreaWidget *>(currentTabWidget->currentWidget());
 }
 
@@ -576,7 +576,7 @@ void EditAreaTabWidgetManager::updateTabText(EditAreaWidget *editArea, const QSt
 EditAreaWidget* EditAreaTabWidgetManager::findInEditAreaTabWidget(EditAreaTabWidget *view, const QString &filePath)
 {
     if(filePath.isEmpty() || view->count()<=0)
-        return NULL;
+        return nullptr;
     QString formatStr = QDir::fromNativeSeparators(filePath);
 #ifdef Q_OS_WIN
     formatStr = formatStr.toLower();
@@ -592,7 +592,7 @@ EditAreaWidget* EditAreaTabWidgetManager::findInEditAreaTabWidget(EditAreaTabWid
             return tab;
         }
     }
-    return NULL;
+    return nullptr;
 }
 
 void EditAreaTabWidgetManager::saveTabsState()

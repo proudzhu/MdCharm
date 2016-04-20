@@ -34,7 +34,7 @@ int main(int argc, char** argv)
     if(argc>1)
         isShowSplash = false;
     QTime startTime;
-    QSplashScreen *splash = NULL;
+    QSplashScreen *splash = nullptr;
     if (isShowSplash)
     {
         splash = new QSplashScreen(QPixmap(":/mdcharm-splash.png"));

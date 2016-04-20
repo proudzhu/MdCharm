@@ -21,13 +21,11 @@ PKGCONFIG += zlib glib-2.0
 HEADERS += \
     core/markdowntohtml.h \
     core/languagedefinationxmlparser.h \
-    core/highlighter.h \
     core/codesyntaxhighlighter.h
 
 SOURCES += \
     core/markdowntohtml.cpp \
     core/languagedefinationxmlparser.cpp \
-    core/highlighter.cpp \
     core/codesyntaxhighlighter.cpp \
     core/commonmark.cpp
 

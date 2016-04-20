@@ -16,11 +16,11 @@
 
 //------------------------ MdCharmGlobal ---------------------------------------
 
-MdCharmGlobal *MdCharmGlobal::instance = NULL;
+MdCharmGlobal *MdCharmGlobal::instance = nullptr;
 
 MdCharmGlobal* MdCharmGlobal::getInstance()
 {
-    if(instance==NULL)
+    if(instance==nullptr)
         instance = new MdCharmGlobal();
     return instance;
 }
@@ -104,13 +104,13 @@ bool MdCharmGlobal::loadSpellCheck(const QString &lan)
 SpellChecker* MdCharmGlobal::getSpellChecker(const QString &lan)
 {
     if(lan.isEmpty())
-        return NULL;
+        return nullptr;
     if(spellCheckerManager.contains(lan))
         return spellCheckerManager.value(lan);
     if(spellCheckerLanguageList.indexOf(lan)==-1)
-        return NULL;
+        return nullptr;
     if(!loadSpellCheck(lan))
-        return NULL;
+        return nullptr;
     return spellCheckerManager.value(lan);
 }
 

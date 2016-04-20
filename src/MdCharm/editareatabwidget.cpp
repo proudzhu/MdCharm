@@ -233,7 +233,7 @@ void EditAreaTabWidget::closeIfExist(const QString &filePath)
 void EditAreaTabWidget::renameFile(const QString &original, const QString &current)
 {
     int target = -1;
-    EditAreaWidget *targetEditArea = NULL;
+    EditAreaWidget *targetEditArea = nullptr;
     for(int i=0; i<count(); i++){
         EditAreaWidget *editArea = qobject_cast<EditAreaWidget *>(widget(i));
         if(!editArea)

@@ -156,7 +156,7 @@ void MarkdownEditAreaWidget::initConfiguration()
 
 void MarkdownEditAreaWidget::initContent(const QString &filePath)
 {
-    doc = QSharedPointer<QTextDocument>(new QTextDocument(NULL));
+    doc = QSharedPointer<QTextDocument>(new QTextDocument(nullptr));
     QAbstractTextDocumentLayout *layout = new QPlainTextDocumentLayout(doc.data());
     doc->setDocumentLayout(layout);
     editor->setDocument(doc.data());

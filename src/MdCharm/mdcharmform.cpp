@@ -41,7 +41,7 @@ MdCharmForm::MdCharmForm(QWidget *parent) :
     conf = Configuration::getInstance();
     mdcharmGlobalInstance = MdCharmGlobal::getInstance();
     cu = new CheckUpdates();
-    mcsd = NULL;
+    mcsd = nullptr;
     appTitle = QString::fromLatin1("MdCharm");
     initGui();
     initMenuContent();

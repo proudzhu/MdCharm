@@ -36,14 +36,14 @@ public:
     const std::string& highlight(const char *name, int len, const char *code, int codeLen);
     const std::string& highlight(Language* lan, const char *code, int len);
 private:
-    int processLexem(const std::string &subCode, const std::string *matchCode=NULL);
+    int processLexem(const std::string &subCode, const std::string *matchCode=nullptr);
     std::string processBuffer();
     std::string processKeywords();
     std::string processKeywords(Contain *contain);
     std::string processSubLanguage(Contain *top);
 
     void processMatch(Contain* contain, const std::string& match);
-    int keywordMatch(const std::string &match, Contain *contain=NULL);
+    int keywordMatch(const std::string &match, Contain *contain=nullptr);
     std::string escape(const char *src, int len);
     Contain* findEndContain(Contain *contain, const std::string& match);
 private:

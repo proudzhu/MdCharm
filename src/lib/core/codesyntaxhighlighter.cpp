@@ -1,7 +1,7 @@
 #include "codesyntaxhighlighter.h"
 #include "languagedefinationxmlparser.h"
 
-LanguageManager* LanguageManager::instance = NULL;
+LanguageManager* LanguageManager::instance = nullptr;
 
 LanguageManager::LanguageManager()
 {
@@ -33,7 +33,7 @@ Language* LanguageManager::getLanguage(const std::string &name)
         realLan = "javascript";
     auto it = languages.find(realLan);
     if(it==languages.end())
-        return NULL;
+        return nullptr;
     return (*it).second;
 }
 
@@ -47,7 +47,7 @@ LanguageManager* LanguageManager::getInstance()
 CodeSyntaxHighlighter::CodeSyntaxHighlighter()
 {
     relevance = 0;
-    top = NULL;
+    top = nullptr;
 }
 
 const std::string& CodeSyntaxHighlighter::highlight(const char *name, int len, const char *code, int codeLen)
@@ -67,7 +67,7 @@ const std::string& CodeSyntaxHighlighter::highlight(Language *lan, const char *c
     modeBuffer.clear();
     while(!parentStack.empty())
         parentStack.pop();
-    top = NULL;
+    top = nullptr;
     this->lan = lan;
     relevance = 0;
     int index = 0;
@@ -102,11 +102,11 @@ int CodeSyntaxHighlighter::processLexem(const std::string &subCode, const std::s
 //    printf("matchCode: %s\n", matchCode->c_str());
 //    return 0;
     modeBuffer += subCode;
-    if(matchCode==NULL){
+    if(matchCode==nullptr){
         result += processBuffer();
         return 0;
     }
-    Contain* con = NULL;
+    Contain* con = nullptr;
     if(top){
         con = top->findMatchedContain(*matchCode);
         if(!con && top->isRefLanguageContains())
@@ -133,7 +133,7 @@ int CodeSyntaxHighlighter::processLexem(const std::string &subCode, const std::s
                 top = parentStack.top();
                 parentStack.pop();
             } else {
-                top = NULL;
+                top = nullptr;
             }
         }
 //        if(parentStack.empty())
@@ -266,14 +266,14 @@ int CodeSyntaxHighlighter::keywordMatch(const std::string &match, Contain *conta
 Contain* CodeSyntaxHighlighter::findEndContain(Contain *contain, const std::string &match)
 {
     if(!contain)
-        return NULL;
+        return nullptr;
     if(!contain->getEnd().empty() && contain->getEndRe().test(match.c_str(), match.length())){
         return contain;
     }
     if(contain->isEndWithParent()){
         return findEndContain(contain->getParent(), match);
     }
-    return NULL;
+    return nullptr;
 }
 
 std::string CodeSyntaxHighlighter::escape(const char* src, int len)

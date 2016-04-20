@@ -34,7 +34,7 @@ FindAndReplace::FindAndReplace(QWidget *parent) :
 FindAndReplace::~FindAndReplace()
 {
     delete ui;
-    ui = NULL;
+    ui = nullptr;
 }
 
 void FindAndReplace::regularExpressionCheckedSlot(bool b)
