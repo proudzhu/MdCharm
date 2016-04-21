@@ -1,7 +1,7 @@
 #include "codesyntaxhighlighter.h"
 #include "languagedefinationxmlparser.h"
 
-LanguageManager* LanguageManager::instance = nullptr;
+std::shared_ptr<LanguageManager> LanguageManager::instance = nullptr;
 
 LanguageManager::LanguageManager()
 {
@@ -37,10 +37,10 @@ Language* LanguageManager::getLanguage(const std::string &name)
     return (*it).second;
 }
 
-LanguageManager* LanguageManager::getInstance()
+std::shared_ptr<LanguageManager> LanguageManager::getInstance()
 {
-    if(!instance)
-        instance = new LanguageManager();
+    if (!instance)
+        instance = std::make_shared<LanguageManager>();
     return instance;
 }
 
@@ -52,7 +52,7 @@ CodeSyntaxHighlighter::CodeSyntaxHighlighter()
 
 const std::string& CodeSyntaxHighlighter::highlight(const char *name, int len, const char *code, int codeLen)
 {
-    LanguageManager *lanManger = LanguageManager::getInstance();
+    std::shared_ptr<LanguageManager> lanManger = LanguageManager::getInstance();
     Language *targetLanguage = lanManger->getLanguage(std::string(name, len));
     if(!targetLanguage){
         result = escape(code, codeLen);
@@ -218,7 +218,7 @@ std::string CodeSyntaxHighlighter::processKeywords(Contain *contain)
 std::string CodeSyntaxHighlighter::processSubLanguage(Contain *top)
 {
     CodeSyntaxHighlighter *subHighlighter = new CodeSyntaxHighlighter;
-    LanguageManager *languageManager = LanguageManager::getInstance();
+    std::shared_ptr<LanguageManager> languageManager = LanguageManager::getInstance();
     Language* sub = languageManager->getLanguage(top->getSubLanguage());
     if(!sub)
         return escape(modeBuffer.c_str(), modeBuffer.length());

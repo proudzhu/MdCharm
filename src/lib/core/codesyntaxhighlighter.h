@@ -4,6 +4,7 @@
 #include <map>
 #include <string>
 #include <stack>
+#include <memory>
 
 #ifdef MARKDOWN_LIB
     #include "../../dllglobal.h"
@@ -21,12 +22,11 @@ public:
     ~LanguageManager();
     void addLanguage(const std::string &name, char *content);
     Language* getLanguage(const std::string &name);
-    static LanguageManager* getInstance();
-private:
+    static std::shared_ptr<LanguageManager> getInstance();
     LanguageManager();
 private:
     std::map<std::string, Language *> languages;
-    static LanguageManager *instance;
+    static std::shared_ptr<LanguageManager> instance;
 };
 
 class CodeSyntaxHighlighter

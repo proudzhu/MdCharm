@@ -100,7 +100,7 @@ void delayForShowSplash(unsigned int msec)
 
 void initHilighter()
 {
-    LanguageManager *languageManager = LanguageManager::getInstance();
+    std::shared_ptr<LanguageManager> languageManager = LanguageManager::getInstance();
     QMap<QString, QString> xmlMap;
     xmlMap.insert("bash", ":/highlighter/highlighter/bash.xml");
     xmlMap.insert("cpp", ":/highlighter/highlighter/cpp.xml");
