@@ -6,6 +6,7 @@
 #include <QTimer>
 #include <QActionGroup>
 #include <QList>
+#include <memory>
 
 class EditAreaWidget;
 class EditAreaTabWidgetManager;
@@ -129,7 +130,7 @@ private:
 
     //other
     QClipboard *clipboard;
-    Configuration *conf;
+    std::shared_ptr<Configuration> conf;
     QTimer checkUpdatesTimer;
     CheckUpdates *cu;
 

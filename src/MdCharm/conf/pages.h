@@ -63,7 +63,7 @@ private slots:
     void resetKeyboardShortcut();
 private:
     Ui::EnvPage *ui;
-    Configuration *conf;
+    std::shared_ptr<Configuration> conf;
     QCheckBox *showSplashCheckBox;
     QCheckBox *checkUpdatesCheckBox;
     QStandardItemModel *keyboardModel;
@@ -96,7 +96,7 @@ private slots:
     void useWhiteSpaceInsteadOfTabSlot(bool isChecked);
 private:
     Ui::TextEditorPage *ui;
-    Configuration *conf;
+    std::shared_ptr<Configuration> conf;
     MdCharmGlobal *mdcharmGlobal;
     QFontComboBox *fontFamilyComboBox;
     QComboBox *fontSizeComboBox;
@@ -117,7 +117,7 @@ public:
     void saveConfig();
 private:
     Ui::StylesPage *ui;
-    Configuration *conf;
+    std::shared_ptr<Configuration> conf;
     QCheckBox *useDefaultCheckBox;
     QPlainTextEdit *customCSSPlainTextEdit;
     CSSHighLighter *cssHighLighter;

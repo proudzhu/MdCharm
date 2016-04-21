@@ -27,7 +27,7 @@ private:
     QPushButton *ignoreThisVersionButton;
     QPushButton *downloadPushButton;
 
-    Configuration *conf;
+    std::shared_ptr<Configuration> conf;
     QString rev;
 };
 

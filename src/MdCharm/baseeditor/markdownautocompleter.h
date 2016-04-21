@@ -1,6 +1,7 @@
 #ifndef MARKDOWNAUTOCOMPLETER_H
 #define MARKDOWNAUTOCOMPLETER_H
 
+#include <memory>
 #include "baseautocompleter.h"
 
 class QRegExp;
@@ -18,7 +19,7 @@ private:
     bool isUnorderList(QChar c1, QChar c2);
 private:
     QRegExp *orderRe;
-    Configuration *conf;
+    std::shared_ptr<Configuration> conf;
 };
 
 #endif // MARKDOWNAUTOCOMPLETER_H

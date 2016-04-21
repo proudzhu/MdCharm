@@ -4,6 +4,7 @@
 #include <QSet>
 #include <QStack>
 #include <QtCore/QXmlStreamWriter>
+#include <memory>
 
 #include "../zip/zipwriter.h"
 
@@ -72,7 +73,7 @@ private:
 
     QStack<QTextList *> m_listStack;
 
-    Configuration *conf;
+    std::shared_ptr<Configuration> conf;
 
     int picCounter;
 };

@@ -2,6 +2,7 @@
 #define CONFIGURATION_H
 
 #include <QString>
+#include <memory>
 #include "utils.h"
 #include "markdowntohtml.h"
 
@@ -25,7 +26,7 @@ public:
         FileTypeNum
     };
 public:
-    static Configuration *getInstance();
+    static std::shared_ptr<Configuration> getInstance();
 
     void setFontFamily(const QString &family);
     QString getFontFamily();
@@ -114,10 +115,9 @@ public:
     void writeSystemInfo();
 
     ~Configuration();
-private:
     Configuration();
 private:
-    static Configuration *instance;
+    static std::shared_ptr<Configuration> instance;
     QString defaultSpellCheckRootDir;
     QSettings *settings;
     QSettings *regSettings;

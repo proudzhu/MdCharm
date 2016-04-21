@@ -8,6 +8,7 @@
 #include <QIcon>
 #include <QMap>
 #include <QWidget>
+#include <memory>
 
 #include "markdowntohtml.h"
 
@@ -127,7 +128,7 @@ public:
 
 private:
     static MdCharmGlobal *instance;
-    Configuration *conf;
+    std::shared_ptr<Configuration> conf;
     QMap<QString, SpellChecker*> spellCheckerManager;
     QStringList spellCheckerLanguageList;
     QMap<QString, QString> cacheSpellCheckDictLocaleName;

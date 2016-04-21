@@ -10,7 +10,7 @@ SpellCheckSelectorDialog::SpellCheckSelectorDialog(QWidget *parent, Qt::WindowFl
     ui(new Ui::SpellCheckSelectorDialog)
 {
     ui->setupUi(this);
-    Configuration *conf = Configuration::getInstance();
+    std::shared_ptr<Configuration> conf = Configuration::getInstance();
     const QStringList sl = conf->getAllAvailableSpellCheckDictNames();
     int index = -1;
     QLocale locale;

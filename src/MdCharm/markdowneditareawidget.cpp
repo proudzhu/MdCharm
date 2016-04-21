@@ -308,7 +308,7 @@ void MarkdownEditAreaWidget::exportToODT(const QString &filePath)
 {
     std::string textResult = convertMarkdownToHtml();
     QTextDocument textDocument;
-    Configuration *conf = Configuration::getInstance();
+    std::shared_ptr<Configuration> conf = Configuration::getInstance();
     QFont font(conf->getFontFamily(), conf->getFontSize());
     textDocument.setDefaultFont(font);
     textDocument.setHtml(QString::fromUtf8(textResult.c_str(), textResult.length()));

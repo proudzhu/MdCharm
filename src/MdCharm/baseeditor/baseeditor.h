@@ -2,6 +2,7 @@
 #define BASEEDITOR_H
 
 #include <QPlainTextEdit>
+#include <memory>
 
 class Configuration;
 class MdCharmGlobal;
@@ -55,7 +56,7 @@ private:
     void checkWholeContent();
     void removeExtraSelectionInRange(QList<QTextEdit::ExtraSelection> &extraList, int start, int end);
 protected:
-     Configuration *conf;
+     std::shared_ptr<Configuration> conf;
      MdCharmGlobal *mdCharmGlobal;
      QString spellCheckLanguage;
 private:

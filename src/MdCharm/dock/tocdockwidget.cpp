@@ -36,7 +36,7 @@ TOCDockWidget::TOCDockWidget(QWidget *parent) :
 
 void TOCDockWidget::visibleChange(bool b)
 {
-    Configuration *conf = Configuration::getInstance();
+    std::shared_ptr<Configuration> conf = Configuration::getInstance();
     conf->setTocDockWidgetVisible(b);
 }
 

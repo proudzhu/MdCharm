@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include <QStack>
+#include <memory>
 
 namespace Ui {
 class ExportDialog;
@@ -46,7 +47,7 @@ private:
     
 private:
     Ui::ExportDialog *ui;
-    Configuration *conf;
+    std::shared_ptr<Configuration> conf;
     int per;
     QStack<ExportType> stack;
     QString log;

@@ -24,7 +24,7 @@ static const char *SPELL_CHECK_DIC_DIRECTORY_NAME = "spellcheckdict";
 #endif
 }
 
-Configuration *Configuration::instance = 0;
+std::shared_ptr<Configuration> Configuration::instance = nullptr;
 const QString Configuration::FONT_FAMILY = QString::fromLatin1("Common/FontFamily");
 const QString Configuration::FONT_SIZE = QString::fromLatin1("Common/FontSize");
 const QString Configuration::TAB_SIZE = QString::fromLatin1("TextEditor/TabSize");
@@ -281,10 +281,10 @@ bool Configuration::isShowSplash()
     }
 }
 
-Configuration* Configuration::getInstance()
+std::shared_ptr<Configuration> Configuration::getInstance()
 {
-    if(!instance)
-        instance = new Configuration();
+    if (!instance)
+        instance = std::make_shared<Configuration>();
     return instance;
 }
 

@@ -87,7 +87,7 @@ QString FileNode::getName() const
     if(parent && parent->getParent() == nullptr){
         return fileInfo.absoluteFilePath();
     } else {
-        Configuration *conf = Configuration::getInstance();
+        std::shared_ptr<Configuration> conf = Configuration::getInstance();
         if(conf->isHideFileExtensionInProjectDock()){
             QString name = fileInfo.baseName();
             if(name.isEmpty())

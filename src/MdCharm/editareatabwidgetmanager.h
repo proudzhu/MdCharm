@@ -90,7 +90,7 @@ private:
     QList<EditAreaTabWidget *> views;
     QHBoxLayout *layout;
 
-    Configuration *conf;
+    std::shared_ptr<Configuration> conf;
 
     EditAreaTabWidget *currentTabWidget;
 

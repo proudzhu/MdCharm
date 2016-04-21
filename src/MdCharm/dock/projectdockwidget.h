@@ -5,6 +5,7 @@
 #include <QtGui>
 #include <QtCore>
 #include <QtWidgets>
+#include <memory>
 
 class FileSystemModel;
 class FileSystemTreeView;
@@ -57,7 +58,7 @@ private:
     FileSystemModel* fileSystemModel;
     FileSystemTreeView *projectTreeView;
 
-    Configuration *conf;
+    std::shared_ptr<Configuration> conf;
 
     QMenu* fileMenu;
     QMenu* directoryMenu;

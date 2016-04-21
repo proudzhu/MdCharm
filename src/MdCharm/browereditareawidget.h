@@ -20,7 +20,7 @@ public slots:
     void domReady();
     void updateRecentFiles();
 private:
-    Configuration *conf;
+    std::shared_ptr<Configuration> conf;
 };
 
 class BrowerEditAreaWidget : public EditAreaWidget

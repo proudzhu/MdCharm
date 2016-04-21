@@ -2,6 +2,7 @@
 #define SELECTENCODINGDIALOG_H
 
 #include <QDialog>
+#include <memory>
 
 class Configuration;
 
@@ -31,7 +32,7 @@ private:
     QComboBox *encodingComboBox;
     QDialogButtonBox *buttonBox;
     QCheckBox *reloadFileCheckBox;
-    Configuration *conf;
+    std::shared_ptr<Configuration> conf;
     bool modified;
 };
 

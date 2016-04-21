@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include <QWebView>
+#include <memory>
 
 class QStandardItemModel;
 class Configuration;
@@ -40,7 +41,7 @@ private:
     QStringList getFiles() const;
 private:
     Ui::ExportDirectoryDialog *ui;
-    Configuration *m_conf;
+    std::shared_ptr<Configuration> m_conf;
     QStandardItemModel *m_model;
     QWebView *webView;
 

@@ -2,6 +2,7 @@
 #define EDITAREAWIDGET_H
 
 #include <QWidget>
+#include <memory>
 
 class Configuration;
 
@@ -143,7 +144,7 @@ public:
 protected:
     QSharedPointer<FileModel> fm;
     EditorModel em;
-    Configuration *conf;
+    std::shared_ptr<Configuration> conf;
     EditActionOptions options;
 signals:
     void editorContentModifiedSignal(bool b);

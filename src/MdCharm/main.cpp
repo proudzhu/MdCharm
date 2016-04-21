@@ -29,7 +29,7 @@ int main(int argc, char** argv)
     app.setOrganizationName(Utils::AppName);
     app.setOrganizationDomain(QLatin1String("mdcharm.com"));
 
-    Configuration *conf = Configuration::getInstance();
+    std::shared_ptr<Configuration> conf = Configuration::getInstance();
     bool isShowSplash = conf->isShowSplash();
     if(argc>1)
         isShowSplash = false;

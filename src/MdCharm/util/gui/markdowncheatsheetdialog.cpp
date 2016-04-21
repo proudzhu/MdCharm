@@ -13,7 +13,7 @@ MarkdownCheatSheetDialog::MarkdownCheatSheetDialog(QWidget *parent) :
     setLayout(mainLayout);
     mainLayout->addWidget(webView);
     resize(800, 600);
-    Configuration *conf = Configuration::getInstance();
+    std::shared_ptr<Configuration> conf = Configuration::getInstance();
     QFile htmlTemplate(":/markdown/markdown.html");
     if(!htmlTemplate.open(QIODevice::ReadOnly))
     {

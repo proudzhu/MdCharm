@@ -2,6 +2,7 @@
 #define INSERTLINKORPICTUREDIALOG_H
 
 #include <QDialog>
+#include <memory>
 
 namespace Ui {
 class InsertLinkOrPictureDialog;
@@ -26,7 +27,7 @@ private:
     Ui::InsertLinkOrPictureDialog *ui;
     int type;
     QString proDir;
-    Configuration *conf;
+    std::shared_ptr<Configuration> conf;
 private slots:
     void checkAndAccept();
     void showWarning(const QString &pw, const QString &lw);
