@@ -211,7 +211,7 @@ void EnvironmentPage::initKeyboardData()
 
     QList<QStandardItem *> items;
     QStandardItem *ic, *is;
-    MdCharmGlobal *global = MdCharmGlobal::getInstance();
+    std::shared_ptr<MdCharmGlobal> global = MdCharmGlobal::getInstance();
     for(int i=0; i<MdCharmGlobal::ShortcutEnd; i++){
         items.clear();
         ic = new QStandardItem(global->getShortDescriptionText(i));

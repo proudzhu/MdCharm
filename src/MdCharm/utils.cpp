@@ -16,12 +16,12 @@
 
 //------------------------ MdCharmGlobal ---------------------------------------
 
-MdCharmGlobal *MdCharmGlobal::instance = nullptr;
+std::shared_ptr<MdCharmGlobal> MdCharmGlobal::instance = nullptr;
 
-MdCharmGlobal* MdCharmGlobal::getInstance()
+std::shared_ptr<MdCharmGlobal> MdCharmGlobal::getInstance()
 {
     if(instance==nullptr)
-        instance = new MdCharmGlobal();
+        instance = std::make_shared<MdCharmGlobal>();
     return instance;
 }
 

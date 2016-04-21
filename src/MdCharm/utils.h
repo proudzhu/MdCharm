@@ -126,18 +126,17 @@ public:
     QKeySequence MdCharm_ShortCut_Print_Preview;
     QKeySequence MdCharm_ShortCut_Hide_Project_DockBar;
 
+    MdCharmGlobal();
+    ~MdCharmGlobal();
 private:
-    static MdCharmGlobal *instance;
+    static std::shared_ptr<MdCharmGlobal> instance;
     std::shared_ptr<Configuration> conf;
     QMap<QString, SpellChecker*> spellCheckerManager;
     QStringList spellCheckerLanguageList;
     QMap<QString, QString> cacheSpellCheckDictLocaleName;
-private:
-    MdCharmGlobal();
-    ~MdCharmGlobal();
     bool loadSpellCheck(const QString &lan);
 public:
-    static MdCharmGlobal *getInstance();
+    static std::shared_ptr<MdCharmGlobal> getInstance();
     SpellChecker* getSpellChecker(const QString &lan);
     QStringList getSpellCheckerLanguageList();
     QString getDictLocaleName(const QString &dictName);

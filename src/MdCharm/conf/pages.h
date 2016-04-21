@@ -97,7 +97,7 @@ private slots:
 private:
     Ui::TextEditorPage *ui;
     std::shared_ptr<Configuration> conf;
-    MdCharmGlobal *mdcharmGlobal;
+    std::shared_ptr<MdCharmGlobal> mdcharmGlobal;
     QFontComboBox *fontFamilyComboBox;
     QComboBox *fontSizeComboBox;
     QComboBox *defaultEncodingComboBox;

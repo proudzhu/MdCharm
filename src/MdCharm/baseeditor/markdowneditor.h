@@ -39,7 +39,7 @@ private:
     QList<QAction *> addSpellCheckActions(QMenu *menu);
     QList<QAction *> addSpellCheckLanguageActions(QMenu *menu);
 private:
-    MdCharmGlobal *mdcharmGlobalInstance;
+    std::shared_ptr<MdCharmGlobal> mdcharmGlobalInstance;
     QAction *copyAsHtmlAction;
     MarkdownAutoCompleter *autoCompleter;
     MarkdownEditAreaWidget *parent;

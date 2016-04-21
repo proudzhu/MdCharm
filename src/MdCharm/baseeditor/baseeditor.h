@@ -57,7 +57,7 @@ private:
     void removeExtraSelectionInRange(QList<QTextEdit::ExtraSelection> &extraList, int start, int end);
 protected:
      std::shared_ptr<Configuration> conf;
-     MdCharmGlobal *mdCharmGlobal;
+     std::shared_ptr<MdCharmGlobal> mdCharmGlobal;
      QString spellCheckLanguage;
 private:
     QWidget *lineNumberArea;

@@ -150,7 +150,7 @@ private:
     //Window title
     QString appTitle;
 
-    MdCharmGlobal *mdcharmGlobalInstance;
+    std::shared_ptr<MdCharmGlobal> mdcharmGlobalInstance;
     QList<QAction *> shortcutActions;
 
 public slots:
