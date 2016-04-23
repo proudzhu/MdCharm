@@ -76,7 +76,8 @@ EditAreaWidget::EditAreaWidget(const QString &filePath, EditActionOptions op) :
     conf = Configuration::getInstance();
 }
 
-EditAreaWidget::EditAreaWidget(EditAreaWidget &e)
+EditAreaWidget::EditAreaWidget(EditAreaWidget &e) :
+    QWidget(0)
 {
     fm = QSharedPointer<FileModel>(e.fm);
     conf = Configuration::getInstance();
