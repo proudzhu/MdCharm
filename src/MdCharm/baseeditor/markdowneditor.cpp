@@ -464,7 +464,7 @@ QList<QAction *> MarkdownEditor::addSpellCheckActions(QMenu *menu)
     QTextCursor cursor = textCursor();
     cursor.select(QTextCursor::WordUnderCursor);
     QString text = cursor.selectedText();
-    SpellChecker *sc = mdCharmGlobal->getSpellChecker(spellCheckLanguage);
+    auto sc = mdCharmGlobal->getSpellChecker(spellCheckLanguage);
     if(!sc)
         return spellCheckActions;
     if(sc->checkString(text).isEmpty())

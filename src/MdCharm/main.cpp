@@ -34,10 +34,10 @@ int main(int argc, char** argv)
     if(argc>1)
         isShowSplash = false;
     QTime startTime;
-    QSplashScreen *splash = nullptr;
+    std::shared_ptr<QSplashScreen> splash = nullptr;
     if (isShowSplash)
     {
-        splash = new QSplashScreen(QPixmap(":/mdcharm-splash.png"));
+        splash = std::make_shared<QSplashScreen>(QPixmap(":/mdcharm-splash.png"));
         splash->show();
         app.processEvents();
         startTime = QTime::currentTime();
@@ -86,7 +86,6 @@ int main(int argc, char** argv)
     if(isShowSplash)
     {
         splash->finish(&mcf);
-        delete splash;
     }
     return app.exec();//FIXME crashrpt 2364fed2-bfb0-451b-b171-cc574f249e77 689c4c7f-7d04-49a8-9e81-3d794ecda3cc
 }

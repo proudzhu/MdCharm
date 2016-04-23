@@ -40,7 +40,7 @@ ODTWriter::ODTWriter(const QTextDocument &document, const QString &fileName):
     manifestWriter(&manifest), contentWriter(&content), metaWriter(&meta),
     stylesWriter(&styles), document(document)
 {
-    zip = new ZipWriter(fileName);
+    zip = std::make_shared<ZipWriter>(fileName);
     conf = Configuration::getInstance();
 
     officeNS =  QLatin1String("urn:oasis:names:tc:opendocument:xmlns:office:1.0");
@@ -72,7 +72,6 @@ ODTWriter::ODTWriter(const QTextDocument &document, const QString &fileName):
 
 ODTWriter::~ODTWriter()
 {
-    delete zip;
 }
 
 bool ODTWriter::writeAll()

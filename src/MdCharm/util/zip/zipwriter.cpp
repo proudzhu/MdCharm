@@ -322,7 +322,7 @@ LocalFileHeader CentralFileHeader::toLocalHeader() const
 
 ZipWriter::ZipWriter(const QString &fileName)
 {
-    zipFile = new QFile(fileName);
+    zipFile = std::make_shared<QFile>(fileName);
     zipFile->open(QIODevice::WriteOnly);
     if (zipFile->error() == QFile::NoError)
         status = ZipWriter::NoError;
@@ -492,7 +492,6 @@ void ZipWriter::close()
     if( !(zipFile->openMode() &QIODevice::WriteOnly) )
     {
         zipFile->close();
-        delete zipFile;
         return;
     }
 
@@ -519,5 +518,4 @@ void ZipWriter::close()
     zipFile->write((const char*)&eod, sizeof(EndOfDirectory));
     zipFile->write(QByteArray());
     zipFile->close();
-    delete zipFile;
 }

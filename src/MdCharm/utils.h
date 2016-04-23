@@ -131,13 +131,13 @@ public:
 private:
     static std::shared_ptr<MdCharmGlobal> instance;
     std::shared_ptr<Configuration> conf;
-    QMap<QString, SpellChecker*> spellCheckerManager;
+    QMap<QString, std::shared_ptr<SpellChecker>> spellCheckerManager;
     QStringList spellCheckerLanguageList;
     QMap<QString, QString> cacheSpellCheckDictLocaleName;
     bool loadSpellCheck(const QString &lan);
 public:
     static std::shared_ptr<MdCharmGlobal> getInstance();
-    SpellChecker* getSpellChecker(const QString &lan);
+    std::shared_ptr<SpellChecker> getSpellChecker(const QString &lan);
     QStringList getSpellCheckerLanguageList();
     QString getDictLocaleName(const QString &dictName);
     QString getShortDescriptionText(int s);

@@ -3,6 +3,7 @@
 
 #include <QString>
 #include <QTextBoundaryFinder>
+#include <memory>
 
 class Hunspell;
 
@@ -50,7 +51,7 @@ private:
 
 private:
     void put_word(const QString &word);
-    Hunspell *hunspell;
+    std::shared_ptr<Hunspell> hunspell;
     QString userDictionary;
     QString encoding;
     QTextCodec *codec;

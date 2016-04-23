@@ -7,14 +7,13 @@
 MarkdownAutoCompleter::MarkdownAutoCompleter(QObject *parent) :
     BaseAutoCompleter(parent)
 {
-    orderRe = new QRegExp("([0-9]*)\\.\\s");
+    orderRe = std::make_shared<QRegExp>("([0-9]*)\\.\\s");
     conf = Configuration::getInstance();
 }
 
 MarkdownAutoCompleter::~MarkdownAutoCompleter()
 {
-    delete orderRe;
-    orderRe = 0;
+    orderRe = nullptr;
 }
 
 int MarkdownAutoCompleter::paragraphSeparatorAboutToBeInserted(QTextCursor &cursor)

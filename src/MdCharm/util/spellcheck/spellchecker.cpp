@@ -117,7 +117,7 @@ SpellChecker::SpellChecker(const QString &dictionaryPath, const QString &userDic
     QString affixFilePath = dictionaryPath + ".aff";
     QByteArray dictFilePathBA = dictFilePath.toLocal8Bit();
     QByteArray affixFilePathBA = affixFilePath.toLocal8Bit();
-    hunspell = new Hunspell(affixFilePathBA.constData(), dictFilePathBA.constData());
+    hunspell = std::make_shared<Hunspell>(affixFilePathBA.constData(), dictFilePathBA.constData());
 
     encoding = "ISO8859-1";
     QFile affixFile(affixFilePath);
@@ -151,7 +151,6 @@ SpellChecker::SpellChecker(const QString &dictionaryPath, const QString &userDic
 
 SpellChecker::~SpellChecker()
 {
-    delete hunspell;
 }
 
 bool SpellChecker::spell(const QString &word)

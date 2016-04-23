@@ -419,7 +419,7 @@ StylesPage::StylesPage(QWidget *parent) :
     customCSSPlainTextEdit = ui->customCSSPlainTextEdit;
     customCSSPlainTextEdit->setFont(QFont(conf->getFontFamily(),conf->getFontSize()));
     customCSSPlainTextEdit->setPlainText(conf->getMarkdownCSS());
-    cssHighLighter = new CSSHighLighter(customCSSPlainTextEdit->document());
+    cssHighLighter = std::make_shared<CSSHighLighter>(customCSSPlainTextEdit->document());
     if(conf->isUseMarkdownDefaultCSS())
     {
         useDefaultCheckBox->setChecked(true);
@@ -437,7 +437,6 @@ StylesPage::StylesPage(QWidget *parent) :
 
 StylesPage::~StylesPage()
 {
-    delete cssHighLighter;
     cssHighLighter = nullptr;
     delete ui;
 }

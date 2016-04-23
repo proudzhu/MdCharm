@@ -215,7 +215,7 @@ std::string CodeSyntaxHighlighter::processKeywords(std::shared_ptr<Contain> cont
 
 std::string CodeSyntaxHighlighter::processSubLanguage(std::shared_ptr<Contain> top)
 {
-    CodeSyntaxHighlighter *subHighlighter = new CodeSyntaxHighlighter;
+    auto subHighlighter = std::make_shared<CodeSyntaxHighlighter>();
     std::shared_ptr<LanguageManager> languageManager = LanguageManager::getInstance();
     std::shared_ptr<Language> sub = languageManager->getLanguage(top->getSubLanguage());
     if(!sub)
@@ -223,7 +223,6 @@ std::string CodeSyntaxHighlighter::processSubLanguage(std::shared_ptr<Contain> t
     std::string r = "<span class=\""+top->getSubLanguage()+"\">";
     r += subHighlighter->highlight(sub, modeBuffer.c_str(), modeBuffer.length());
     r += "</span>";
-    delete subHighlighter;
     return r;
 }
 

@@ -68,7 +68,7 @@ private:
             mathNS, xformNS,foNS, svgNS, smilNS;
     QString manifestNS;
 
-    ZipWriter *zip;
+    std::shared_ptr<ZipWriter> zip;
     const QTextDocument &document;
 
     QStack<QTextList *> m_listStack;

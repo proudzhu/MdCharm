@@ -72,9 +72,6 @@ MdCharmGlobal::MdCharmGlobal()
 
 MdCharmGlobal::~MdCharmGlobal()
 {
-    foreach (SpellChecker *sc, spellCheckerManager.values()) {
-        delete sc;
-    }
 }
 
 bool MdCharmGlobal::loadSpellCheck(const QString &lan)
@@ -89,7 +86,7 @@ bool MdCharmGlobal::loadSpellCheck(const QString &lan)
         QString filePath = conf->getLanguageSpellCheckDictPath(lan);
         if(!filePath.isEmpty()){
             QString withoutSuffixFilePath = filePath.left(filePath.lastIndexOf('.'));
-            spellCheckerManager[lan] = new SpellChecker(withoutSuffixFilePath, conf->getLanguageSpellCheckUserDictPath(), lan);
+            spellCheckerManager[lan] = std::make_shared<SpellChecker>(withoutSuffixFilePath, conf->getLanguageSpellCheckUserDictPath(), lan);
             return true;
         } else {
             conf->setCheckSpell(false);
@@ -101,7 +98,7 @@ bool MdCharmGlobal::loadSpellCheck(const QString &lan)
     }
 }
 
-SpellChecker* MdCharmGlobal::getSpellChecker(const QString &lan)
+std::shared_ptr<SpellChecker> MdCharmGlobal::getSpellChecker(const QString &lan)
 {
     if(lan.isEmpty())
         return nullptr;

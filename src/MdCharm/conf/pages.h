@@ -120,7 +120,7 @@ private:
     std::shared_ptr<Configuration> conf;
     QCheckBox *useDefaultCheckBox;
     QPlainTextEdit *customCSSPlainTextEdit;
-    CSSHighLighter *cssHighLighter;
+    std::shared_ptr<CSSHighLighter> cssHighLighter;
 private slots:
     void checkStateChanged();
 };

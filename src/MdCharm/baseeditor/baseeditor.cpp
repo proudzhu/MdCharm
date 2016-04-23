@@ -575,7 +575,7 @@ void BaseEditor::spellCheck(int start, int unused, int length)
 void BaseEditor::spellCheckAux(const QTextBlock &block)
 {
     removeExtraSelectionInRange(spellCheckErrorSelection, block.position(), block.position()+block.length());
-    SpellChecker *spellChecker = mdCharmGlobal->getSpellChecker(spellCheckLanguage);
+    auto spellChecker = mdCharmGlobal->getSpellChecker(spellCheckLanguage);
     if(spellChecker==nullptr)
         return;
     SpellCheckResultList resultList = spellChecker->checkString(block.text());

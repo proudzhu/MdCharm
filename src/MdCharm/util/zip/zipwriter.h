@@ -2,6 +2,7 @@
 #define ZIPWRITER_H
 
 #include <QFile>
+#include <memory>
 
 struct FileHeader;
 
@@ -59,7 +60,7 @@ private:
     Status status;
     CompressionPolicy cp;
     QFile::Permissions permissions;
-    QFile *zipFile;
+    std::shared_ptr<QFile> zipFile;
     QList<FileHeader> fileHeaders;
     uint start_of_directory;
     Q_DISABLE_COPY(ZipWriter)
