@@ -2,6 +2,7 @@
 #define ADDNEWFILEDIALOG_H
 
 #include <QDialog>
+#include <memory>
 
 class QLabel;
 class QLineEdit;
@@ -22,7 +23,7 @@ public:
     ~AddNewFileDialog();
     
 private:
-    Ui::AddNewFileDialog *ui;
+    std::shared_ptr<Ui::AddNewFileDialog> ui;
     QLabel *parentDirLabel;
     QLineEdit *fileNameLineEdit;
     QDialogButtonBox *buttonBox;

@@ -3,7 +3,7 @@
 
 NoticeDialog::NoticeDialog(QWidget *parent) :
     QDialog(parent, Qt::WindowTitleHint|Qt::WindowSystemMenuHint),
-    ui(new Ui::NoticeDialog)
+    ui(std::make_shared<Ui::NoticeDialog>())
 {
     ui->setupUi(this);
     connect(ui->buttonBox, SIGNAL(accepted()),
@@ -17,5 +17,4 @@ void NoticeDialog::setNoticeContent(const QString &content)
 
 NoticeDialog::~NoticeDialog()
 {
-    delete ui;
 }

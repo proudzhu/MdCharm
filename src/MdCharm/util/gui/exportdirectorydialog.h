@@ -40,7 +40,7 @@ private:
     void clearModel();
     QStringList getFiles() const;
 private:
-    Ui::ExportDirectoryDialog *ui;
+    std::shared_ptr<Ui::ExportDirectoryDialog> ui;
     std::shared_ptr<Configuration> m_conf;
     QStandardItemModel *m_model;
     QWebView *webView;

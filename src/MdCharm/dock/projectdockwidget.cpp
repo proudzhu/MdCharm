@@ -8,7 +8,7 @@
 
 ProjectDockWidget::ProjectDockWidget(QWidget *parent) :
     QDockWidget(parent),
-    ui(new Ui::ProjectDockWidget)
+    ui(std::make_shared<Ui::ProjectDockWidget>())
 {
     ui->setupUi(this);
     conf = Configuration::getInstance();
@@ -125,7 +125,6 @@ void ProjectDockWidget::keyPressEvent(QKeyEvent *event)
 
 ProjectDockWidget::~ProjectDockWidget()
 {
-    delete ui;
 }
 
 void ProjectDockWidget::prepareDirectoryMenu(const QString &dirPath)

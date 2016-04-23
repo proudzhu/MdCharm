@@ -2,6 +2,7 @@
 #define GOTODIALOG_H
 
 #include <QDialog>
+#include <memory>
 
 namespace Ui {
 class GotoDialog;
@@ -18,7 +19,7 @@ public:
 private slots:
     void checkLineNumber();
 private:
-    Ui::GotoDialog *ui;
+    std::shared_ptr<Ui::GotoDialog> ui;
     int max;
     int min;
     int togo;

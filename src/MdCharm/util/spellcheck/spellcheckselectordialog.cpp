@@ -7,7 +7,7 @@
 
 SpellCheckSelectorDialog::SpellCheckSelectorDialog(QWidget *parent, Qt::WindowFlags f) :
     QDialog(parent, f),
-    ui(new Ui::SpellCheckSelectorDialog)
+    ui(std::make_shared<Ui::SpellCheckSelectorDialog>())
 {
     ui->setupUi(this);
     std::shared_ptr<Configuration> conf = Configuration::getInstance();
@@ -49,5 +49,4 @@ QString SpellCheckSelectorDialog::getSpellCheckLanguageName()
 
 SpellCheckSelectorDialog::~SpellCheckSelectorDialog()
 {
-    delete ui;
 }

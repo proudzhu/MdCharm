@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QTextDocument>
+#include <memory>
 
 class QLineEdit;
 class QToolButton;
@@ -31,7 +32,7 @@ signals:
     void replaceAll(const QString &ft, const QString &rt, QTextDocument::FindFlags qff, bool isRE);
     void findHide();
 private:
-    Ui::FindAndReplaceForm *ui;
+    std::shared_ptr<Ui::FindAndReplaceForm> ui;
     QToolButton *closeFindButton;
     QToolButton *prevFindButton;
     QToolButton *nextFindButton;

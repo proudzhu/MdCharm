@@ -4,7 +4,7 @@
 
 AboutMdCharmDialog::AboutMdCharmDialog(QWidget *parent) :
     QDialog(parent, Qt::WindowTitleHint|Qt::WindowSystemMenuHint),
-    ui(new Ui::AboutMdCharmDialog)
+    ui(std::make_shared<Ui::AboutMdCharmDialog>())
 {
     ui->setupUi(this);
 //    setAttribute(Qt::WA_DeleteOnClose);
@@ -29,5 +29,4 @@ AboutMdCharmDialog::AboutMdCharmDialog(QWidget *parent) :
 
 AboutMdCharmDialog::~AboutMdCharmDialog()
 {
-    delete ui;
 }

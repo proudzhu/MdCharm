@@ -3,7 +3,7 @@
 #include "ui_findandreplaceform.h"
 
 FindAndReplace::FindAndReplace(QWidget *parent) :
-    QWidget(parent), ui(new Ui::FindAndReplaceForm)
+    QWidget(parent), ui(std::make_shared<Ui::FindAndReplaceForm>())
 {
     ui->setupUi(this);
     closeFindButton = ui->closeFindToolButton;
@@ -33,7 +33,6 @@ FindAndReplace::FindAndReplace(QWidget *parent) :
 
 FindAndReplace::~FindAndReplace()
 {
-    delete ui;
     ui = nullptr;
 }
 

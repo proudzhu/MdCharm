@@ -7,7 +7,7 @@
 
 RenameFileDialog::RenameFileDialog(const QString &fileFullPath, QWidget *parent) :
     QDialog(parent, Qt::WindowTitleHint|Qt::WindowSystemMenuHint),
-    ui(new Ui::RenameFileDialog)
+    ui(std::make_shared<Ui::RenameFileDialog>())
 {
     ui->setupUi(this);
     oldFilePath = fileFullPath;
@@ -20,7 +20,6 @@ RenameFileDialog::RenameFileDialog(const QString &fileFullPath, QWidget *parent)
 
 RenameFileDialog::~RenameFileDialog()
 {
-    delete ui;
 }
 
 QString RenameFileDialog::getNewFilePath()

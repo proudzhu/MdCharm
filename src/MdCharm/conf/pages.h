@@ -62,7 +62,7 @@ private slots:
     void onShortcutItemClicked(const QModelIndex &index);
     void resetKeyboardShortcut();
 private:
-    Ui::EnvPage *ui;
+    std::shared_ptr<Ui::EnvPage> ui;
     std::shared_ptr<Configuration> conf;
     QCheckBox *showSplashCheckBox;
     QCheckBox *checkUpdatesCheckBox;

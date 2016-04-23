@@ -9,7 +9,7 @@
 
 ExportDialog::ExportDialog(QWidget *parent) :
     QDialog(parent, Qt::WindowTitleHint|Qt::WindowSystemMenuHint),
-    ui(new Ui::ExportDialog)
+    ui(std::make_shared<Ui::ExportDialog>())
 {
     ui->setupUi(this);
 
@@ -89,7 +89,6 @@ void ExportDialog::restoreState()
 
 ExportDialog::~ExportDialog()
 {
-    delete ui;
 }
 
 void ExportDialog::saveState()

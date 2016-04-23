@@ -2,6 +2,7 @@
 #define SPELLCHECKSELECTORDIALOG_H
 
 #include <QDialog>
+#include <memory>
 
 namespace Ui {
 class SpellCheckSelectorDialog;
@@ -20,7 +21,7 @@ public slots:
     void acceptSlot();
     
 private:
-    Ui::SpellCheckSelectorDialog *ui;
+    std::shared_ptr<Ui::SpellCheckSelectorDialog> ui;
     QString language;
 };
 

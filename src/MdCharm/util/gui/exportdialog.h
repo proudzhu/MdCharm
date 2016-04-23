@@ -46,7 +46,7 @@ private:
     };
     
 private:
-    Ui::ExportDialog *ui;
+    std::shared_ptr<Ui::ExportDialog> ui;
     std::shared_ptr<Configuration> conf;
     int per;
     QStack<ExportType> stack;

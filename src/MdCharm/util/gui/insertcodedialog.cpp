@@ -3,7 +3,7 @@
 
 InsertCodeDialog::InsertCodeDialog(QWidget *parent) :
     QDialog(parent, Qt::WindowTitleHint|Qt::WindowSystemMenuHint),
-    ui(new Ui::InsertCodeDialog)
+    ui(std::make_shared<Ui::InsertCodeDialog>())
 {
     ui->setupUi(this);
     QStringList supportLan;
@@ -26,5 +26,4 @@ QString InsertCodeDialog::getCodeType()
 
 InsertCodeDialog::~InsertCodeDialog()
 {
-    delete ui;
 }

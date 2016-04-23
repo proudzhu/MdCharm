@@ -5,7 +5,7 @@
 
 GotoDialog::GotoDialog(int max, int min, QWidget *parent) :
     QDialog(parent, Qt::WindowTitleHint|Qt::WindowSystemMenuHint),
-    ui(new Ui::GotoDialog)
+    ui(std::make_shared<Ui::GotoDialog>())
 {
     ui->setupUi(this);
     this->max = max;
@@ -38,5 +38,4 @@ int GotoDialog::getLineNumber()
 
 GotoDialog::~GotoDialog()
 {
-    delete ui;
 }

@@ -11,7 +11,7 @@
 //---------------------- EnvironmentPage ---------------------------------------
 EnvironmentPage::EnvironmentPage(QWidget *parent) :
     QTabWidget(parent),
-    ui(new Ui::EnvPage)
+    ui(std::make_shared<Ui::EnvPage>())
 
 {
     ui->setupUi(this);
@@ -44,7 +44,6 @@ EnvironmentPage::EnvironmentPage(QWidget *parent) :
 
 EnvironmentPage::~EnvironmentPage()
 {
-    delete ui;
 }
 
 void EnvironmentPage::saveConfig()
@@ -281,7 +280,6 @@ TextEditorPage::TextEditorPage(QWidget *parent) :
 
 TextEditorPage::~TextEditorPage()
 {
-    delete ui;
 }
 
 void TextEditorPage::saveConfig()
@@ -438,7 +436,6 @@ StylesPage::StylesPage(QWidget *parent) :
 StylesPage::~StylesPage()
 {
     cssHighLighter = nullptr;
-    delete ui;
 }
 
 void StylesPage::saveConfig()

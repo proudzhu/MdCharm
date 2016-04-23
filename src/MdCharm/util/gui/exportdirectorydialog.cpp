@@ -13,7 +13,7 @@
 
 ExportDirectoryDialog::ExportDirectoryDialog(QWidget *parent, const QString &dirPath) :
     QDialog(parent, Qt::WindowTitleHint|Qt::WindowSystemMenuHint),
-    ui(new Ui::ExportDirectoryDialog)
+    ui(std::make_shared<Ui::ExportDirectoryDialog>())
 {
     ui->setupUi(this);
     webView = new QWebView;
@@ -50,7 +50,6 @@ ExportDirectoryDialog::ExportDirectoryDialog(QWidget *parent, const QString &dir
 
 ExportDirectoryDialog::~ExportDirectoryDialog()
 {
-    delete ui;
     webView->deleteLater();
 }
 

@@ -2,6 +2,7 @@
 #define ABOUTMDCHARMDIALOG_H
 
 #include <QDialog>
+#include <memory>
 
 class QPlainTextEdit;
 class QLabel;
@@ -18,7 +19,7 @@ public:
     AboutMdCharmDialog(QWidget *parent);
     ~AboutMdCharmDialog();
 private:
-    Ui::AboutMdCharmDialog *ui;
+    std::shared_ptr<Ui::AboutMdCharmDialog> ui;
     QPushButton *closePushButton;
     QLabel *versionLabel;
 };

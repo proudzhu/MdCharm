@@ -8,7 +8,7 @@
 
 SelectEncodingDialog::SelectEncodingDialog(bool modified, QString currentEncoding, QWidget *parent) :
     QDialog(parent, Qt::WindowTitleHint|Qt::WindowSystemMenuHint),
-    ui(new Ui::SelectEncodingDialog)
+    ui(std::make_shared<Ui::SelectEncodingDialog>())
 {
     ui->setupUi(this);
     this->modified = modified;
@@ -29,7 +29,6 @@ SelectEncodingDialog::SelectEncodingDialog(bool modified, QString currentEncodin
 
 SelectEncodingDialog::~SelectEncodingDialog()
 {
-    delete ui;
 }
 
 QString SelectEncodingDialog::getSelectedEncoding()

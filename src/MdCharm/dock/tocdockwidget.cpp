@@ -12,7 +12,7 @@
 
 TOCDockWidget::TOCDockWidget(QWidget *parent) :
     QDockWidget(parent),
-    ui(new Ui::TOCDockWidget)
+    ui(std::make_shared<Ui::TOCDockWidget>())
 {
     ui->setupUi(this);
 
@@ -55,7 +55,6 @@ void TOCDockWidget::workerFinished()
 
 TOCDockWidget::~TOCDockWidget()
 {
-    delete ui;
     thread->quit();
     delete thread;
 }

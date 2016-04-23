@@ -54,7 +54,7 @@ private slots:
     void directoryChanged(QString dir);
     void hideFileExt(bool b);
 private:
-    Ui::ProjectDockWidget *ui;
+    std::shared_ptr<Ui::ProjectDockWidget> ui;
     FileSystemModel* fileSystemModel;
     FileSystemTreeView *projectTreeView;
 

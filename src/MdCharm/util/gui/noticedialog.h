@@ -2,6 +2,7 @@
 #define NOTICEDIALOG_H
 
 #include <QDialog>
+#include <memory>
 
 namespace Ui {
 class NoticeDialog;
@@ -17,7 +18,7 @@ public:
     ~NoticeDialog();
     
 private:
-    Ui::NoticeDialog *ui;
+    std::shared_ptr<Ui::NoticeDialog> ui;
 };
 
 #endif // NOTICEDIALOG_H

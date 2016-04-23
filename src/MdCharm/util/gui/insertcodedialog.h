@@ -2,6 +2,7 @@
 #define INSERTCODEDIALOG_H
 
 #include <QDialog>
+#include <memory>
 
 namespace Ui {
 class InsertCodeDialog;
@@ -17,7 +18,7 @@ public:
     ~InsertCodeDialog();
     
 private:
-    Ui::InsertCodeDialog *ui;
+    std::shared_ptr<Ui::InsertCodeDialog> ui;
 };
 
 #endif // INSERTCODEDIALOG_H

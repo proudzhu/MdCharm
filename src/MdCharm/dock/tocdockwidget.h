@@ -8,6 +8,7 @@
 #include <QDockWidget>
 #include <QMutex>
 #include <QUrl>
+#include <memory>
 
 #include "markdowntohtml.h"
 
@@ -37,7 +38,7 @@ private slots:
     void updateTocContent(const QString &result);
 
 private:
-    Ui::TOCDockWidget *ui;
+    std::shared_ptr<Ui::TOCDockWidget> ui;
 
     QMutex mutex;
     MarkdownToHtml::MarkdownType type;

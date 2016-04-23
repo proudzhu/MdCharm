@@ -3,7 +3,7 @@
 
 AddNewFileDialog::AddNewFileDialog(QWidget *parent) :
     QDialog(parent, Qt::WindowTitleHint|Qt::WindowSystemMenuHint),
-    ui(new Ui::AddNewFileDialog)
+    ui(std::make_shared<Ui::AddNewFileDialog>())
 {
     ui->setupUi(this);
     parentDirLabel = ui->parentDirLabel;
@@ -33,5 +33,4 @@ QString AddNewFileDialog::getFileName()
 
 AddNewFileDialog::~AddNewFileDialog()
 {
-    delete ui;
 }

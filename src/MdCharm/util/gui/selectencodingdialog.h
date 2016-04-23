@@ -28,7 +28,7 @@ private slots:
     void reloadFileWarning();
     
 private:
-    Ui::SelectEncodingDialog *ui;
+    std::shared_ptr<Ui::SelectEncodingDialog> ui;
     QComboBox *encodingComboBox;
     QDialogButtonBox *buttonBox;
     QCheckBox *reloadFileCheckBox;

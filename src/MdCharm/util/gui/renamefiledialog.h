@@ -2,6 +2,7 @@
 #define RENAMEFILEDIALOG_H
 
 #include <QDialog>
+#include <memory>
 
 namespace Ui {
 class RenameFileDialog;
@@ -20,7 +21,7 @@ private slots:
     void acceptSlot();
     
 private:
-    Ui::RenameFileDialog *ui;
+    std::shared_ptr<Ui::RenameFileDialog> ui;
     QString oldFilePath;
     QString newFP;
 };
