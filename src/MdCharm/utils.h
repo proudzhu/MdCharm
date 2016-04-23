@@ -176,7 +176,7 @@ public:
     static QStringList ImageExts;
 public:
     static QString AppName;
-    static const char* AppNameCStr;
+    static const std::string AppNameCStr;
 };
 
 #endif // UTILS_H

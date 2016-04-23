@@ -32,7 +32,7 @@ bool SessionFileParser::startParse(const QString &sessionXmlFilePath)
     doc.parse<0>(fileContent.data());//TODO: Why file.readAll().data() not work
     xml_node<> *node = doc.first_node();
     while(node){
-        if(0==strcmp(node->name(), Utils::AppNameCStr))
+        if(0==strcmp(node->name(), Utils::AppNameCStr.c_str()))
             parseMdCharmElement(node);
         node = node->next_sibling();
     }
