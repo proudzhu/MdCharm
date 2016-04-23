@@ -1085,7 +1085,7 @@ void MdCharmForm::crateNewFile(const QString &dir)
     int res = anfd.exec();
     if(res==QDialog::Accepted)
     {
-        QString realName = Utils::checkOrAppendDefaultSuffix(MdCharmGlobal::Markdown, anfd.getFileName());
+        QString realName = Utils::checkOrAppendDefaultSuffix(MdCharmGlobal::WikiType::Markdown, anfd.getFileName());
         QString realPath = dir + "/" + realName;
         QFile newFile(realPath);
         if(!newFile.open(QIODevice::WriteOnly))

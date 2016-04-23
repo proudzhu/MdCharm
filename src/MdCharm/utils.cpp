@@ -460,7 +460,7 @@ QString Utils::checkOrAppendDefaultSuffix(MdCharmGlobal::WikiType type, const QS
 {
     switch(type)
     {
-    case MdCharmGlobal::Markdown:
+    case MdCharmGlobal::WikiType::Markdown:
         if(Utils::isMarkdownFile(fileName))
             return fileName;
         return fileName+".md";

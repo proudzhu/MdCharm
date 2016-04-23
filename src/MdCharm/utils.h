@@ -34,7 +34,7 @@ public:
         IsRecommand,
         Warning
     };
-    enum WikiType
+    enum class WikiType
     {
         Markdown
     };
