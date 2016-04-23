@@ -26,7 +26,7 @@ public:
         Cancel,
         None
     };
-    enum UpdatesInfo
+    enum class UpdatesInfo
     {
         Version=0,
         Revision,
