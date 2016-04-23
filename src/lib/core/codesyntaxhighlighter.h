@@ -42,20 +42,20 @@ private:
     int processLexem(const std::string &subCode, const std::string *matchCode=nullptr);
     std::string processBuffer();
     std::string processKeywords();
-    std::string processKeywords(Contain *contain);
-    std::string processSubLanguage(Contain *top);
+    std::string processKeywords(std::shared_ptr<Contain> contain);
+    std::string processSubLanguage(std::shared_ptr<Contain> top);
 
-    void processMatch(Contain* contain, const std::string& match);
-    Keywords::KeywordsType keywordMatch(const std::string &match, Contain *contain=nullptr);
+    void processMatch(std::shared_ptr<Contain> contain, const std::string& match);
+    Keywords::KeywordsType keywordMatch(const std::string &match, std::shared_ptr<Contain> contain=nullptr);
     std::string escape(const char *src, int len);
-    Contain* findEndContain(Contain *contain, const std::string& match);
+    std::shared_ptr<Contain> findEndContain(std::shared_ptr<Contain> contain, const std::string& match);
 private:
     std::string result;
     std::string modeBuffer;
     std::shared_ptr<Language> lan;
-    Contain* top;
+    std::shared_ptr<Contain> top;
     int relevance;
-    std::stack<Contain *> parentStack;
+    std::stack<std::shared_ptr<Contain>> parentStack;
 };
 
 #endif // CODESYNTAXHIGHLIGHTER_H

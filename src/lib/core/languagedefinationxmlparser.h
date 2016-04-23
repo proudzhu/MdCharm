@@ -114,17 +114,17 @@ public:
     void setLexems(const std::string &lexems);
     void setIllegal(const std::string &illegal);
     void addKeyword(Keywords::KeywordsType kt, const std::string &keyword);
-    void addRefContain(Contain *contain);
+    void addRefContain(std::shared_ptr<Contain> contain);
     void compile(Language *lan);
-    Contain *findMatchedContain(const std::string &match);
+    std::shared_ptr<Contain> findMatchedContain(const std::string &match);
     RegExp& getBeginRe();
     RegExp& getEndRe();
     RegExp& getTerminatorsRe();
     RegExp& getLexemsRe();
     bool isRef();
     void setRef(bool r);
-    void setParent(Contain *contain);
-    Contain* getParent();
+    void setParent(std::shared_ptr<Contain> contain);
+    std::shared_ptr<Contain> getParent();
     const std::string& getTerminatorEnd();
     bool isReturnBegin();
     void setReturnBegin(bool b);
@@ -135,8 +135,8 @@ public:
     void setExcludeEnd(bool b);
     const std::list<Keywords>& getKeywords();
     Keywords::KeywordsType matchKeyword(const std::string &k);
-    void setStarts(Contain *contain);
-    Contain* getStarts();
+    void setStarts(std::shared_ptr<Contain> contain);
+    std::shared_ptr<Contain> getStarts();
     void setRefLanguageContains(bool b);
     bool isRefLanguageContains();
     bool isStarts();
@@ -164,9 +164,9 @@ private:
     std::string terminatorEnd;
     RegExp terminatorsRe;
     std::list<Keywords> keywords;
-    std::list<Contain *> refContains;
-    Contain *parent;
-    Contain *starts;
+    std::list<std::shared_ptr<Contain>> refContains;
+    std::shared_ptr<Contain> parent;
+    std::shared_ptr<Contain> starts;
     std::string subLanguage;
 };
 
@@ -182,7 +182,7 @@ public:
     void addCommand(const std::string &command);
     void addProperty(const std::string &property);
     void addBuiltIn(const std::string &builtIn);
-    void addContain(Contain *contain);
+    void addContain(std::shared_ptr<Contain> contain);
     void setCaseSensitive(bool s);
     bool isCaseSensitive();
     void setName(const std::string &name);
@@ -191,14 +191,14 @@ public:
     const std::string& getLexems();
     const std::list<Keywords>& getKeywords();
     Keywords::KeywordsType matchKeyword(const std::string &k);
-    Contain *findRefContain(const char *name);
-    Contain *findMatchedContain(const std::string &match);
+    std::shared_ptr<Contain> findRefContain(const char *name);
+    std::shared_ptr<Contain> findMatchedContain(const std::string &match);
     void printDebugInfo();
     bool isCompiled();
     void compileLanguage();
     RegExp& getTerminatorsRe();
     RegExp& getLexemsRe();
-    std::list<Contain *>& getContains();
+    std::list<std::shared_ptr<Contain>>& getContains();
 private:
     bool compiled;
     bool caseSensitive;
@@ -213,7 +213,7 @@ private:
 
     std::string illegal;
     RegExp illegalRe;
-    std::list<Contain *> contains;
+    std::list<std::shared_ptr<Contain>> contains;
 };
 
 class LanguageDefinationXmlParser
@@ -225,7 +225,7 @@ private:
     void parseLanguageNode(rapidxml::xml_node<> *languageNode, std::shared_ptr<Language> lan);
     void parseKeywordsNode(rapidxml::xml_node<> *keywordsNode, std::shared_ptr<Language> lan);
     void parseContainsNode(rapidxml::xml_node<> *containsNode, std::shared_ptr<Language> lan);
-    bool parseContainNode(rapidxml::xml_node<> *node, Contain *contain, std::shared_ptr<Language> lan);
+    bool parseContainNode(rapidxml::xml_node<> *node, std::shared_ptr<Contain> contain, std::shared_ptr<Language> lan);
 private:
 };
 

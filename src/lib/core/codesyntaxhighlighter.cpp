@@ -108,7 +108,7 @@ int CodeSyntaxHighlighter::processLexem(const std::string &subCode, const std::s
         result += processBuffer();
         return 0;
     }
-    Contain* con = nullptr;
+    std::shared_ptr<Contain> con = nullptr;
     if(top){
         con = top->findMatchedContain(*matchCode);
         if(!con && top->isRefLanguageContains())
@@ -122,7 +122,7 @@ int CodeSyntaxHighlighter::processLexem(const std::string &subCode, const std::s
         return con->isReturnBegin() ? 0 : matchCode->length();
     }
 
-    Contain *endContain = findEndContain(top, *matchCode);
+    auto endContain = findEndContain(top, *matchCode);
     if(endContain){
         if(!(endContain->isReturnEnd()||endContain->isExcludeEnd())){
             modeBuffer += *matchCode;
@@ -189,7 +189,7 @@ std::string CodeSyntaxHighlighter::processKeywords()
     return keywordResult + buffer.substr(lastIndex);
 }
 
-std::string CodeSyntaxHighlighter::processKeywords(Contain *contain)
+std::string CodeSyntaxHighlighter::processKeywords(std::shared_ptr<Contain> contain)
 {
     std::string buffer = escape(modeBuffer.c_str(), modeBuffer.length());
     if(contain->getKeywords().empty()&&!contain->isRefLanguageKeywords())
@@ -217,7 +217,7 @@ std::string CodeSyntaxHighlighter::processKeywords(Contain *contain)
     return keywordResult + buffer.substr(lastIndex);
 }
 
-std::string CodeSyntaxHighlighter::processSubLanguage(Contain *top)
+std::string CodeSyntaxHighlighter::processSubLanguage(std::shared_ptr<Contain> top)
 {
     CodeSyntaxHighlighter *subHighlighter = new CodeSyntaxHighlighter;
     std::shared_ptr<LanguageManager> languageManager = LanguageManager::getInstance();
@@ -231,7 +231,7 @@ std::string CodeSyntaxHighlighter::processSubLanguage(Contain *top)
     return r;
 }
 
-void CodeSyntaxHighlighter::processMatch(Contain *contain, const std::string &match)
+void CodeSyntaxHighlighter::processMatch(std::shared_ptr<Contain> contain, const std::string &match)
 {
     std::string markup;
     if(contain->isShowClassName())
@@ -256,7 +256,7 @@ void CodeSyntaxHighlighter::processMatch(Contain *contain, const std::string &ma
     relevance += contain->getRelevance();
 }
 
-Keywords::KeywordsType CodeSyntaxHighlighter::keywordMatch(const std::string &match, Contain *contain)
+Keywords::KeywordsType CodeSyntaxHighlighter::keywordMatch(const std::string &match, std::shared_ptr<Contain> contain)
 {
     std::string matchStr(match);
     if(!lan->isCaseSensitive()){//to lower case if not case sensitive
@@ -265,7 +265,7 @@ Keywords::KeywordsType CodeSyntaxHighlighter::keywordMatch(const std::string &ma
     return (contain&&!contain->isRefLanguageKeywords()) ? contain->matchKeyword(matchStr) : lan->matchKeyword(matchStr);
 }
 
-Contain* CodeSyntaxHighlighter::findEndContain(Contain *contain, const std::string &match)
+std::shared_ptr<Contain> CodeSyntaxHighlighter::findEndContain(std::shared_ptr<Contain> contain, const std::string &match)
 {
     if(!contain)
         return nullptr;

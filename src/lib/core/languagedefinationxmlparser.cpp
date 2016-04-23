@@ -283,7 +283,7 @@ void Contain::addKeyword(Keywords::KeywordsType kt, const std::string &keyword)
     keywords.push_back(Keywords(kt, keyword));
 }
 
-void Contain::addRefContain(Contain *contain)
+void Contain::addRefContain(std::shared_ptr<Contain> contain)
 {
     refContains.push_back(contain);
 }
@@ -307,7 +307,7 @@ void Contain::compile(Language *lan)
     if(!end.empty())
         endRe.compile(end, lan->isCaseSensitive());
     terminatorEnd = end.empty() ? "" : end;
-    if(getParent() && endsWithParent && getParent()!=this && !getParent()->getTerminatorEnd().empty())
+    if(getParent() && endsWithParent && getParent().get()!=this && !getParent()->getTerminatorEnd().empty())
         if(!terminatorEnd.empty())
             terminatorEnd.append("|"+getParent()->getTerminatorEnd());
         else
@@ -322,7 +322,7 @@ void Contain::compile(Language *lan)
         terminators.push_back(contain->getBegin());
     }
     if(refLanguageContains){
-        std::list<Contain *>& lanContains = lan->getContains();
+        auto lanContains = lan->getContains();
         for (auto contain : lanContains) {
             if(!contain->isRef()){
                 terminators.push_front(contain->getBegin());
@@ -338,9 +338,9 @@ void Contain::compile(Language *lan)
         terminatorsRe.compile(HighlighterUtil::joinStrings(terminators, '|'), true, true);
 }
 
-Contain* Contain::findMatchedContain(const std::string &match)
+std::shared_ptr<Contain> Contain::findMatchedContain(const std::string &match)
 {
-    if(parent && parent->getStarts() && parent->getStarts()==this)
+    if(parent && parent->getStarts() && parent->getStarts().get()==this)
         return nullptr;
     for (auto contain : refContains) {
         if(contain->getBeginRe().isValid()){
@@ -382,14 +382,14 @@ void Contain::setRef(bool r)
     ref = r;
 }
 
-void Contain::setParent(Contain *contain)
+void Contain::setParent(std::shared_ptr<Contain> contain)
 {
     parent = contain;
 }
 
-Contain* Contain::getParent()
+std::shared_ptr<Contain> Contain::getParent()
 {
-    if(parent && parent->getStarts() && parent->getStarts()==this)
+    if(parent && parent->getStarts() && parent->getStarts().get()==this)
         return parent->getParent();
     return parent;
 }
@@ -447,12 +447,12 @@ Keywords::KeywordsType Contain::matchKeyword(const std::string &k)
     return Keywords::KeywordsType::NotFound;
 }
 
-void Contain::setStarts(Contain *contain)
+void Contain::setStarts(std::shared_ptr<Contain> contain)
 {
     starts = contain;
 }
 
-Contain* Contain::getStarts()
+std::shared_ptr<Contain> Contain::getStarts()
 {
     return starts;
 }
@@ -469,7 +469,7 @@ bool Contain::isRefLanguageContains()
 
 bool Contain::isStarts()
 {
-    return parent && parent->getStarts() && parent->getStarts()==this;
+    return parent && parent->getStarts() && parent->getStarts().get()==this;
 }
 
 //------------------------------- Language -------------------------------------
@@ -514,7 +514,7 @@ void Language::addBuiltIn(const std::string &builtIn)
     keywords.push_back(Keywords(Keywords::KeywordsType::BuiltIn, builtIn));
 }
 
-void Language::addContain(Contain *contain)
+void Language::addContain(std::shared_ptr<Contain> contain)
 {
     contains.push_front(contain);
 }
@@ -563,7 +563,7 @@ Keywords::KeywordsType Language::matchKeyword(const std::string &k)
     return Keywords::KeywordsType::NotFound;
 }
 
-Contain *Language::findRefContain(const char *name)
+std::shared_ptr<Contain> Language::findRefContain(const char *name)
 {
     for (auto contain : contains) {
         if(0==strcmp(contain->getName(), name))
@@ -572,10 +572,10 @@ Contain *Language::findRefContain(const char *name)
     return nullptr;
 }
 
-Contain *Language::findMatchedContain(const std::string &match)
+std::shared_ptr<Contain> Language::findMatchedContain(const std::string &match)
 {
-    for(std::list<Contain *>::reverse_iterator it=contains.rbegin(); it!=contains.rend(); it++){
-        Contain *contain = *it;
+    for(auto it=contains.rbegin(); it!=contains.rend(); it++){
+        auto contain = *it;
         if(contain->getBeginRe().isValid() && !contain->isRef()){
             FindResult fr = contain->getBeginRe().exec(match.c_str(), match.length());
             if(fr.isValid())
@@ -636,7 +636,7 @@ RegExp& Language::getLexemsRe()
     return lexemsRe;
 }
 
-std::list<Contain *>& Language::getContains()
+std::list<std::shared_ptr<Contain>>& Language::getContains()
 {
     return contains;
 }
@@ -644,9 +644,11 @@ std::list<Contain *>& Language::getContains()
 Language::~Language()
 {
     //free contains
+    /*
     for (auto contain : contains) {
         delete contain;
     }
+    */
 }
 //---------------------------- LanguageDefinationXmlParser ---------------------
 LanguageDefinationXmlParser::LanguageDefinationXmlParser()
@@ -712,17 +714,15 @@ void LanguageDefinationXmlParser::parseContainsNode(xml_node<> *containsNode, st
     xml_node<> *node = containsNode->first_node();
     while(node){
         if(0==strcmp(node->name(), "Contain")){
-            Contain *contain = new Contain();
+            auto contain = std::make_shared<Contain>();
             if(parseContainNode(node, contain, lan))
                 lan->addContain(contain);
-            else
-                delete contain;
         }
         node = node->next_sibling();
     }
 }
 
-bool LanguageDefinationXmlParser::parseContainNode(xml_node<> *node, Contain *contain, std::shared_ptr<Language> lan)
+bool LanguageDefinationXmlParser::parseContainNode(xml_node<> *node, std::shared_ptr<Contain> contain, std::shared_ptr<Language> lan)
 {
     //Deal Attribute: Name
     xml_attribute<> *nameAttr = node->first_attribute("name");
@@ -770,7 +770,7 @@ bool LanguageDefinationXmlParser::parseContainNode(xml_node<> *node, Contain *co
             while(refNode){
                 if(0==strcmp(refNode->name(), "RefContain")){
                     xml_attribute<> *isRef = refNode->first_attribute("notSetRef");
-                    Contain *c = lan->findRefContain(refNode->value());
+                    auto c = lan->findRefContain(refNode->value());
                     if(!c){
                         assert(0 && "this should not be happend");
                         return false;
@@ -806,7 +806,7 @@ bool LanguageDefinationXmlParser::parseContainNode(xml_node<> *node, Contain *co
         } else if (0==strcmp(currentNode->name(), "Lexems")){
             contain->setLexems(currentNode->value());
         } else if (0==strcmp(currentNode->name(), "Starts")){
-            Contain *c = lan->findRefContain(currentNode->value());
+            auto c = lan->findRefContain(currentNode->value());
             if(!c){
                 assert(0 && "this should not be happend");
                 return false;
