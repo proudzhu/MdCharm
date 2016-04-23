@@ -9,10 +9,6 @@ LanguageManager::LanguageManager()
 
 LanguageManager::~LanguageManager()
 {
-    /*
-    for (auto lang : languages)
-        delete lang.second;
-    */
 }
 
 void LanguageManager::addLanguage(const std::string &name, char *content)

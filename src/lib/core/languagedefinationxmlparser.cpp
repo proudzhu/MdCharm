@@ -643,12 +643,6 @@ std::list<std::shared_ptr<Contain>>& Language::getContains()
 
 Language::~Language()
 {
-    //free contains
-    /*
-    for (auto contain : contains) {
-        delete contain;
-    }
-    */
 }
 //---------------------------- LanguageDefinationXmlParser ---------------------
 LanguageDefinationXmlParser::LanguageDefinationXmlParser()
