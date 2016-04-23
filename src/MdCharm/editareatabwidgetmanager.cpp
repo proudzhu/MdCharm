@@ -372,7 +372,7 @@ bool EditAreaTabWidgetManager::saveAllBeforeClose()
             EditAreaWidget *eaw = qobject_cast<EditAreaWidget *>(editAreaTabWidget->widget(i));
             if(!eaw || (!eaw->getFileModel().isUntitled() && sl.indexOf(eaw->getFileModel().getFileFullPath())!=-1))//deal clone tab
                 continue;
-            if(MdCharmGlobal::Cancel==editAreaTabWidget->saveBeforeClose(eaw, editAreaTabWidget->tabText(i)))
+            if(MdCharmGlobal::SaveFileOptions::Cancel==editAreaTabWidget->saveBeforeClose(eaw, editAreaTabWidget->tabText(i)))
                 return false;
             sl.append(eaw->getFileModel().getFileFullPath());
         }

@@ -91,7 +91,7 @@ public:
     void setLastFilterType(int ft);
     QStringList getFileExtension();
     QString fileTypeToString(int order);
-    QStringList getFileOpenFilters(FileType firstType=AllFile);
+    QStringList getFileOpenFilters(FileType firstType=FileType::AllFile);
     QStringList getFileFilter(FileType fy);
     void setAutoIndentation(bool i);
     bool isAutoIndentation();

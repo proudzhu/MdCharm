@@ -162,7 +162,7 @@ bool EditAreaTabWidget::closeOneTab(int index)
     assert(editArea);
     if(editArea)
     {
-        if(MdCharmGlobal::Cancel==saveBeforeClose(editArea, tabText(index)))
+        if(MdCharmGlobal::SaveFileOptions::Cancel==saveBeforeClose(editArea, tabText(index)))
             return false;
         FileModel fm = editArea->getFileModel();
         if(!fm.getFileFullPath().isEmpty())
@@ -270,19 +270,19 @@ MdCharmGlobal::SaveFileOptions EditAreaTabWidget::saveBeforeClose(EditAreaWidget
         if(sb==QMessageBox::Save)
         {
             if(!saveFile(editArea))
-                return MdCharmGlobal::Cancel; //not saved, don't close the tab
+                return MdCharmGlobal::SaveFileOptions::Cancel; //not saved, don't close the tab
         }
         else if(sb==QMessageBox::Cancel)
         {
-            return MdCharmGlobal::Cancel;
+            return MdCharmGlobal::SaveFileOptions::Cancel;
         }
         else
         {
-            return MdCharmGlobal::DontSave;
+            return MdCharmGlobal::SaveFileOptions::DontSave;
         }
-        return MdCharmGlobal::Save;
+        return MdCharmGlobal::SaveFileOptions::Save;
     }
-    return MdCharmGlobal::None;
+    return MdCharmGlobal::SaveFileOptions::None;
 }
 bool EditAreaTabWidget::saveFile(EditAreaWidget *editArea)
 {

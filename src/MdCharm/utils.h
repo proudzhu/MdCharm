@@ -19,7 +19,7 @@ class MdCharmGlobal : public QWidget
 {
     Q_OBJECT
 public:
-    enum SaveFileOptions
+    enum class SaveFileOptions
     {
         Save,
         DontSave,

@@ -365,7 +365,7 @@ bool MarkdownEditAreaWidget::saveFile()
     QString fileFullPath = fm->getFileFullPath();
     if (fileFullPath.isEmpty())
     {
-        QStringList filterList = conf->getFileOpenFilters(Configuration::MarkdownFile);
+        QStringList filterList = conf->getFileOpenFilters(Configuration::FileType::MarkdownFile);
         QString dir;
         QVariant var = conf->getLastStateValue("MarkdownEditArea_SaveFile");
         if(var.isValid() && var.canConvert(QVariant::String))
@@ -389,7 +389,7 @@ bool MarkdownEditAreaWidget::saveFile()
 
 void MarkdownEditAreaWidget::saveFileAs()
 {
-    QStringList filterList = conf->getFileOpenFilters(Configuration::MarkdownFile);
+    QStringList filterList = conf->getFileOpenFilters(Configuration::FileType::MarkdownFile);
     QString dir;
     QVariant var = conf->getLastStateValue("MarkdownEditArea_SaveFileAs");
     if(var.isValid() && var.canConvert(QVariant::String))
