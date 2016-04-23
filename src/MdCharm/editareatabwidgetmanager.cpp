@@ -171,7 +171,7 @@ void EditAreaTabWidgetManager::showFind()
     if(!editArea)
         return;
     EditorModel em = editArea->getEditorModel();
-    if(em.getEditorType()==EditorModel::MARKDOWN){
+    if(em.getEditorType()==EditorModel::EditorType::MARKDOWN){
         MarkdownEditAreaWidget *mea = qobject_cast<MarkdownEditAreaWidget *>(editArea);
         Q_ASSERT(mea);
         if(!mea)
@@ -352,7 +352,7 @@ void EditAreaTabWidgetManager::updateSpellCheckOption(bool isCheck)
 {
     QList<EditAreaWidget *> tabs = getAllEditAreaWidgets();
     foreach (EditAreaWidget *tab, tabs) {
-        if(tab->getEditorModel().getEditorType()==EditorModel::MARKDOWN){
+        if(tab->getEditorModel().getEditorType()==EditorModel::EditorType::MARKDOWN){
             MarkdownEditAreaWidget *meaw = qobject_cast<MarkdownEditAreaWidget *>(tab);
             if(!meaw)
                 continue;
@@ -501,7 +501,7 @@ void EditAreaTabWidgetManager::cloneToOtherViewSlot(int index)
     if(!copy)
         return;
     EditorModel em = copy->getEditorModel();
-    if(em.getEditorType()==EditorModel::MARKDOWN){
+    if(em.getEditorType()==EditorModel::EditorType::MARKDOWN){
         MarkdownEditAreaWidget *meaw = qobject_cast<MarkdownEditAreaWidget *>(copy);
         if(meaw){
             connect(meaw, SIGNAL(updateActions()), this, SLOT(updateStatus()));
@@ -693,7 +693,7 @@ void EditAreaTabWidgetManager::restoreTabsState(const QList<StateModel> &sml)
                 EditAreaWidget *copy = src->clone();
                 if(!copy)
                     continue;
-                if(copy->getEditorModel().getEditorType()==EditorModel::MARKDOWN){
+                if(copy->getEditorModel().getEditorType()==EditorModel::EditorType::MARKDOWN){
                     MarkdownEditAreaWidget *meaw = qobject_cast<MarkdownEditAreaWidget *>(copy);
                     if(meaw){
                         connect(meaw, SIGNAL(updateActions()), this, SLOT(updateStatus()));

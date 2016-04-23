@@ -690,11 +690,11 @@ void MdCharmForm::updateActions()
     assert(editArea);
     FileModel fm = editArea->getFileModel();
     EditorModel em = editArea->getEditorModel();
-    if( em.getEditorType()==EditorModel::BROWER)
+    if( em.getEditorType()==EditorModel::EditorType::BROWER)
         updateWindowTitle(editAreaTabWidgetManager->getCurrentTabTabText(), false);
     else
         updateWindowTitle(fm.getFileFullPath(), editArea->isModified());
-    if(em.getEditorType()==EditorModel::MARKDOWN)
+    if(em.getEditorType()==EditorModel::EditorType::MARKDOWN)
         markdownToolBar->setEnabled(true);
     else
         markdownToolBar->setEnabled(false);
@@ -809,7 +809,7 @@ void MdCharmForm::updatePasteAction()
         if(!editArea)
             return;
         EditorModel em = editArea->getEditorModel();
-        pasteAction->setEnabled(!text.isEmpty() && em.getEditorType()==EditorModel::MARKDOWN);
+        pasteAction->setEnabled(!text.isEmpty() && em.getEditorType()==EditorModel::EditorType::MARKDOWN);
     }
 }
 
@@ -961,7 +961,7 @@ void MdCharmForm::showSelectEncodingDialog()
     FileModel fm = eaw->getFileModel();
     SelectEncodingDialog sed(eaw->isModified(), fm.getEncodingFormatName(), this);
     if(sed.exec()==QDialog::Accepted && oldEncoding!=sed.getSelectedEncoding()
-            && em.getEditorType()>=EditorModel::EDITABLE)
+            && em.getEditorType()>=EditorModel::EditorType::EDITABLE)
     {
         eaw->setFileEncoding(sed.getSelectedEncoding());
         encodingInfoLabel->setText(sed.getSelectedEncoding());
@@ -976,7 +976,7 @@ void MdCharmForm::showGotoDialog()
     if(!eaw)
         return;
     EditorModel em = eaw->getEditorModel();
-    if(em.getEditorType()<EditorModel::EDITABLE)
+    if(em.getEditorType()<EditorModel::EditorType::EDITABLE)
         return;
     GotoDialog gd(eaw->getCurrentMaxBlockCount(), 1, this);
     if(gd.exec()==QDialog::Accepted)
@@ -1304,7 +1304,7 @@ void MdCharmForm::markdownToolBarSlot()
     if(!editArea)
         return;
     EditorModel em = editArea->getEditorModel();
-    if(em.getEditorType()!=EditorModel::MARKDOWN)
+    if(em.getEditorType()!=EditorModel::EditorType::MARKDOWN)
         return;
     MarkdownEditAreaWidget *meaw = qobject_cast<MarkdownEditAreaWidget *>(editArea);
     if(!meaw)

@@ -130,7 +130,7 @@ int EditAreaTabWidget::addMarkdownTab(MarkdownEditAreaWidget *tab, const QIcon &
 int EditAreaTabWidget::addEditAreaTab(EditAreaWidget *tab, const QIcon &icon, const QString &label)
 {
     EditorModel em = tab->getEditorModel();
-    if(em.getEditorType()==EditorModel::MARKDOWN){
+    if(em.getEditorType()==EditorModel::EditorType::MARKDOWN){
         return addMarkdownTab(qobject_cast<MarkdownEditAreaWidget *>(tab), icon, label);
     } else {
         Q_ASSERT(0 && "this should not be happen");
@@ -262,7 +262,7 @@ MdCharmGlobal::SaveFileOptions EditAreaTabWidget::saveBeforeClose(EditAreaWidget
 {
     assert(editArea);
     EditorModel em = editArea->getEditorModel();
-    if(em.getEditorType()>EditorModel::EDITABLE && editArea->isModified())
+    if(em.getEditorType()>EditorModel::EditorType::EDITABLE && editArea->isModified())
     {
         QMessageBox::StandardButton sb = QMessageBox::question(this, tr("Save"),
                                  tr("Save File %1 ?").arg(name),

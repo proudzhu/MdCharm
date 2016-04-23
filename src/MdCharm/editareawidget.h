@@ -28,7 +28,7 @@ public:
 class EditorModel
 {
 public:
-    enum EditorType
+    enum class EditorType
     {
         NONE,
         BROWER,
@@ -43,7 +43,7 @@ public:
         overWrite = false;
         canCopy = false;
         findVisible = false;
-        editorType = NONE;
+        editorType = EditorType::NONE;
     }
 
 private:

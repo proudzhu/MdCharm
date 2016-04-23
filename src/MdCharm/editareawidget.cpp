@@ -43,7 +43,7 @@ void EditorModel::setEditorType(EditorType t) { editorType = t; }
 EditorModel::EditorType EditorModel::getEditorType() { return editorType; }
 bool EditorModel::isEditable()
 {
-    if(editorType>EDITABLE)
+    if(editorType>EditorType::EDITABLE)
         return true;
     return false;
 }

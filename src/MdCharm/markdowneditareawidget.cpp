@@ -59,7 +59,7 @@ MarkdownEditAreaWidget::MarkdownEditAreaWidget(MdCharmForm *mainForm, const QStr
     inited = false;
 //    lastRevision = -2;
     this->baseUrl = baseUrl;
-    em.setEditorType(EditorModel::MARKDOWN);
+    em.setEditorType(EditorModel::EditorType::MARKDOWN);
 
     initGui();
     initContent(filePath);
@@ -798,7 +798,7 @@ MarkdownEditAreaWidget::MarkdownEditAreaWidget(MarkdownEditAreaWidget &src) :
     inited = false;
     baseUrl = src.baseUrl;
     doc = QSharedPointer<QTextDocument>(src.doc);
-    em.setEditorType(EditorModel::MARKDOWN);
+    em.setEditorType(EditorModel::EditorType::MARKDOWN);
 
     initGui();
     editor->setDocument(doc.data());

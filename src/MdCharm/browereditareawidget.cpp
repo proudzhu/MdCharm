@@ -38,7 +38,7 @@ BrowerEditAreaWidget::BrowerEditAreaWidget(const QString &filePath) :
     EditAreaWidget(filePath, 0)
 
 {
-    em.setEditorType(EditorModel::BROWER);
+    em.setEditorType(EditorModel::EditorType::BROWER);
     webkitHandler = new BrowerWebkitHandler;
     brower = new BaseWebView(this);
     brower->setAcceptDrops(false);
