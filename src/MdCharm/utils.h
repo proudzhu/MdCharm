@@ -45,7 +45,7 @@ public:
         Delete
     };
 
-    enum PreviewOptionMenu
+    enum class PreviewOptionMenu
     {
         PreviewOptionMenu_WriteMode,
         PreviewOptionMenu_WriteRead,
