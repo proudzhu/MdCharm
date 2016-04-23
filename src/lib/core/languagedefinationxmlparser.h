@@ -3,6 +3,7 @@
 
 #include <string>
 #include <list>
+#include <memory>
 
 #include <QtXml/QDomDocument>
 
@@ -18,20 +19,17 @@ class Contain;
 
 struct StackItem
 {
-    StackItem(Language *l=nullptr, Contain* c=nullptr)
-    {
-        lan = l;
-        con = c;
-    }
+    StackItem(std::shared_ptr<Language> l=nullptr, std::shared_ptr<Contain> c=nullptr)
+        : lan(l), con(c) {}
 
-    Language *lan;
-    Contain *con;
+    std::shared_ptr<Language> lan;
+    std::shared_ptr<Contain> con;
 };
 
 struct FindResult
 {
-    FindResult(){start=-1; end=-1;}
-    FindResult(int s, int e){start=s; end=e;}
+    FindResult() : start(-1), end(-1) {}
+    FindResult(int s, int e) : start(s), end(e) {}
     bool isValid(){return start!=-1||end!=-1;}
     int start;
     int end;
@@ -74,7 +72,7 @@ public:
     Keywords(KeywordsType t, const std::string &kw);
     const std::string& getKeyword();
     const int getType(){return type;}
-    static const char* getKeyTypeString(int kt);
+    static const std::string getKeyTypeString(int kt);
 
 private:
     KeywordsType type;

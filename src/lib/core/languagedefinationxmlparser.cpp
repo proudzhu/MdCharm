@@ -90,9 +90,9 @@ const std::string& Keywords::getKeyword()
     return k;
 }
 
-const char* Keywords::getKeyTypeString(int kt)
+const std::string Keywords::getKeyTypeString(int kt)
 {
-    static const char *errorTexts[] = {
+    static const std::vector<std::string> errorTexts = {
         "keyword",
         "literal",
         "constant",
