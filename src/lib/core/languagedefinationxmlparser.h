@@ -57,7 +57,7 @@ private:
 class Keywords
 {
 public:
-    enum KeywordsType {
+    enum class KeywordsType {
         Keyword,
         Literal,
         Constant,
@@ -71,8 +71,8 @@ public:
 
     Keywords(KeywordsType t, const std::string &kw);
     const std::string& getKeyword();
-    const int getType(){return type;}
-    static const std::string getKeyTypeString(int kt);
+    const KeywordsType& getType(){return type;}
+    static const std::string getKeyTypeString(KeywordsType kt);
 
 private:
     KeywordsType type;
@@ -134,7 +134,7 @@ public:
     bool isExcludeEnd();
     void setExcludeEnd(bool b);
     const std::list<Keywords>& getKeywords();
-    int matchKeyword(const std::string &k);
+    Keywords::KeywordsType matchKeyword(const std::string &k);
     void setStarts(Contain *contain);
     Contain* getStarts();
     void setRefLanguageContains(bool b);
@@ -190,7 +190,7 @@ public:
     void setLexems(const std::string &lexems);
     const std::string& getLexems();
     const std::list<Keywords>& getKeywords();
-    int matchKeyword(const std::string &k);
+    Keywords::KeywordsType matchKeyword(const std::string &k);
     Contain *findRefContain(const char *name);
     Contain *findMatchedContain(const std::string &match);
     void printDebugInfo();

@@ -90,7 +90,7 @@ const std::string& Keywords::getKeyword()
     return k;
 }
 
-const std::string Keywords::getKeyTypeString(int kt)
+const std::string Keywords::getKeyTypeString(Keywords::KeywordsType kt)
 {
     static const std::vector<std::string> errorTexts = {
         "keyword",
@@ -103,9 +103,9 @@ const std::string Keywords::getKeyTypeString(int kt)
         "title",
         ""
     };
-    if(kt>=8||kt<0)
+    if(kt>=KeywordsType::NotFound||kt<KeywordsType::Keyword)
         return errorTexts[8];
-    return errorTexts[kt];
+    return errorTexts[static_cast<int>(kt)];
 }
 
 //---------------------------- HighlightUtli -----------------------------------
@@ -438,13 +438,13 @@ const std::list<Keywords>& Contain::getKeywords()
     return keywords;
 }
 
-int Contain::matchKeyword(const std::string &k)
+Keywords::KeywordsType Contain::matchKeyword(const std::string &k)
 {
     for (auto key : keywords) {
         if(key.getKeyword()==k)
             return key.getType();
     }
-    return Keywords::NotFound;
+    return Keywords::KeywordsType::NotFound;
 }
 
 void Contain::setStarts(Contain *contain)
@@ -486,32 +486,32 @@ void Language::addKeyword(Keywords::KeywordsType kt, const std::string &keyword)
 
 void Language::addLiteral(const std::string &literal)
 {
-    keywords.push_back(Keywords(Keywords::Literal, literal));
+    keywords.push_back(Keywords(Keywords::KeywordsType::Literal, literal));
 }
 
 void Language::addConstant(const std::string &constant)
 {
-    keywords.push_back(Keywords(Keywords::Constant, constant));
+    keywords.push_back(Keywords(Keywords::KeywordsType::Constant, constant));
 }
 
 void Language::addType(const std::string &type)
 {
-    keywords.push_back(Keywords(Keywords::Type, type));
+    keywords.push_back(Keywords(Keywords::KeywordsType::Type, type));
 }
 
 void Language::addCommand(const std::string &command)
 {
-    keywords.push_back(Keywords(Keywords::Command, command));
+    keywords.push_back(Keywords(Keywords::KeywordsType::Command, command));
 }
 
 void Language::addProperty(const std::string &property)
 {
-    keywords.push_back(Keywords(Keywords::Property, property));
+    keywords.push_back(Keywords(Keywords::KeywordsType::Property, property));
 }
 
 void Language::addBuiltIn(const std::string &builtIn)
 {
-    keywords.push_back(Keywords(Keywords::BuiltIn, builtIn));
+    keywords.push_back(Keywords(Keywords::KeywordsType::BuiltIn, builtIn));
 }
 
 void Language::addContain(Contain *contain)
@@ -554,13 +554,13 @@ const std::list<Keywords>& Language::getKeywords()
     return keywords;
 }
 
-int Language::matchKeyword(const std::string &k)
+Keywords::KeywordsType Language::matchKeyword(const std::string &k)
 {
     for (auto key : keywords) {
         if(key.getKeyword()==k)
             return key.getType();
     }
-    return Keywords::NotFound;
+    return Keywords::KeywordsType::NotFound;
 }
 
 Contain *Language::findRefContain(const char *name)
@@ -683,21 +683,21 @@ void LanguageDefinationXmlParser::parseLanguageNode(xml_node<> *languageNode, La
             xml_node<> *kNode = node->first_node();
             while(kNode){
                 if(0==strcmp(kNode->name(), "Keyword"))
-                    lan->addKeyword(Keywords::Keyword, kNode->value());
+                    lan->addKeyword(Keywords::KeywordsType::Keyword, kNode->value());
                 else if(0==strcmp(kNode->name(), "BuiltIn"))
-                    lan->addKeyword(Keywords::BuiltIn, kNode->value());
+                    lan->addKeyword(Keywords::KeywordsType::BuiltIn, kNode->value());
                 else if(0==strcmp(kNode->name(), "Literal"))
-                    lan->addKeyword(Keywords::Literal, kNode->value());
+                    lan->addKeyword(Keywords::KeywordsType::Literal, kNode->value());
                 else if(0==strcmp(kNode->name(), "Constant"))
-                    lan->addKeyword(Keywords::Constant, kNode->value());
+                    lan->addKeyword(Keywords::KeywordsType::Constant, kNode->value());
                 else if (0==strcmp(kNode->name(), "Type"))
-                    lan->addKeyword(Keywords::Type, kNode->value());
+                    lan->addKeyword(Keywords::KeywordsType::Type, kNode->value());
                 else if (0==strcmp(kNode->name(), "Command"))
-                    lan->addKeyword(Keywords::Command, kNode->value());
+                    lan->addKeyword(Keywords::KeywordsType::Command, kNode->value());
                 else if (0==strcmp(kNode->name(), "Property"))
-                    lan->addKeyword(Keywords::Property, kNode->value());
+                    lan->addKeyword(Keywords::KeywordsType::Property, kNode->value());
                 else if (0==strcmp(kNode->name(), "Title"))
-                    lan->addKeyword(Keywords::Title, kNode->value());
+                    lan->addKeyword(Keywords::KeywordsType::Title, kNode->value());
                 kNode = kNode->next_sibling();
             }
         } else if(0==strcmp(node->name(), "Lexems")){
@@ -745,21 +745,21 @@ bool LanguageDefinationXmlParser::parseContainNode(xml_node<> *node, Contain *co
             xml_node<> *kNode = currentNode->first_node();
             while(kNode){
                 if(0==strcmp(kNode->name(), "Keyword"))
-                    contain->addKeyword(Keywords::Keyword, kNode->value());
+                    contain->addKeyword(Keywords::KeywordsType::Keyword, kNode->value());
                 else if(0==strcmp(kNode->name(), "BuiltIn"))
-                    contain->addKeyword(Keywords::BuiltIn, kNode->value());
+                    contain->addKeyword(Keywords::KeywordsType::BuiltIn, kNode->value());
                 else if(0==strcmp(kNode->name(), "Literal"))
-                    contain->addKeyword(Keywords::Literal, kNode->value());
+                    contain->addKeyword(Keywords::KeywordsType::Literal, kNode->value());
                 else if(0==strcmp(kNode->name(), "Constant"))
-                    contain->addKeyword(Keywords::Constant, kNode->value());
+                    contain->addKeyword(Keywords::KeywordsType::Constant, kNode->value());
                 else if (0==strcmp(kNode->name(), "Type"))
-                    contain->addKeyword(Keywords::Type, kNode->value());
+                    contain->addKeyword(Keywords::KeywordsType::Type, kNode->value());
                 else if (0==strcmp(kNode->name(), "Command"))
-                    contain->addKeyword(Keywords::Command, kNode->value());
+                    contain->addKeyword(Keywords::KeywordsType::Command, kNode->value());
                 else if (0==strcmp(kNode->name(), "Property"))
-                    contain->addKeyword(Keywords::Property, kNode->value());
+                    contain->addKeyword(Keywords::KeywordsType::Property, kNode->value());
                 else if (0==strcmp(kNode->name(), "Title"))
-                    contain->addKeyword(Keywords::Title, kNode->value());
+                    contain->addKeyword(Keywords::KeywordsType::Title, kNode->value());
                 kNode = kNode->next_sibling();
             }
         } else if(0==strcmp(currentNode->name(), "RefContains")){

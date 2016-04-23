@@ -171,8 +171,8 @@ std::string CodeSyntaxHighlighter::processKeywords()
     while(fr.isValid()){
         keywordResult.append(buffer.substr(lastIndex, fr.start-lastIndex));
         std::string keyword = buffer.substr(fr.start, fr.end-fr.start);
-        int km = keywordMatch(keyword);
-        if(km!=Keywords::NotFound){
+        Keywords::KeywordsType km = keywordMatch(keyword);
+        if(km!=Keywords::KeywordsType::NotFound){
             keywordResult.append("<span class=\"")
                     .append(Keywords::getKeyTypeString(km))
                     .append("\">")
@@ -199,8 +199,8 @@ std::string CodeSyntaxHighlighter::processKeywords(Contain *contain)
     while(fr.isValid()){
         keywordResult.append(buffer.substr(lastIndex, fr.start-lastIndex));
         std::string keyword = buffer.substr(fr.start, fr.end-fr.start);
-        int km = keywordMatch(keyword, contain);
-        if(km!=Keywords::NotFound){
+        Keywords::KeywordsType km = keywordMatch(keyword, contain);
+        if(km!=Keywords::KeywordsType::NotFound){
             keywordResult.append("<span class=\"")
                     .append(Keywords::getKeyTypeString(km))
                     .append("\">")
@@ -254,7 +254,7 @@ void CodeSyntaxHighlighter::processMatch(Contain *contain, const std::string &ma
     relevance += contain->getRelevance();
 }
 
-int CodeSyntaxHighlighter::keywordMatch(const std::string &match, Contain *contain)
+Keywords::KeywordsType CodeSyntaxHighlighter::keywordMatch(const std::string &match, Contain *contain)
 {
     std::string matchStr(match);
     if(!lan->isCaseSensitive()){//to lower case if not case sensitive

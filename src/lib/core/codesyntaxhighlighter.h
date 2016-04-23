@@ -6,6 +6,8 @@
 #include <stack>
 #include <memory>
 
+#include "languagedefinationxmlparser.h"
+
 #ifdef MARKDOWN_LIB
     #include "../../dllglobal.h"
 #else
@@ -14,6 +16,7 @@
 
 class Language;
 class Contain;
+class Keywords;
 struct StackItem;
 
 class AS_DYNAMIC_LIB LanguageManager
@@ -43,7 +46,7 @@ private:
     std::string processSubLanguage(Contain *top);
 
     void processMatch(Contain* contain, const std::string& match);
-    int keywordMatch(const std::string &match, Contain *contain=nullptr);
+    Keywords::KeywordsType keywordMatch(const std::string &match, Contain *contain=nullptr);
     std::string escape(const char *src, int len);
     Contain* findEndContain(Contain *contain, const std::string& match);
 private:
