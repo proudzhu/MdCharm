@@ -316,7 +316,10 @@ void MarkdownEditor::insertLinkOrPicuture(int type, const QString &text,
                                           const QString &url,
                                           const QString &title,
                                           const QString &width,
-                                          const QString &height){
+                                          const QString &height)
+{
+    Q_UNUSED(width);
+    Q_UNUSED(height);
     QTextCursor cursor = textCursor();
     cursor.beginEditBlock();
     cursor.clearSelection();
