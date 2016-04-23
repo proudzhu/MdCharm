@@ -14,7 +14,7 @@ LanguageManager::~LanguageManager()
 void LanguageManager::addLanguage(const std::string &name, char *content)
 {
     LanguageDefinationXmlParser ldxp;
-    std::shared_ptr<Language> lan = ldxp.startParse(name.c_str(), content);
+    auto lan = ldxp.startParse(name.c_str(), content);
     lan->compileLanguage();
     languages[name] = lan;
 //    lan->printDebugInfo();
@@ -50,8 +50,8 @@ CodeSyntaxHighlighter::CodeSyntaxHighlighter()
 
 const std::string& CodeSyntaxHighlighter::highlight(const char *name, int len, const char *code, int codeLen)
 {
-    std::shared_ptr<LanguageManager> lanManger = LanguageManager::getInstance();
-    std::shared_ptr<Language> targetLanguage = lanManger->getLanguage(std::string(name, len));
+    auto lanManger = LanguageManager::getInstance();
+    auto targetLanguage = lanManger->getLanguage(std::string(name, len));
     if(!targetLanguage){
         result = escape(code, codeLen);
         return result;
@@ -169,7 +169,7 @@ std::string CodeSyntaxHighlighter::processKeywords()
     while(fr.isValid()){
         keywordResult.append(buffer.substr(lastIndex, fr.start-lastIndex));
         std::string keyword = buffer.substr(fr.start, fr.end-fr.start);
-        Keywords::KeywordsType km = keywordMatch(keyword);
+        auto km = keywordMatch(keyword);
         if(km!=Keywords::KeywordsType::NotFound){
             keywordResult.append("<span class=\"")
                     .append(Keywords::getKeyTypeString(km))
@@ -197,7 +197,7 @@ std::string CodeSyntaxHighlighter::processKeywords(std::shared_ptr<Contain> cont
     while(fr.isValid()){
         keywordResult.append(buffer.substr(lastIndex, fr.start-lastIndex));
         std::string keyword = buffer.substr(fr.start, fr.end-fr.start);
-        Keywords::KeywordsType km = keywordMatch(keyword, contain);
+        auto km = keywordMatch(keyword, contain);
         if(km!=Keywords::KeywordsType::NotFound){
             keywordResult.append("<span class=\"")
                     .append(Keywords::getKeyTypeString(km))
@@ -216,8 +216,8 @@ std::string CodeSyntaxHighlighter::processKeywords(std::shared_ptr<Contain> cont
 std::string CodeSyntaxHighlighter::processSubLanguage(std::shared_ptr<Contain> top)
 {
     auto subHighlighter = std::make_shared<CodeSyntaxHighlighter>();
-    std::shared_ptr<LanguageManager> languageManager = LanguageManager::getInstance();
-    std::shared_ptr<Language> sub = languageManager->getLanguage(top->getSubLanguage());
+    auto languageManager = LanguageManager::getInstance();
+    auto sub = languageManager->getLanguage(top->getSubLanguage());
     if(!sub)
         return escape(modeBuffer.c_str(), modeBuffer.length());
     std::string r = "<span class=\""+top->getSubLanguage()+"\">";

@@ -10,8 +10,8 @@ SpellCheckSelectorDialog::SpellCheckSelectorDialog(QWidget *parent, Qt::WindowFl
     ui(std::make_shared<Ui::SpellCheckSelectorDialog>())
 {
     ui->setupUi(this);
-    std::shared_ptr<Configuration> conf = Configuration::getInstance();
-    const QStringList sl = conf->getAllAvailableSpellCheckDictNames();
+    auto conf = Configuration::getInstance();
+    auto sl = conf->getAllAvailableSpellCheckDictNames();
     int index = -1;
     QLocale locale;
     for(int i=0; i<sl.length(); i++){
