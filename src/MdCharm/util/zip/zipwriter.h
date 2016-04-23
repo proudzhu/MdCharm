@@ -5,6 +5,10 @@
 
 struct FileHeader;
 
+#ifndef MAYBE_UNUSED
+#define MAYBE_UNUSED __attribute_used__
+#endif
+
 class ZipWriter
 {
 public:

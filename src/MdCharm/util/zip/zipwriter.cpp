@@ -133,7 +133,7 @@ static quint32 permissionsToMode(QFile::Permissions perms)
     return mode;
 }
 
-static int inflate(Bytef *dest, ulong *destLen, const Bytef *source, ulong sourceLen)
+ static int MAYBE_UNUSED inflate(Bytef *dest, ulong *destLen, const Bytef *source, ulong sourceLen)
 {
     z_stream stream;
     int err;
@@ -197,7 +197,7 @@ static int deflate (Bytef *dest, ulong *destLen, const Bytef *source, ulong sour
     return err;
 }
 
-static QFile::Permissions modeToPermissions(quint32 mode)
+static QFile::Permissions MAYBE_UNUSED modeToPermissions(quint32 mode)
 {
     QFile::Permissions ret;
     if (mode & S_IRUSR)
@@ -227,7 +227,7 @@ static QFile::Permissions modeToPermissions(quint32 mode)
     return ret;
 }
 
-static QDateTime readMSDosDate(const uchar *src)
+static QDateTime MAYBE_UNUSED readMSDosDate(const uchar *src)
 {
     uint dosDate = readUInt(src);
     quint64 uDate;
