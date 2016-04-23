@@ -653,9 +653,9 @@ LanguageDefinationXmlParser::LanguageDefinationXmlParser()
 {
 }
 
-Language* LanguageDefinationXmlParser::startParse(const char* name, char *src)
+std::shared_ptr<Language> LanguageDefinationXmlParser::startParse(const char* name, char *src)
 {
-    Language *lan = new Language;
+    std::shared_ptr<Language> lan = std::make_shared<Language>();
     lan->setName(name);
     xml_document<> doc;
     doc.parse<0>(src);
@@ -666,7 +666,7 @@ Language* LanguageDefinationXmlParser::startParse(const char* name, char *src)
     return lan;
 }
 
-void LanguageDefinationXmlParser::parseLanguageNode(xml_node<> *languageNode, Language* lan)
+void LanguageDefinationXmlParser::parseLanguageNode(xml_node<> *languageNode, std::shared_ptr<Language> lan)
 {
     xml_attribute<> *caseSensitive = languageNode->first_attribute("casesensitive");
     if(caseSensitive && 0==strcmp(caseSensitive->value(), "false"))
@@ -707,7 +707,7 @@ void LanguageDefinationXmlParser::parseLanguageNode(xml_node<> *languageNode, La
     }
 }
 
-void LanguageDefinationXmlParser::parseContainsNode(xml_node<> *containsNode, Language *lan)
+void LanguageDefinationXmlParser::parseContainsNode(xml_node<> *containsNode, std::shared_ptr<Language> lan)
 {
     xml_node<> *node = containsNode->first_node();
     while(node){
@@ -722,7 +722,7 @@ void LanguageDefinationXmlParser::parseContainsNode(xml_node<> *containsNode, La
     }
 }
 
-bool LanguageDefinationXmlParser::parseContainNode(xml_node<> *node, Contain *contain, Language *lan)
+bool LanguageDefinationXmlParser::parseContainNode(xml_node<> *node, Contain *contain, std::shared_ptr<Language> lan)
 {
     //Deal Attribute: Name
     xml_attribute<> *nameAttr = node->first_attribute("name");

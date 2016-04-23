@@ -9,20 +9,22 @@ LanguageManager::LanguageManager()
 
 LanguageManager::~LanguageManager()
 {
+    /*
     for (auto lang : languages)
         delete lang.second;
+    */
 }
 
 void LanguageManager::addLanguage(const std::string &name, char *content)
 {
     LanguageDefinationXmlParser ldxp;
-    Language *lan = ldxp.startParse(name.c_str(), content);
+    std::shared_ptr<Language> lan = ldxp.startParse(name.c_str(), content);
     lan->compileLanguage();
     languages[name] = lan;
 //    lan->printDebugInfo();
 }
 
-Language* LanguageManager::getLanguage(const std::string &name)
+std::shared_ptr<Language> LanguageManager::getLanguage(const std::string &name)
 {
     std::string realLan = name;
     if(name=="c")
@@ -53,7 +55,7 @@ CodeSyntaxHighlighter::CodeSyntaxHighlighter()
 const std::string& CodeSyntaxHighlighter::highlight(const char *name, int len, const char *code, int codeLen)
 {
     std::shared_ptr<LanguageManager> lanManger = LanguageManager::getInstance();
-    Language *targetLanguage = lanManger->getLanguage(std::string(name, len));
+    std::shared_ptr<Language> targetLanguage = lanManger->getLanguage(std::string(name, len));
     if(!targetLanguage){
         result = escape(code, codeLen);
         return result;
@@ -61,7 +63,7 @@ const std::string& CodeSyntaxHighlighter::highlight(const char *name, int len, c
     return highlight(targetLanguage, code, codeLen);
 }
 
-const std::string& CodeSyntaxHighlighter::highlight(Language *lan, const char *code, int len)
+const std::string& CodeSyntaxHighlighter::highlight(std::shared_ptr<Language> lan, const char *code, int len)
 {
     result.clear();
     modeBuffer.clear();
@@ -219,7 +221,7 @@ std::string CodeSyntaxHighlighter::processSubLanguage(Contain *top)
 {
     CodeSyntaxHighlighter *subHighlighter = new CodeSyntaxHighlighter;
     std::shared_ptr<LanguageManager> languageManager = LanguageManager::getInstance();
-    Language* sub = languageManager->getLanguage(top->getSubLanguage());
+    std::shared_ptr<Language> sub = languageManager->getLanguage(top->getSubLanguage());
     if(!sub)
         return escape(modeBuffer.c_str(), modeBuffer.length());
     std::string r = "<span class=\""+top->getSubLanguage()+"\">";

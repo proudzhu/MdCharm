@@ -220,12 +220,12 @@ class LanguageDefinationXmlParser
 {
 public:
     LanguageDefinationXmlParser();
-    Language *startParse(const char *name, char *src);
+    std::shared_ptr<Language> startParse(const char *name, char *src);
 private:
-    void parseLanguageNode(rapidxml::xml_node<> *languageNode, Language *lan);
-    void parseKeywordsNode(rapidxml::xml_node<> *keywordsNode, Language *lan);
-    void parseContainsNode(rapidxml::xml_node<> *containsNode, Language *lan);
-    bool parseContainNode(rapidxml::xml_node<> *node, Contain *contain, Language *lan);
+    void parseLanguageNode(rapidxml::xml_node<> *languageNode, std::shared_ptr<Language> lan);
+    void parseKeywordsNode(rapidxml::xml_node<> *keywordsNode, std::shared_ptr<Language> lan);
+    void parseContainsNode(rapidxml::xml_node<> *containsNode, std::shared_ptr<Language> lan);
+    bool parseContainNode(rapidxml::xml_node<> *node, Contain *contain, std::shared_ptr<Language> lan);
 private:
 };
 

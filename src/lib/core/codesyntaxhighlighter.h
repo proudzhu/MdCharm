@@ -24,11 +24,11 @@ class AS_DYNAMIC_LIB LanguageManager
 public:
     ~LanguageManager();
     void addLanguage(const std::string &name, char *content);
-    Language* getLanguage(const std::string &name);
+    std::shared_ptr<Language> getLanguage(const std::string &name);
     static std::shared_ptr<LanguageManager> getInstance();
     LanguageManager();
 private:
-    std::map<std::string, Language *> languages;
+    std::map<std::string, std::shared_ptr<Language>> languages;
     static std::shared_ptr<LanguageManager> instance;
 };
 
@@ -37,7 +37,7 @@ class CodeSyntaxHighlighter
 public:
     CodeSyntaxHighlighter();
     const std::string& highlight(const char *name, int len, const char *code, int codeLen);
-    const std::string& highlight(Language* lan, const char *code, int len);
+    const std::string& highlight(std::shared_ptr<Language> lan, const char *code, int len);
 private:
     int processLexem(const std::string &subCode, const std::string *matchCode=nullptr);
     std::string processBuffer();
@@ -52,7 +52,7 @@ private:
 private:
     std::string result;
     std::string modeBuffer;
-    Language *lan;
+    std::shared_ptr<Language> lan;
     Contain* top;
     int relevance;
     std::stack<Contain *> parentStack;
