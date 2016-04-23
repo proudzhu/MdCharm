@@ -37,8 +37,8 @@ static QString bulletChar(QTextListFormat::Style style)
 }
 
 ODTWriter::ODTWriter(const QTextDocument &document, const QString &fileName):
-    document(document), manifestWriter(&manifest), contentWriter(&content),
-    metaWriter(&meta), stylesWriter(&styles)
+    manifestWriter(&manifest), contentWriter(&content), metaWriter(&meta),
+    stylesWriter(&styles), document(document)
 {
     zip = new ZipWriter(fileName);
     conf = Configuration::getInstance();
