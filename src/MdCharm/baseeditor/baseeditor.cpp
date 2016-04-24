@@ -24,7 +24,10 @@ BaseEditor::BaseEditor(QWidget *parent) :
             this, SLOT(ensureAtTheLast()));
 }
 
-BaseEditor::~BaseEditor(){}
+BaseEditor::~BaseEditor()
+{
+    delete lineNumberArea;
+}
 
 void BaseEditor::initSpellCheckMatter()//triggered by setDocument()
 {
