@@ -384,6 +384,10 @@ bool MarkdownEditAreaWidget::saveFile()
                                          Utils::encodeString(editor->toPlainText(), fm->getEncodingFormatName(), bom));
     if(isSaveSuccess)
         setModified(false);
+
+    /* rephase the html when file saved */
+    initHtmlEngine();
+
     return isSaveSuccess;
 }
 
