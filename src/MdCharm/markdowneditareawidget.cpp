@@ -69,7 +69,7 @@ MarkdownEditAreaWidget::MarkdownEditAreaWidget(MdCharmForm *mainForm, const QStr
 
 void MarkdownEditAreaWidget::initPreviewerMatter()
 {
-    connect(previewer, SIGNAL(linkChanged(QUrl)),
+    connect(previewer, SIGNAL(urlChanged(QUrl)),
             this, SLOT(openUrl(QUrl)));
     markdownWebkitHandler = new MarkdownWebkitHandler();
     addJavascriptObject();//warning:add before setHtml!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -752,6 +752,8 @@ void MarkdownEditAreaWidget::findPrevious()
 void MarkdownEditAreaWidget::scrollPreviewTo(int value)//Vertical scrollbar visible=true
 {
     float maxEdit = editorScrollBar->maximum();
+    Q_UNUSED(value);
+    Q_UNUSED(maxEdit);
     //TODO:
     //int previewMax = previewer->page()->scrollBarMaximum(Qt::Vertical);
     //previewer->page()->setScrollBarValue(Qt::Vertical, value/maxEdit*previewMax);
@@ -761,6 +763,8 @@ void MarkdownEditAreaWidget::scrollPreviewTo()//Vertical scrollbar visible=false
 {
     int blockCount = editor->blockCount();
     int curBlock = editor->textCursor().blockNumber()+1;//FIXME: crashrpt 60e48fe9-6bfc-43cd-afac-002f89817ead
+    Q_UNUSED(blockCount);
+    Q_UNUSED(curBlock);
     //TODO:
     //int previewMax = previewer->page()->scrollBarMaximum(Qt::Vertical);
     //if(!editorScrollBar->isVisible() || blockCount==curBlock)
@@ -799,6 +803,7 @@ std::string MarkdownEditAreaWidget::convertMarkdownToHtml()
 
 void MarkdownEditAreaWidget::jumpToPreviewAnchor(const QString &anchor)
 {
+    Q_UNUSED(anchor);
     //TODO:
     //previewer->page()->scrollToAnchor(anchor);
 }
