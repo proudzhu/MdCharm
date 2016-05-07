@@ -2,6 +2,7 @@
 #include <cassert>
 #include <stdio.h>
 #include <QString>
+#include <vector>
 
 #include "languagedefinationxmlparser.h"
 

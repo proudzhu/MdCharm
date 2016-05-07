@@ -93,8 +93,8 @@ int main(int argc, char** argv)
 void delayForShowSplash(unsigned int msec)
 {
     QTime dieTime = QTime::currentTime().addMSecs(msec);
-    while(QTime::currentTime()<dieTime) ;
-            QCoreApplication::processEvents();
+    while(QTime::currentTime()<dieTime)
+        QCoreApplication::processEvents();
 }
 
 void initHilighter()
