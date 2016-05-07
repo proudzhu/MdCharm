@@ -31,7 +31,7 @@ TOCDockWidget::TOCDockWidget(QWidget *parent) :
     connect(this, SIGNAL(visibilityChanged(bool)), this, SLOT(visibleChange(bool)));
     connect(thread, SIGNAL(finished()), this, SLOT(workerFinished()));
     connect(thread, SIGNAL(workerResult(QString)), this, SLOT(updateTocContent(QString)));
-    connect(ui->webView->page(), SIGNAL(linkChanged(QUrl)), this, SIGNAL(anchorClicked(QUrl)));
+    connect(ui->webView->page(), SIGNAL(urlChanged(QUrl)), this, SIGNAL(anchorClicked(QUrl)));
 }
 
 void TOCDockWidget::visibleChange(bool b)
@@ -77,6 +77,7 @@ void TOCDockWidget::updateToc(MarkdownToHtml::MarkdownType type, const QString &
 
 void TOCDockWidget::updateTocContent(const QString &result)
 {
+    Q_UNUSED(result);
     //TODO: Not available in qtwebengine
     //ui->webView->page()->findFirstElement("body").setInnerXml(result);
 }
